@@ -2,101 +2,96 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { Mail } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer>
-      <div className="container">
-        <div className="footer-brand">
-          <Link href="/">
-            <Image
-              src="/Landscope.png"
-              width={119}
-              height={37}
-              alt="Landscope logo"
-            />
-          </Link>
-          <p>
-            Exploring India&apos;s diverse landscapes — from the towering
-            Himalayas to tropical island paradises. Your guide to understanding
-            India&apos;s geography and wildlife.
-          </p>
+    <footer className="bg-card border-t border-border/50 pt-16 pb-8">
+      <div className="max-w-7xl mx-auto px-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+          {/* Brand */}
+          <div>
+            <Link href="/">
+              <Image
+                src="/Landscope.png"
+                width={119}
+                height={37}
+                alt="Landscope logo"
+              />
+            </Link>
+            <p className="text-muted-foreground text-sm mt-4 leading-relaxed">
+              Exploring India&apos;s diverse landscapes — from the towering
+              Himalayas to tropical island paradises. Your guide to
+              understanding India&apos;s geography and wildlife.
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-foreground font-bold text-base mb-5">
+              Explore
+            </h3>
+            <ul className="space-y-2.5">
+              {[
+                {
+                  href: "/landforms/himalayan-mountains",
+                  label: "Himalayan Mountains",
+                },
+                {
+                  href: "/landforms/northern-plains",
+                  label: "Northern Plains",
+                },
+                {
+                  href: "/landforms/peninsular-plateau",
+                  label: "Peninsular Plateau",
+                },
+                { href: "/landforms/thar-desert", label: "Thar Desert" },
+                { href: "/landforms/coastal-plains", label: "Coastal Plains" },
+                { href: "/landforms/islands", label: "The Islands" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-muted-foreground text-sm hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h3 className="text-foreground font-bold text-base mb-5">
+              Newsletter
+            </h3>
+            <p className="text-muted-foreground text-sm mb-4">
+              Stay updated on India&apos;s geography, wildlife, and
+              conservation.
+            </p>
+            <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
+              <Input
+                type="email"
+                placeholder="Your email"
+                className="bg-secondary border-border/50 text-foreground placeholder:text-muted-foreground"
+              />
+              <Button className="bg-gradient-to-r from-cyan-primary to-teal-accent text-white shrink-0">
+                <Mail className="h-4 w-4" />
+              </Button>
+            </form>
+          </div>
         </div>
 
-        <div>
-          <h3 className="footer-title">Explore</h3>
-          <ul className="footer-list">
-            <li>
-              <Link
-                href="/landforms/himalayan-mountains"
-                className="footer-link"
-              >
-                Himalayan Mountains
-              </Link>
-            </li>
-            <li>
-              <Link href="/landforms/northern-plains" className="footer-link">
-                Northern Plains
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/landforms/peninsular-plateau"
-                className="footer-link"
-              >
-                Peninsular Plateau
-              </Link>
-            </li>
-            <li>
-              <Link href="/landforms/thar-desert" className="footer-link">
-                Thar Desert
-              </Link>
-            </li>
-            <li>
-              <Link href="/landforms/coastal-plains" className="footer-link">
-                Coastal Plains
-              </Link>
-            </li>
-            <li>
-              <Link href="/landforms/islands" className="footer-link">
-                The Islands
-              </Link>
-            </li>
-          </ul>
-        </div>
+        <Separator className="bg-border/50" />
 
-        <div>
-          <h3 className="footer-title">Newsletter</h3>
-          <p
-            style={{
-              color: "var(--text-wild-blue-yonder)",
-              fontSize: "var(--fontSize-7)",
-              marginBottom: "12px",
-            }}
-          >
-            Stay updated on India&apos;s geography, wildlife, and conservation.
-          </p>
-          <form
-            className="newsletter-form"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <input
-              type="email"
-              placeholder="Your email"
-              className="newsletter-input"
-            />
-            <button
-              type="submit"
-              className="btn btn-primary"
-              style={{ padding: "10px 20px" }}
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
+        <p className="text-center text-muted-foreground text-xs mt-6">
+          © 2026 Landscope. All rights reserved.
+        </p>
       </div>
-
-      <p className="footer-bottom">© 2026 Landscope. All rights reserved.</p>
     </footer>
   );
 }

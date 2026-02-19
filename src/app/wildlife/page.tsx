@@ -27,34 +27,38 @@ export default function WildlifePage() {
   }));
 
   return (
-    <section className="section">
-      <div className="container">
-        <h1 className="headline headline-1 section-title">
-          <span className="span">Flora & Fauna</span> of India
-        </h1>
-        <p
-          className="section-text"
-          style={{ maxWidth: "700px", margin: "0 auto 30px" }}
-        >
-          Discover the incredible biodiversity across India&apos;s landforms —
-          from Himalayan snow leopards to island coral reefs.
-        </p>
+    <section className="pt-28 pb-20">
+      <div className="max-w-7xl mx-auto px-5">
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-extrabold text-foreground mb-4">
+            <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+              Flora & Fauna
+            </span>{" "}
+            of India
+          </h1>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Discover the incredible biodiversity across India&apos;s landforms —
+            from Himalayan snow leopards to island coral reefs.
+          </p>
+        </div>
 
         <FilterBar
           onFilterChange={setFilter}
           landformOptions={landformOptions}
         />
 
-        <p className="results-count">{filtered.length} species found</p>
+        <p className="text-muted-foreground text-sm mb-6">
+          {filtered.length} species found
+        </p>
 
-        <div className="wildlife-grid">
-          {filtered.map((sp) => (
-            <WildlifeCard key={sp.slug} species={sp} />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filtered.map((sp, i) => (
+            <WildlifeCard key={sp.slug} species={sp} index={i} />
           ))}
         </div>
 
         {filtered.length === 0 && (
-          <p className="empty-state">
+          <p className="text-center py-20 text-muted-foreground text-lg">
             No species match your filters. Try adjusting the criteria.
           </p>
         )}

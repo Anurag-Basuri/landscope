@@ -3,6 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { wildlife, getWildlifeBySlug } from "@/data/wildlife";
 import { getLandformBySlug } from "@/data/landforms";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -31,70 +34,89 @@ export default async function WildlifeDetailPage({ params }: PageProps) {
     .map(getLandformBySlug)
     .filter(Boolean);
 
+  const statusColors: Record<string, string> = {
+    "Critically Endangered": "bg-red-500/90 text-white hover:bg-red-500",
+    Endangered: "bg-orange-500/90 text-white hover:bg-orange-500",
+    Vulnerable: "bg-yellow-500/90 text-black hover:bg-yellow-500",
+    "Near Threatened": "bg-blue-400/90 text-white hover:bg-blue-400",
+  };
+
   return (
-    <section className="section">
-      <div className="container">
-        <div className="wildlife-detail-layout">
+    <section className="pt-28 pb-20">
+      <div className="max-w-7xl mx-auto px-5">
+        <div className="grid md:grid-cols-2 gap-10 items-start">
           {/* Image */}
-          <figure
-            className="wildlife-detail-image img-holder"
-            style={{ "--width": 600, "--height": 450 } as React.CSSProperties}
-          >
+          <div className="relative rounded-2xl overflow-hidden">
             <Image
               src={sp.imageUrl}
               width={600}
               height={450}
               alt={sp.name}
-              className="img-cover"
+              className="w-full h-auto object-cover"
               priority
             />
             {sp.conservationStatus && (
-              <span
-                className={`conservation-badge badge-${sp.conservationStatus.toLowerCase().replace(/\s+/g, "-")}`}
+              <Badge
+                className={`absolute top-4 right-4 text-sm ${
+                  statusColors[sp.conservationStatus] ||
+                  "bg-muted text-foreground"
+                }`}
               >
                 {sp.conservationStatus}
-              </span>
+              </Badge>
             )}
-          </figure>
+          </div>
 
           {/* Info */}
-          <div className="wildlife-detail-info">
-            <span
-              className="wildlife-type-badge"
-              style={{ marginBottom: "12px", display: "inline-block" }}
-            >
+          <div>
+            <span className="inline-block text-sm font-semibold text-primary mb-3">
               {sp.type === "flora" ? "🌿 Flora" : "🐾 Fauna"} · {sp.category}
             </span>
-            <h1 className="headline headline-1">{sp.name}</h1>
-            <p className="wildlife-scientific-name">{sp.scientificName}</p>
 
-            <div className="wildlife-detail-body">
-              <p>{sp.description}</p>
+            <h1 className="text-3xl lg:text-4xl font-extrabold text-foreground mb-2">
+              {sp.name}
+            </h1>
+            <p className="text-muted-foreground italic text-lg mb-6">
+              {sp.scientificName}
+            </p>
 
-              <div className="wildlife-meta">
-                <div className="meta-item">
-                  <span className="meta-label">Habitat</span>
-                  <span className="meta-value">{sp.habitat}</span>
+            <p className="text-muted-foreground leading-relaxed mb-8">
+              {sp.description}
+            </p>
+
+            <Card className="border-border/50">
+              <CardContent className="p-6 space-y-4">
+                <div>
+                  <span className="text-xs font-semibold text-primary uppercase tracking-wider">
+                    Habitat
+                  </span>
+                  <p className="text-foreground text-sm mt-1">{sp.habitat}</p>
                 </div>
                 {sp.conservationStatus && (
-                  <div className="meta-item">
-                    <span className="meta-label">Conservation Status</span>
-                    <span className="meta-value">{sp.conservationStatus}</span>
+                  <div>
+                    <span className="text-xs font-semibold text-primary uppercase tracking-wider">
+                      Conservation Status
+                    </span>
+                    <p className="text-foreground text-sm mt-1">
+                      {sp.conservationStatus}
+                    </p>
                   </div>
                 )}
-              </div>
-            </div>
+              </CardContent>
+            </Card>
 
             {/* Found in */}
             {linkedLandforms.length > 0 && (
-              <div className="found-in">
-                <h3 className="found-in-title">Found in:</h3>
-                <div className="found-in-links">
+              <div className="mt-8">
+                <h3 className="text-foreground font-semibold mb-3">
+                  Found in:
+                </h3>
+                <div className="flex flex-wrap gap-2">
                   {linkedLandforms.map((lf) => (
                     <Link
                       key={lf!.slug}
                       href={`/landforms/${lf!.slug}`}
-                      className="found-in-chip"
+                      className="px-4 py-1.5 text-sm bg-secondary border border-border/50 rounded-lg text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
                     >
                       {lf!.name}
                     </Link>

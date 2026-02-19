@@ -2,43 +2,67 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Wildlife } from "@/data/types";
 
 interface Props {
   species: Wildlife;
+  index?: number;
 }
 
-export default function WildlifeCard({ species }: Props) {
+const statusColors: Record<string, string> = {
+  "Critically Endangered": "bg-red-500/90 text-white hover:bg-red-500",
+  Endangered: "bg-orange-500/90 text-white hover:bg-orange-500",
+  Vulnerable: "bg-yellow-500/90 text-black hover:bg-yellow-500",
+  "Near Threatened": "bg-blue-400/90 text-white hover:bg-blue-400",
+};
+
+export default function WildlifeCard({ species, index = 0 }: Props) {
   return (
-    <Link href={`/wildlife/${species.slug}`} className="wildlife-card">
-      <figure
-        className="wildlife-card-banner img-holder"
-        style={{ "--width": 400, "--height": 300 } as React.CSSProperties}
-      >
-        <Image
-          src={species.imageUrl}
-          width={400}
-          height={300}
-          alt={species.name}
-          className="img-cover"
-          loading="lazy"
-        />
-        {species.conservationStatus && (
-          <span
-            className={`conservation-badge badge-${species.conservationStatus.toLowerCase().replace(/\s+/g, "-")}`}
-          >
-            {species.conservationStatus}
-          </span>
-        )}
-      </figure>
-      <div className="wildlife-card-content">
-        <span className="wildlife-type-badge">
-          {species.type === "flora" ? "🌿 Flora" : "🐾 Fauna"}
-        </span>
-        <h3 className="wildlife-card-title">{species.name}</h3>
-        <p className="wildlife-card-scientific">{species.scientificName}</p>
-        <span className="wildlife-card-category">{species.category}</span>
-      </div>
-    </Link>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-30px" }}
+      transition={{ duration: 0.4, delay: index * 0.06 }}
+    >
+      <Link href={`/wildlife/${species.slug}`}>
+        <Card className="group overflow-hidden border-border/50 hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 py-0 gap-0">
+          <div className="relative h-[200px] overflow-hidden">
+            <Image
+              src={species.imageUrl}
+              width={400}
+              height={300}
+              alt={species.name}
+              className="img-cover group-hover:scale-105"
+              loading="lazy"
+            />
+            {species.conservationStatus && (
+              <Badge
+                className={`absolute top-3 right-3 text-xs ${
+                  statusColors[species.conservationStatus] ||
+                  "bg-muted text-foreground"
+                }`}
+              >
+                {species.conservationStatus}
+              </Badge>
+            )}
+          </div>
+          <CardContent className="p-4 space-y-2">
+            <span className="text-xs font-semibold text-primary">
+              {species.type === "flora" ? "🌿 Flora" : "🐾 Fauna"} ·{" "}
+              {species.category}
+            </span>
+            <h3 className="text-foreground font-bold text-base group-hover:text-primary transition-colors">
+              {species.name}
+            </h3>
+            <p className="text-muted-foreground text-xs italic">
+              {species.scientificName}
+            </p>
+          </CardContent>
+        </Card>
+      </Link>
+    </motion.div>
   );
 }

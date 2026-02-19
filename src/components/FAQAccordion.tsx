@@ -1,31 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { FAQItem } from "@/data/types";
 
-interface FAQAccordionProps {
+interface Props {
   items: FAQItem[];
 }
 
-export default function FAQAccordion({ items }: FAQAccordionProps) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
+export default function FAQAccordion({ items }: Props) {
   return (
-    <ul className="faq-text">
+    <Accordion type="single" collapsible className="space-y-3">
       {items.map((item, i) => (
-        <li
+        <AccordionItem
           key={i}
-          className={openIndex === i ? "showAnswer" : ""}
-          onClick={() => setOpenIndex(openIndex === i ? null : i)}
+          value={`item-${i}`}
+          className="bg-card border border-border/50 rounded-xl px-6 overflow-hidden data-[state=open]:border-primary/30 transition-colors"
         >
-          <div className="question-arrow">
-            <span className="question">{item.question}</span>
-            <span className="arrow">▼</span>
-          </div>
-          <p>{item.answer}</p>
-          <span className="line"></span>
-        </li>
+          <AccordionTrigger className="text-foreground text-sm font-semibold hover:text-primary py-4 hover:no-underline">
+            {item.question}
+          </AccordionTrigger>
+          <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-4">
+            {item.answer}
+          </AccordionContent>
+        </AccordionItem>
       ))}
-    </ul>
+    </Accordion>
   );
 }
