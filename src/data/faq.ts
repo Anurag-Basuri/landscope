@@ -1,52 +1,64 @@
-import { FAQItem, Comment } from "./types";
+import { FAQItem } from "./types";
 
 export const faqItems: FAQItem[] = [
   {
-    question: "How can I assess the quality of land resources in my area?",
+    question: "What are the 6 major landforms of India?",
     answer:
-      "You can assess land quality through soil testing, water quality analysis, and evaluating vegetation health.",
+      "India's six major physiographic divisions are: The Himalayan Mountains, The Northern Plains (Indo-Gangetic Plain), The Peninsular Plateau (Deccan Plateau), The Thar Desert, The Coastal Plains, and The Islands (Andaman & Nicobar, Lakshadweep).",
+    category: "Geography",
   },
   {
-    question: "How does land use planning affect land resources?",
+    question: "What makes the Himalayas important for India's climate?",
     answer:
-      "Effective land use planning helps manage resources sustainably, prevent land degradation, and promote conservation.",
+      "The Himalayas act as a natural barrier, blocking cold Central Asian winds from reaching India and trapping monsoon winds from the Indian Ocean, causing heavy rainfall across the subcontinent. They are also the source of major rivers like the Ganga, Yamuna, and Brahmaputra.",
+    category: "Geography",
   },
   {
-    question: "What are the main factors contributing to land degradation?",
+    question: "Why are the Northern Plains so fertile?",
     answer:
-      "Factors include deforestation, overgrazing, urbanization, industrial pollution, and improper agricultural practices.",
+      "The Indo-Gangetic Plain is formed by alluvial deposits from the Indus, Ganga, and Brahmaputra river systems over millions of years. The fine silt (Khadar) deposited during annual floods renews the soil's fertility, making it ideal for agriculture — wheat, rice, and sugarcane.",
+    category: "Geography",
   },
   {
-    question:
-      "How can I contribute to the conservation and sustainable management of land resources?",
+    question: "What is the Deccan Plateau known for?",
     answer:
-      "You can contribute by practicing sustainable farming, supporting reforestation, reducing waste, volunteering for conservation programs, and advocating for strong environmental policies.",
+      "The Peninsular Plateau (Deccan Plateau) is one of the oldest landmasses on Earth, rich in mineral deposits like iron ore, coal, manganese, and bauxite. It is flanked by the Western Ghats — a UNESCO biodiversity hotspot — and the Eastern Ghats.",
+    category: "Geography",
   },
   {
-    question:
-      "Where can I find information about land conservation programs and initiatives?",
+    question: "Is the Thar Desert lifeless?",
     answer:
-      "Information is available from government agencies, environmental organizations, and online resources dedicated to land conservation.",
-  },
-];
-
-export const latestComments: Comment[] = [
-  {
-    text: "As a student studying environmental science, I found the resources in the library section very helpful for my research projects. It's great to have access to such a wealth of information on land management and conservation all in one place. Keep up the good work!",
-    author: "Jane Cooper",
-    authorImage: "/images/author-6.png",
-    date: "15 April 2022",
+      "Not at all! The Thar is the world's most densely populated desert and home to remarkable biodiversity. It supports species like the Great Indian Bustard, Indian Wild Ass, and Chinkara. The Khejri tree is so revered that the Bishnoi community sacrificed their lives to protect it in 1730.",
+    category: "Wildlife",
   },
   {
-    text: "Thank you for sharing this informative guide on urban greening initiatives. As a city planner, I found the case studies very inspiring and relevant to my work. It's great to see examples of how green spaces can enhance urban environments and improve quality of life for residents.",
-    author: "Katen Doe",
-    authorImage: "/images/author-7.png",
-    date: "15 April 2022",
+    question: "How long is India's coastline?",
+    answer:
+      "India has approximately 7,500 km of coastline, bordered by the Arabian Sea on the west, the Bay of Bengal on the east, and the Indian Ocean to the south. It is home to unique ecosystems like the Kerala Backwaters, the Sundarbans mangroves, and Chilika Lake.",
+    category: "Geography",
   },
   {
-    text: "This article provided a comprehensive overview of sustainable agriculture practices! I particularly appreciated the section on crop rotation and its benefits for soil health. Looking forward to implementing some of these techniques on my farm.",
-    author: "Barbara Cartland",
-    authorImage: "/images/author-8.png",
-    date: "15 April 2022",
+    question: "What is unique about India's island territories?",
+    answer:
+      "India has two major island groups: the Andaman & Nicobar Islands (572 islands in the Bay of Bengal) and Lakshadweep (36 coral atolls in the Arabian Sea). They contain India's only active volcano (Barren Island), rich coral reefs, and are home to some of the world's last uncontacted indigenous tribes.",
+    category: "Geography",
+  },
+  {
+    question: "What endangered species are found in India?",
+    answer:
+      "India is home to many endangered species including the Bengal Tiger, Snow Leopard, Indian Elephant, Red Panda, Gangetic Dolphin, Great Indian Bustard, Nilgiri Tahr, and Lion-Tailed Macaque. Conservation programs like Project Tiger have helped increase tiger numbers from 1,411 in 2006 to over 3,600 today.",
+    category: "Wildlife",
+  },
+  {
+    question: "What is a biodiversity hotspot?",
+    answer:
+      "A biodiversity hotspot is a region with exceptionally high species diversity that is under severe threat. India has four biodiversity hotspots: the Himalayas, the Western Ghats, the Indo-Burma region, and Sundaland (including the Nicobar Islands). These areas contain a large number of endemic species found nowhere else on Earth.",
+    category: "Wildlife",
+  },
+  {
+    question: "How can I contribute to landform conservation?",
+    answer:
+      "You can contribute by supporting responsible tourism, avoiding single-use plastics in natural areas, donating to conservation organisations like WWF India and Wildlife SOS, participating in local clean-up drives, and spreading awareness about India's unique ecosystems through education and social media.",
+    category: "General",
   },
 ];

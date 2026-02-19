@@ -1,30 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-
-const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Library", href: "/#topics" },
-  { label: "Policies", href: "/#featured" },
-  { label: "News and Updates", href: "/#recent" },
-  { label: "FAQ'S", href: "/faq" },
-  { label: "Contact Us", href: "/contact" },
-];
+import { landforms } from "@/data/landforms";
 
 export default function Header() {
-  const [navOpen, setNavOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 100);
-    window.addEventListener("scroll", onScroll);
+    function onScroll() {
+      setIsScrolled(window.scrollY > 50);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <header className={`header${scrolled ? " active" : ""}`}>
+    <header className={`header ${isScrolled ? "active" : ""}`} data-header>
       <div className="container">
         <Link href="/" className="logo">
           <Image
@@ -32,53 +26,91 @@ export default function Header() {
             width={119}
             height={37}
             alt="Landscope logo"
+            priority
           />
         </Link>
 
-        <nav className={`navbar${navOpen ? " active" : ""}`}>
-          <div className="navbar-top">
-            <Link href="/" className="logo">
-              <Image
-                src="/Landscope.png"
-                width={119}
-                height={37}
-                alt="Landscope logo"
-              />
-            </Link>
-            <button
-              className="nav-close-btn"
-              aria-label="close menu"
-              onClick={() => setNavOpen(false)}
-            >
-              ✕
-            </button>
-          </div>
-
+        <nav className={`navbar ${isNavOpen ? "active" : ""}`} data-navbar>
           <ul className="navbar-list">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="navbar-link hover-1"
-                  onClick={() => setNavOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+            <li>
+              <Link
+                href="/"
+                className="navbar-link hover-1"
+                onClick={() => setIsNavOpen(false)}
+              >
+                Home
+              </Link>
+            </li>
+
+            {/* Landforms dropdown */}
+            <li className="nav-dropdown">
+              <Link href="/landforms" className="navbar-link hover-1">
+                Landforms
+              </Link>
+              <ul className="dropdown-menu">
+                {landforms.map((lf) => (
+                  <li key={lf.slug}>
+                    <Link
+                      href={`/landforms/${lf.slug}`}
+                      className="dropdown-link"
+                      onClick={() => setIsNavOpen(false)}
+                    >
+                      {lf.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </li>
+
+            <li>
+              <Link
+                href="/wildlife"
+                className="navbar-link hover-1"
+                onClick={() => setIsNavOpen(false)}
+              >
+                Wildlife
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/about"
+                className="navbar-link hover-1"
+                onClick={() => setIsNavOpen(false)}
+              >
+                About
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/faq"
+                className="navbar-link hover-1"
+                onClick={() => setIsNavOpen(false)}
+              >
+                FAQ
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/contact"
+                className="navbar-link hover-1"
+                onClick={() => setIsNavOpen(false)}
+              >
+                Contact
+              </Link>
+            </li>
           </ul>
         </nav>
 
-        <Link href="/contact" className="btn btn-primary">
+        <button className="btn btn-primary" style={{ cursor: "pointer" }}>
           Login
-        </Link>
+        </button>
 
         <button
           className="nav-open-btn"
           aria-label="open menu"
-          onClick={() => setNavOpen(true)}
+          onClick={() => setIsNavOpen(!isNavOpen)}
         >
-          ☰
+          <span style={{ fontSize: "28px" }}>{isNavOpen ? "✕" : "☰"}</span>
         </button>
       </div>
     </header>

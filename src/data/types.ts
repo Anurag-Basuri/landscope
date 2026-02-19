@@ -1,46 +1,47 @@
-export interface Article {
+/* ─── Core Types ─── */
+
+export interface Landform {
   slug: string;
-  title: string;
-  tags: string[];
-  readTime: string;
-  author: string;
-  authorImage: string;
-  date: string;
+  name: string;
+  tagline: string;
+  description: string;
   imageUrl: string;
-  excerpt: string;
+  galleryImages: string[];
+  sections: ContentSection[];
+  facts: Fact[];
+  floraIds: string[];
+  faunaIds: string[];
+}
+
+export interface ContentSection {
+  id: string;
+  title: string;
   content: string;
+  imageUrl?: string;
 }
 
-export interface NewsItem {
-  slug: string;
-  title: string;
-  badge: string;
-  imageUrl: string;
-  excerpt: string;
-  tags: string[];
-  readTime: string;
-  date: string;
-  content: string;
+export interface Fact {
+  label: string;
+  value: string;
 }
 
-export interface PopularPost {
+export interface Wildlife {
   slug: string;
-  title: string;
+  name: string;
+  scientificName: string;
+  type: "flora" | "fauna";
+  category: string;
   imageUrl: string;
-  readTime: string;
-  date: string;
-}
-
-export interface LibraryCategory {
-  slug: string;
-  title: string;
-  imageUrl: string;
-  articleCount: number;
+  description: string;
+  habitat: string;
+  conservationStatus?: string;
+  landformSlugs: string[];
 }
 
 export interface FAQItem {
   question: string;
   answer: string;
+  category?: string;
 }
 
 export interface Comment {

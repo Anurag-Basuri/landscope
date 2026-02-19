@@ -1,200 +1,124 @@
-import Image from "next/image";
 import Link from "next/link";
-import LibrarySlider from "@/components/LibrarySlider";
-import ArticleCard from "@/components/ArticleCard";
-import NewsCard from "@/components/NewsCard";
-import { libraryCategories } from "@/data/library";
-import { articles } from "@/data/articles";
-import { recentNews, popularPosts } from "@/data/news";
-import { latestComments } from "@/data/faq";
+import Image from "next/image";
+import { landforms } from "@/data/landforms";
+import { wildlife } from "@/data/wildlife";
+import LandformCard from "@/components/LandformCard";
+import WildlifeCard from "@/components/WildlifeCard";
 
-export default function HomePage() {
+const featuredWildlife = wildlife
+  .filter((w) => w.conservationStatus)
+  .slice(0, 6);
+
+export default function Home() {
   return (
-    <article>
-      {/* ===== HERO ===== */}
-      <section className="hero" id="home" aria-label="home">
+    <>
+      {/* ─── HERO ─── */}
+      <section className="hero" id="home">
         <div className="container">
           <div className="hero-content">
-            <p className="hero-subtitle">Landscope Initiative</p>
-
-            <h1 className="headline headline-1 section-title">
-              Welcome to <span className="span">Landscope</span>
+            <h1 className="headline headline-1">
+              Discover India&apos;s{" "}
+              <span className="span">Diverse Landscapes</span>
             </h1>
-
             <p className="hero-text">
-              A comprehensive knowledge hub for land resource management in
-              India. Explore our curated library of articles covering land
-              classification, agricultural techniques, soil health, and
-              sustainable practices.
+              From the towering Himalayas to tropical island paradises — explore
+              the six major landforms that shape India&apos;s geography, and the
+              incredible flora and fauna they sustain.
             </p>
-
-            <div className="input-wrapper">
-              <input
-                type="email"
-                name="email_address"
-                placeholder="Your email address"
-                required
-                className="input-field"
-                autoComplete="off"
-              />
-              <button className="btn btn-primary">
-                <span className="span">Get Started</span>
-              </button>
+            <div className="hero-actions">
+              <Link href="/landforms" className="btn btn-primary">
+                Explore Landforms
+              </Link>
+              <Link href="/wildlife" className="btn btn-outline">
+                Discover Wildlife
+              </Link>
             </div>
           </div>
 
-          <div className="hero-banner">
+          <figure
+            className="hero-banner img-holder"
+            style={{ "--width": 700, "--height": 520 } as React.CSSProperties}
+          >
             <Image
-              src="/images/pattern.svg"
-              width={531}
-              height={540}
-              alt="Map of India"
-              className="w-100"
+              src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
+              width={700}
+              height={520}
+              alt="Indian landscape"
+              className="img-cover"
               priority
             />
-          </div>
+          </figure>
         </div>
       </section>
 
-      {/* ===== LIBRARY / TOPICS ===== */}
-      <LibrarySlider categories={libraryCategories} />
-
-      {/* ===== POLICIES / FEATURED ===== */}
-      <section className="section feature" id="featured" aria-label="feature">
+      {/* ─── LANDFORMS GRID ─── */}
+      <section className="section landforms-section" id="landforms">
         <div className="container">
           <h2 className="headline headline-2 section-title">
-            <span className="span">Land Policy Overview</span>
+            The <span className="span">6 Landforms</span> of India
           </h2>
-
           <p className="section-text">
-            Explore featured articles on various land policies and regulations
-            that shape India&apos;s land management landscape.
+            India&apos;s landmass is divided into six major physiographic
+            divisions, each with unique geological features, climates, and
+            ecosystems.
           </p>
 
-          <ul className="feature-list">
-            {articles.map((article) => (
-              <li key={article.slug}>
-                <ArticleCard article={article} />
-              </li>
+          <div className="landforms-grid">
+            {landforms.map((lf) => (
+              <LandformCard key={lf.slug} landform={lf} />
             ))}
-          </ul>
+          </div>
         </div>
       </section>
 
-      {/* ===== RECENT NEWS ===== */}
-      <section
-        className="section recent-post"
-        id="recent"
-        aria-label="recent post"
-      >
+      {/* ─── FEATURED WILDLIFE ─── */}
+      <section className="section wildlife-section" id="wildlife">
         <div className="container">
-          <div className="post-main">
-            <h2 className="headline headline-2 section-title">
-              <span className="span">Recent News</span>
-            </h2>
+          <h2 className="headline headline-2 section-title">
+            Featured <span className="span">Wildlife</span>
+          </h2>
+          <p className="section-text">
+            Iconic species across India&apos;s diverse habitats — many
+            threatened, all remarkable.
+          </p>
 
-            <p className="section-text">
-              Stay up to date with the latest news and developments in land
-              resource management across India.
-            </p>
-
-            <ul className="grid-list">
-              {recentNews.map((news) => (
-                <li key={news.slug}>
-                  <NewsCard news={news} />
-                </li>
-              ))}
-            </ul>
+          <div className="wildlife-grid">
+            {featuredWildlife.map((sp) => (
+              <WildlifeCard key={sp.slug} species={sp} />
+            ))}
           </div>
 
-          {/* Sidebar */}
-          <div className="post-aside grid-list">
-            {/* Popular Posts */}
-            <div className="card aside-card">
-              <h3 className="headline headline-2 aside-title">
-                <span className="span">Popular Posts</span>
-              </h3>
+          <div style={{ textAlign: "center", marginTop: "40px" }}>
+            <Link href="/wildlife" className="btn btn-primary">
+              View All Wildlife →
+            </Link>
+          </div>
+        </div>
+      </section>
 
-              <ul className="popular-list">
-                {popularPosts.map((post) => (
-                  <li key={post.slug}>
-                    <div className="popular-card">
-                      <figure
-                        className="card-banner img-holder"
-                        style={
-                          {
-                            "--width": 64,
-                            "--height": 64,
-                          } as React.CSSProperties
-                        }
-                      >
-                        <Image
-                          src={post.imageUrl}
-                          width={64}
-                          height={64}
-                          alt={post.title}
-                          className="img-cover"
-                          loading="lazy"
-                        />
-                      </figure>
-
-                      <div className="card-content">
-                        <h4 className="headline headline-4">
-                          <Link
-                            href={`/news/${post.slug}`}
-                            className="card-title hover-2"
-                          >
-                            {post.title}
-                          </Link>
-                        </h4>
-
-                        <div className="warpper">
-                          <span className="card-date">{post.date}</span>
-                          <span className="card-time">{post.readTime}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+      {/* ─── STATS ─── */}
+      <section className="section stats-section">
+        <div className="container">
+          <div className="stats-grid">
+            <div className="stat-card">
+              <span className="stat-number">6</span>
+              <span className="stat-label">Major Landforms</span>
             </div>
-
-            {/* Latest Comments */}
-            <div className="card aside-card">
-              <h3 className="headline headline-2 aside-title">
-                <span className="span">Latest Comments</span>
-              </h3>
-
-              <ul className="comment-list">
-                {latestComments.map((comment, i) => (
-                  <li key={i}>
-                    <div className="comment-card">
-                      <blockquote className="card-text">
-                        &ldquo;{comment.text}&rdquo;
-                      </blockquote>
-
-                      <div className="profile-card">
-                        <Image
-                          src={comment.authorImage}
-                          width={32}
-                          height={32}
-                          alt={comment.author}
-                          className="profile-banner"
-                          loading="lazy"
-                        />
-                        <div>
-                          <p className="card-title">{comment.author}</p>
-                          <p className="card-date">{comment.date}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+            <div className="stat-card">
+              <span className="stat-number">3.3M</span>
+              <span className="stat-label">sq km Total Area</span>
+            </div>
+            <div className="stat-card">
+              <span className="stat-number">~1,00,000</span>
+              <span className="stat-label">Fauna Species</span>
+            </div>
+            <div className="stat-card">
+              <span className="stat-number">~45,000</span>
+              <span className="stat-label">Flora Species</span>
             </div>
           </div>
         </div>
       </section>
-    </article>
+    </>
   );
 }
