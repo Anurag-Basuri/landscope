@@ -1,6 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Props {
   onFilterChange: (filter: { type: string; landform: string }) => void;
@@ -21,41 +29,54 @@ export default function FilterBar({ onFilterChange, landformOptions }: Props) {
     onFilterChange({ type: activeType, landform });
   }
 
+  const typeOptions = [
+    { key: "all", label: "All" },
+    { key: "flora", label: "🌿 Flora" },
+    { key: "fauna", label: "🐾 Fauna" },
+  ];
+
   return (
-    <div className="filter-bar">
-      <div className="filter-group">
-        <span className="filter-label">Type:</span>
-        <div className="filter-buttons">
-          {[
-            { key: "all", label: "All" },
-            { key: "flora", label: "🌿 Flora" },
-            { key: "fauna", label: "🐾 Fauna" },
-          ].map((btn) => (
-            <button
+    <div className="flex flex-wrap items-center gap-4 p-4 bg-card border border-border/50 rounded-xl mb-8">
+      <div className="flex items-center gap-3">
+        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          Type
+        </span>
+        <div className="flex gap-1.5">
+          {typeOptions.map((btn) => (
+            <Button
               key={btn.key}
-              className={`filter-btn ${activeType === btn.key ? "active" : ""}`}
+              variant={activeType === btn.key ? "default" : "outline"}
+              size="sm"
               onClick={() => handleTypeChange(btn.key)}
+              className={
+                activeType === btn.key
+                  ? "bg-gradient-to-r from-cyan-primary to-teal-accent text-white border-none"
+                  : "border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50"
+              }
             >
               {btn.label}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
 
-      <div className="filter-group">
-        <span className="filter-label">Landform:</span>
-        <select
-          className="filter-select"
-          value={activeLandform}
-          onChange={(e) => handleLandformChange(e.target.value)}
-        >
-          <option value="all">All Landforms</option>
-          {landformOptions.map((lf) => (
-            <option key={lf.slug} value={lf.slug}>
-              {lf.name}
-            </option>
-          ))}
-        </select>
+      <div className="flex items-center gap-3">
+        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          Landform
+        </span>
+        <Select value={activeLandform} onValueChange={handleLandformChange}>
+          <SelectTrigger className="w-[200px] bg-secondary border-border/50 text-foreground">
+            <SelectValue placeholder="All Landforms" />
+          </SelectTrigger>
+          <SelectContent className="bg-card border-border">
+            <SelectItem value="all">All Landforms</SelectItem>
+            {landformOptions.map((lf) => (
+              <SelectItem key={lf.slug} value={lf.slug}>
+                {lf.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );
