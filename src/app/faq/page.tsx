@@ -1,31 +1,28 @@
-import Image from "next/image";
 import FAQAccordion from "@/components/FAQAccordion";
 import { faqItems } from "@/data/faq";
 
 export const metadata = {
   title: "FAQ — Landscope",
   description:
-    "Frequently asked questions about land resources and conservation.",
+    "Frequently asked questions about India's landforms and wildlife.",
 };
 
 export default function FAQPage() {
   return (
-    <section className="faq-mainContainer">
-      <div className="accordion">
-        <div className="image-box">
-          <Image
-            src="/faq.png"
-            width={300}
-            height={360}
-            alt="FAQ illustration"
-            style={{ objectFit: "contain", width: "100%", height: "100%" }}
-          />
-        </div>
+    <section className="pt-28 pb-20">
+      <div className="max-w-3xl mx-auto px-5">
+        <h1 className="text-4xl font-extrabold text-foreground text-center mb-4">
+          Frequently Asked{" "}
+          <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+            Questions
+          </span>
+        </h1>
+        <p className="text-muted-foreground text-center mb-10 max-w-xl mx-auto">
+          Everything you need to know about India&apos;s geography, landforms,
+          and biodiversity.
+        </p>
 
-        <div className="accordion-text">
-          <span className="title">FAQ</span>
-          <FAQAccordion items={faqItems} />
-        </div>
+        <FAQAccordion items={faqItems} />
       </div>
     </section>
   );
