@@ -1,65 +1,200 @@
 import Image from "next/image";
+import Link from "next/link";
+import LibrarySlider from "@/components/LibrarySlider";
+import ArticleCard from "@/components/ArticleCard";
+import NewsCard from "@/components/NewsCard";
+import { libraryCategories } from "@/data/library";
+import { articles } from "@/data/articles";
+import { recentNews, popularPosts } from "@/data/news";
+import { latestComments } from "@/data/faq";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <article>
+      {/* ===== HERO ===== */}
+      <section className="hero" id="home" aria-label="home">
+        <div className="container">
+          <div className="hero-content">
+            <p className="hero-subtitle">Landscope Initiative</p>
+
+            <h1 className="headline headline-1 section-title">
+              Welcome to <span className="span">Landscope</span>
+            </h1>
+
+            <p className="hero-text">
+              A comprehensive knowledge hub for land resource management in
+              India. Explore our curated library of articles covering land
+              classification, agricultural techniques, soil health, and
+              sustainable practices.
+            </p>
+
+            <div className="input-wrapper">
+              <input
+                type="email"
+                name="email_address"
+                placeholder="Your email address"
+                required
+                className="input-field"
+                autoComplete="off"
+              />
+              <button className="btn btn-primary">
+                <span className="span">Get Started</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="hero-banner">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src="/images/pattern.svg"
+              width={531}
+              height={540}
+              alt="Map of India"
+              className="w-100"
+              priority
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* ===== LIBRARY / TOPICS ===== */}
+      <LibrarySlider categories={libraryCategories} />
+
+      {/* ===== POLICIES / FEATURED ===== */}
+      <section className="section feature" id="featured" aria-label="feature">
+        <div className="container">
+          <h2 className="headline headline-2 section-title">
+            <span className="span">Land Policy Overview</span>
+          </h2>
+
+          <p className="section-text">
+            Explore featured articles on various land policies and regulations
+            that shape India&apos;s land management landscape.
+          </p>
+
+          <ul className="feature-list">
+            {articles.map((article) => (
+              <li key={article.slug}>
+                <ArticleCard article={article} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ===== RECENT NEWS ===== */}
+      <section
+        className="section recent-post"
+        id="recent"
+        aria-label="recent post"
+      >
+        <div className="container">
+          <div className="post-main">
+            <h2 className="headline headline-2 section-title">
+              <span className="span">Recent News</span>
+            </h2>
+
+            <p className="section-text">
+              Stay up to date with the latest news and developments in land
+              resource management across India.
+            </p>
+
+            <ul className="grid-list">
+              {recentNews.map((news) => (
+                <li key={news.slug}>
+                  <NewsCard news={news} />
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Sidebar */}
+          <div className="post-aside grid-list">
+            {/* Popular Posts */}
+            <div className="card aside-card">
+              <h3 className="headline headline-2 aside-title">
+                <span className="span">Popular Posts</span>
+              </h3>
+
+              <ul className="popular-list">
+                {popularPosts.map((post) => (
+                  <li key={post.slug}>
+                    <div className="popular-card">
+                      <figure
+                        className="card-banner img-holder"
+                        style={
+                          {
+                            "--width": 64,
+                            "--height": 64,
+                          } as React.CSSProperties
+                        }
+                      >
+                        <Image
+                          src={post.imageUrl}
+                          width={64}
+                          height={64}
+                          alt={post.title}
+                          className="img-cover"
+                          loading="lazy"
+                        />
+                      </figure>
+
+                      <div className="card-content">
+                        <h4 className="headline headline-4">
+                          <Link
+                            href={`/news/${post.slug}`}
+                            className="card-title hover-2"
+                          >
+                            {post.title}
+                          </Link>
+                        </h4>
+
+                        <div className="warpper">
+                          <span className="card-date">{post.date}</span>
+                          <span className="card-time">{post.readTime}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Latest Comments */}
+            <div className="card aside-card">
+              <h3 className="headline headline-2 aside-title">
+                <span className="span">Latest Comments</span>
+              </h3>
+
+              <ul className="comment-list">
+                {latestComments.map((comment, i) => (
+                  <li key={i}>
+                    <div className="comment-card">
+                      <blockquote className="card-text">
+                        &ldquo;{comment.text}&rdquo;
+                      </blockquote>
+
+                      <div className="profile-card">
+                        <Image
+                          src={comment.authorImage}
+                          width={32}
+                          height={32}
+                          alt={comment.author}
+                          className="profile-banner"
+                          loading="lazy"
+                        />
+                        <div>
+                          <p className="card-title">{comment.author}</p>
+                          <p className="card-date">{comment.date}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </article>
   );
 }

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact us page</title>
+    <link rel="stylesheet" href="contact.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+     <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <a href="#" class="logo">
+        <img src="Landscope.png" width="119" height="37" alt="Wren logo">
+      </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="navbar-top">
+          <a href="#" class="logo">
+            <img src="Landscope.png" width="119" height="37" alt="Wren logo">
+          </a>
+
+          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+
+        <ul class="navbar-list">
+
+          <li>
+            <a href="index.html" class="navbar-link hover-1" data-nav-toggler>Home</a>
+          </li>
+
+          <li>
+            <a href="index.html" class="navbar-link hover-1" data-nav-toggler>Library</a>
+          </li>
+
+          <li>
+            <a href="index.html" class="navbar-link hover-1" data-nav-toggler>Policies</a>
+          </li>
+
+          <li>
+            <a href="index.html" class="navbar-link hover-1" data-nav-toggler>News and Updates</a>
+          </li>
+
+          <li>
+            <a href="faq.html" class="navbar-link hover-1" data-nav-toggler>FAQ'S</a>
+          </li>
+
+          <li>
+            <a href="contact.html" class="navbar-link hover-1" data-nav-toggler>Contact Us</a>
+          </li>
+
+        </ul>
+
+        <div class="navbar-bottom">
+
+          <div class="profile-card">
+            <img src="./assets/images/author-1.png" width="48" height="48" alt="Steven" class="profile-banner">
+
+            <div>
+              <p class="card-title">Hello Steven !</p>
+
+              <p class="card-subtitle">
+                You have 3 new messages
+              </p>
+            </div>
+          </div>
+
+          <ul class="link-list">
+
+            <li>
+              <a href="#" class="navbar-bottom-link hover-1">Profile</a>
+            </li>
+
+            <li>
+              <a href="#" class="navbar-bottom-link hover-1">Articles Saved</a>
+            </li>
+
+            <li>
+              <a href="#" class="navbar-bottom-link hover-1">Add New Post</a>
+            </li>
+
+            <li>
+              <a href="#" class="navbar-bottom-link hover-1">My Likes</a>
+            </li>
+
+            <li>
+              <a href="#" class="navbar-bottom-link hover-1">Account Setting</a>
+            </li>
+
+            <li>
+              <a href="#" class="navbar-bottom-link hover-1">Sign Out</a>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <p class="copyright-text">
+        </p>
+
+      </nav>
+
+      <a href="loginout/login.html" class="btn btn-primary">Login</a>
+
+      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+        <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+      </button>
+
+    </div>
+  </header>
+    
+
+    <div class="contactUs">
+
+
+	<div id="myPopup" class="popup">
+		<div class="popup-content">
+
+            <form action="">
+                <div class="wrapper">
+                <h1 class="loginHeading">Login</h1>
+                <div class="input-box">
+                    <input type="text" placeholder="username" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="password" required>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <div class="remember-forgot">
+                    <a href="#">forgot password?</a>
+                    <button type="submit" class="btn">Login</button>
+                </div>
+                <div class="register-link">
+                    <p>Don't have an account? <a href="#">Register</a></p>
+                </div>
+            </div>
+            </form> 
+			<button id="closePopup">
+				Close
+			</button>
+
+		</div>
+	</div>
+
+    <script src="popup.js"></script>
+        <div class="title">
+            <h2>Contact Us</h2>
+        </div>
+        <div class="box">
+            <div class="contact form">
+                <h3>Send a message</h3>
+                <form>
+                    <div class="formBox">
+                        <div class="row50">
+                            <div class="inputBox">
+                                <span>First Name</span>
+                                <input type="text" placeholder="Bhoomi">
+                            </div>
+
+                            <div class="inputBox">
+                                <span>Last Name</span>
+                                <input type="text" placeholder="Yadav">
+                            </div>
+                        </div>
+
+                        <div class="row50">
+                            <div class="inputBox">
+                                <span>Email</span>
+                                <input type="text" placeholder="Bhoomiyadav@gmail.com">
+                            </div>
+
+                            <div class="inputBox">
+                                <span>Mobile</span>
+                                <input type="text" placeholder="+91 0123 456 789">
+                            </div>
+                        </div>
+
+                        <div class="row100">
+                            <div class="inputBox">
+                                <span>Message</span>
+                                <textarea placeholder="Write your message here..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row100">
+                            <div class="inputBox">
+                                <input type="submit" value="Send">
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="contact info">
+                <h3>Contact Info</h3>
+                <div class="infoBox">
+                    <div>
+                        <span><ion-icon name="location"></ion-icon></span>
+                        <p>Cannaught Palace, New Delhi<br>INDIA</p>
+                    </div>
+
+                    <div>
+                        <span><ion-icon name="mail"></ion-icon></span>
+                        <a href="mailto:bhoomiy518@gmail.com">landscope@gmail.com</a>
+                    </div>
+
+                    <div>
+                        <span><ion-icon name="call"></ion-icon></span>
+                        <a href="tel:+91 987 654 3210">+91 987 654 3210</a>
+                    </div>
+                    <ul class="sci">
+                        <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
+                        <li><a href="#"><ion-icon name="logo-twitter"></ion-icon></a></li>
+                        <li><a href="#"><ion-icon name="logo-linkedin"></ion-icon></a></li>
+                        <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contact map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.930183286514!2d77.2203533!3d28.631854500000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd0a0025699b%3A0xcaaf49a31d7e510f!2sCannaught%20palace!5e0!3m2!1sen!2sin!4v1700289937171!5m2!1sen!2sin" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+    <!-- 
+    - #FOOTER
+  -->
+
+  <footer>
+    <div class="container">
+
+      <div class="card footer">
+
+        <div class="section footer-top">
+
+          <div class="footer-brand">
+
+            <a href="#" class="logo">
+              <img src="Landscope.png" width="119" height="37" loading="lazy" alt="Wren logo">
+            </a>
+
+            <p class="footer-text">
+              Guiding Our Journey Towards Sustainable Land Management and Environmental Stewardship, Together.
+            </p>
+
+            <p class="footer-list-title">Address</p>
+
+            <address class="footer-text address">
+              123 Main Street <br>
+              New York, NY 10001
+            </address>
+
+          </div>
+
+          <div class="footer-list">
+
+            <p class="footer-list-title">Categories</p>
+
+            <ul>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Land classification</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Agricultural techniques</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Soil health</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Sustainable Practices</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Case Studies</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Educational Resources</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Fertility management</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Farming</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Success stories</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Sustainable techniques</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Policies</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">News and  updates</a>
+              </li>
+
+            </ul>
+
+          </div>
+
+          <div class="footer-list">
+
+            <p class="footer-list-title">Newsletter</p>
+
+            <p class="footer-text">
+              Sign up to be first to receive the latest news about land resources, case studies, and new Policies.
+            </p>
+
+            <div class="input-wrapper">
+              <input type="text" name="name" placeholder="Your name" required class="input-field" autocomplete="off">
+
+              <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+            </div>
+
+            <div class="input-wrapper">
+              <input type="email" name="email_address" placeholder="Emaill address" required class="input-field"
+                autocomplete="off">
+
+              <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+            </div>
+
+            <a href="#" class="btn btn-primary">
+              <span class="span">Subscribe</span>
+
+              <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+            </a>
+
+          </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+          <!-- <p class="copyright">
+            &copy; sDeveloped by <a href="#" class="copyright-link">codewithsadee.</a>
+          </p> -->
+
+          <ul class="social-list">
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+
+                <span class="span">Twitter</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-linkedin"></ion-icon>
+
+                <span class="span">LinkedIn</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+
+                <span class="span">Instagram</span>
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="./assets/js/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

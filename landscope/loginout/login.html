@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="loginoutcss.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <title>LOGIN | SIGNUP | Landscope</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Metal+Mania">
+</head>
+
+<body>
+  <!-- <header>
+    <span id="logo_image">
+      <img
+        src="Landscope.png">
+    </span>
+   
+  </header> -->
+       <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <a href="#" class="logo">
+        <img src="Landscope.png" width="119" height="37" alt="Wren logo">
+      </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="navbar-top">
+          <a href="#" class="logo">
+            <img src="Landscope.png" width="119" height="37" alt="Wren logo">
+          </a>
+
+          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+
+        <ul class="navbar-list">
+
+          <li>
+            <a href="index.html" class="navbar-link hover-1" data-nav-toggler>Home</a>
+          </li>
+
+          <li>
+            <a href="index.html" class="navbar-link hover-1" data-nav-toggler>Library</a>
+          </li>
+
+          <li>
+            <a href="index.html" class="navbar-link hover-1" data-nav-toggler>Policies</a>
+          </li>
+
+          <li>
+            <a href="index.html" class="navbar-link hover-1" data-nav-toggler>News and Updates</a>
+          </li>
+
+          <li>
+            <a href="faq.html" class="navbar-link hover-1" data-nav-toggler>FAQ'S</a>
+          </li>
+
+          <li>
+            <a href="contact.html" class="navbar-link hover-1" data-nav-toggler>Contact Us</a>
+          </li>
+
+        </ul>
+
+        <div class="navbar-bottom">
+
+          <div class="profile-card">
+            <img src="./assets/images/author-1.png" width="48" height="48" alt="Steven" class="profile-banner">
+
+            <div>
+              <p class="card-title">Hello Steven !</p>
+
+              <p class="card-subtitle">
+                You have 3 new messages
+              </p>
+            </div>
+          </div>
+
+          <ul class="link-list">
+
+            <li>
+              <a href="#" class="navbar-bottom-link hover-1">Profile</a>
+            </li>
+
+            <li>
+              <a href="#" class="navbar-bottom-link hover-1">Articles Saved</a>
+            </li>
+
+            <li>
+              <a href="#" class="navbar-bottom-link hover-1">Add New Post</a>
+            </li>
+
+            <li>
+              <a href="#" class="navbar-bottom-link hover-1">My Likes</a>
+            </li>
+
+            <li>
+              <a href="#" class="navbar-bottom-link hover-1">Account Setting</a>
+            </li>
+
+            <li>
+              <a href="#" class="navbar-bottom-link hover-1">Sign Out</a>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <p class="copyright-text">
+        </p>
+
+      </nav>
+
+      <a href="loginout/login.html" class="btn btn-primary">Login</a>
+
+      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+        <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+      </button>
+
+    </div>
+  </header>
+  
+  <div class="body">
+    <div class="container" id="container">
+      <div class="form-container sign-up">
+        <form>
+          <h2>Sign Up</h2>
+          <span>
+        sign-up using your email and phone no.
+          </span>
+          <input type="text" placeholder="Userame">
+          <input type="email" placeholder="Email">
+          <input type="phone no." placeholder="Phone no.">
+          <input type="password" placeholder="Password">
+          <a href="index.html" class="first">Sign Up</a>
+        </form>
+      </div>
+      <div class="form-container sign-in">
+        <form>
+          <h2>Sign In</h2>
+          <span>
+         sign-in using Username, email or phone no.
+          </span>
+          <input type="email" id="username" placeholder="Username, Email or Phone no.">
+          <input type="password" id="password" placeholder="Password">
+          <a href="#" class="forget">forgot password ?</a>
+          <button type="submit" class="first" onclick="login()">Login</button>
+        </form>
+      </div>
+      <div class="toggle-container">
+        <div class="toggle">
+          <div class="toggle-panel toggle-left">
+            <h1>Welcome Back!</h1>
+            <p>Enter your details to use all of site features</p>
+            <button class="hidden" id="login">Sign In</button>
+          </div>
+          <div class="toggle-panel toggle-right">
+            <h1>Hello, Welcome!</h1>
+            <p>Register with your details to use all of site features</p>
+            <button class="hidden" id="register">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 
+    - #FOOTER
+  -->
+
+  <footer>
+    <div class="container">
+
+      <div class="card footer">
+
+        <div class="section footer-top">
+
+          <div class="footer-brand">
+
+            <a href="#" class="logo">
+              <img src="Landscope.png" width="119" height="37" loading="lazy" alt="Wren logo">
+            </a>
+
+            <p class="footer-text">
+              Guiding Our Journey Towards Sustainable Land Management and Environmental Stewardship, Together.
+            </p>
+
+            <p class="footer-list-title">Address</p>
+
+            <address class="footer-text address">
+              123 Main Street <br>
+              New York, NY 10001
+            </address>
+
+          </div>
+
+          <div class="footer-list">
+
+            <p class="footer-list-title">Categories</p>
+
+            <ul>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Land classification</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Agricultural techniques</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Soil health</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Sustainable Practices</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Case Studies</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Educational Resources</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Fertility management</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Farming</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Success stories</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Sustainable techniques</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">Policies</a>
+              </li>
+
+              <li>
+                <a href="#" class="footer-link hover-2">News and  updates</a>
+              </li>
+
+            </ul>
+
+          </div>
+
+          <div class="footer-list">
+
+            <p class="footer-list-title">Newsletter</p>
+
+            <p class="footer-text">
+              Sign up to be first to receive the latest news about land resources, case studies, and new Policies.
+            </p>
+
+            <div class="input-wrapper">
+              <input type="text" name="name" placeholder="Your name" required class="input-field" autocomplete="off">
+
+              <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+            </div>
+
+            <div class="input-wrapper">
+              <input type="email" name="email_address" placeholder="Emaill address" required class="input-field"
+                autocomplete="off">
+
+              <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+            </div>
+
+            <a href="#" class="btn btn-primary">
+              <span class="span">Subscribe</span>
+
+              <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+            </a>
+
+          </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+          <!-- <p class="copyright">
+            &copy; sDeveloped by <a href="#" class="copyright-link">codewithsadee.</a>
+          </p> -->
+
+          <ul class="social-list">
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+
+                <span class="span">Twitter</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-linkedin"></ion-icon>
+
+                <span class="span">LinkedIn</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+
+                <span class="span">Instagram</span>
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+  </footer>
+
+  <script src=""></script>
+    <script src="log.js">
+    </script>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible"
+		content="IE=edge">
+	<meta name="viewport"
+		content="width=device-width, 
+				initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+	<button id="myButton">
+		Click me
+	</button>
+	<div id="myPopup" class="popup">
+		<div class="popup-content">
+
+            <form action="">
+                <div class="wrapper">
+                <h1>Login</h1>
+                <div class="input-box">
+                    <input type="text" placeholder="username" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="password" required>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <div class="remember-forgot">
+                    <label for="remember-forgot"><input type="checkbox">Remeber me</label>
+                    <a href="#">forgot password?</a>
+                    <button type="submit" class="btn">Login</button>
+                </div>
+                <div class="register-link">
+                    <p>Don't have an account? <a href="#">Register</a></p>
+                </div>
+            </div>
+            </form> 
+			<button id="closePopup">
+				Close
+			</button>
+
+		</div>
+	</div>
+
+    <script src="popup.js"></script>
+	
+</body>
+</html>
