@@ -1,15 +1,12 @@
 "use client";
 
-import { useState, useCallback, useRef, memo } from "react";
+import { useState, useCallback, useRef, useMemo, useEffect, memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  Marker,
-} from "react-simple-maps";
+import { geoMercator, geoPath, type GeoPermissibleObjects } from "d3-geo";
+import { feature } from "topojson-client";
+import type { FeatureCollection } from "geojson";
 import { landforms } from "@/data/landforms";
 import { ArrowRight, MapPin, MousePointerClick } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -113,6 +110,8 @@ const REGIONS: Region[] = [
 ];
 
 const GEO_URL = "/india-states.json";
+const MAP_WIDTH = 600;
+const MAP_HEIGHT = 600;
 
 function getRegion(name: string): Region | undefined {
   return REGIONS.find((r) => r.states.includes(name));
@@ -134,6 +133,8 @@ function RegionGeographies({
   onLeave,
   onSelect,
   onMouseMove,
+  geographies,
+  pathGenerator,
 }: {
   hoveredSlug: string | null;
   selectedSlug: string | null;
@@ -145,94 +146,79 @@ function RegionGeographies({
     regionLabel: string,
     regionColor: string,
   ) => void;
+  geographies: FeatureCollection;
+  pathGenerator: (geo: GeoPermissibleObjects) => string | null;
 }) {
   return (
-    <Geographies geography={GEO_URL}>
-      {({ geographies }) => (
-        <g strokeLinejoin="round">
-          {geographies.map((geo) => {
-            const stateName = geo.properties.ST_NM;
-            const region = getRegion(stateName);
+    <g strokeLinejoin="round">
+      {geographies.features.map((geo, index) => {
+        const props = (geo.properties ?? {}) as { ST_NM?: string };
+        const stateName = props.ST_NM ?? "";
+        const region = getRegion(stateName);
+        const path = pathGenerator(geo as GeoPermissibleObjects);
 
-            // A region is active if it's currently selected OR (nothing is selected and it's hovered)
-            const isHovered = hoveredSlug === region?.slug;
-            const isSelected = selectedSlug === region?.slug;
+        if (!path) return null;
 
-            // Dim others if something is either selected or hovered
-            const somethingActive =
-              selectedSlug !== null || hoveredSlug !== null;
-            const isHighlighted = isSelected || isHovered;
+        // A region is active if it's currently selected OR (nothing is selected and it's hovered)
+        const isHovered = hoveredSlug === region?.slug;
+        const isSelected = selectedSlug === region?.slug;
 
-            let fill = "#1e293b";
-            if (region) {
-              if (isSelected) fill = region.bright;
-              else if (isHovered && !selectedSlug) fill = region.bright;
-              else if (isHovered && selectedSlug)
-                fill = region.color; // Muted hover if something else is selected
-              else if (somethingActive) fill = region.dim;
-              else fill = region.color;
-            }
+        // Dim others if something is either selected or hovered
+        const somethingActive = selectedSlug !== null || hoveredSlug !== null;
+        const isHighlighted = isSelected || isHovered;
 
-            // Merge stroke with fill visually to create region blobs
-            let stroke = "#0f172a";
-            if (region) stroke = fill;
+        let fill = "#1e293b";
+        if (region) {
+          if (isSelected) fill = region.bright;
+          else if (isHovered && !selectedSlug) fill = region.bright;
+          else if (isHovered && selectedSlug) fill = region.color;
+          else if (somethingActive) fill = region.dim;
+          else fill = region.color;
+        }
 
-            return (
-              <Geography
-                key={geo.rsmKey}
-                geography={geo}
-                onMouseEnter={() => region && onHover(region.slug)}
-                onMouseLeave={onLeave}
-                onFocus={() => region && onHover(region.slug)}
-                onBlur={onLeave}
-                onMouseMove={(e: React.MouseEvent) => {
-                  if (region) {
-                    onMouseMove(e, region.label, region.color);
-                  }
-                }}
-                onClick={(e: React.MouseEvent) => {
-                  e.stopPropagation();
-                  if (region) onSelect(region.slug);
-                }}
-                onKeyDown={(e: React.KeyboardEvent) => {
-                  if (!region) return;
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    onSelect(region.slug);
-                  }
-                }}
-                tabIndex={region ? 0 : -1}
-                role={region ? "button" : "img"}
-                aria-label={region ? `${region.label} region` : undefined}
-                style={{
-                  default: {
-                    fill,
-                    stroke,
-                    strokeWidth: isHighlighted ? 1.4 : 0.8,
-                    cursor: region ? "pointer" : "default",
-                    transition: "all 350ms ease",
-                    outline: "none",
-                  },
-                  hover: {
-                    fill: region ? region.bright : "#1e293b",
-                    stroke: region ? region.bright : "#0f172a",
-                    strokeWidth: 1.4,
-                    cursor: "pointer",
-                    transition: "all 150ms ease",
-                    outline: "none",
-                  },
-                  pressed: {
-                    fill: region ? region.color : "#1e293b",
-                    stroke: region ? region.color : "#0f172a",
-                    outline: "none",
-                  },
-                }}
-              />
-            );
-          })}
-        </g>
-      )}
-    </Geographies>
+        // Merge stroke with fill visually to create region blobs
+        let stroke = "#0f172a";
+        if (region) stroke = fill;
+
+        return (
+          <path
+            key={`${stateName}-${index}`}
+            d={path}
+            onMouseEnter={() => region && onHover(region.slug)}
+            onMouseLeave={onLeave}
+            onFocus={() => region && onHover(region.slug)}
+            onBlur={onLeave}
+            onMouseMove={(e: React.MouseEvent<SVGPathElement>) => {
+              if (region) {
+                onMouseMove(e, region.label, region.color);
+              }
+            }}
+            onClick={(e: React.MouseEvent<SVGPathElement>) => {
+              e.stopPropagation();
+              if (region) onSelect(region.slug);
+            }}
+            onKeyDown={(e: React.KeyboardEvent<SVGPathElement>) => {
+              if (!region) return;
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                onSelect(region.slug);
+              }
+            }}
+            tabIndex={region ? 0 : -1}
+            role={region ? "button" : "img"}
+            aria-label={region ? `${region.label} region` : undefined}
+            style={{
+              fill,
+              stroke,
+              strokeWidth: isHighlighted ? 1.4 : 0.8,
+              cursor: region ? "pointer" : "default",
+              transition: "all 350ms ease",
+              outline: "none",
+            }}
+          />
+        );
+      })}
+    </g>
   );
 }
 
@@ -241,6 +227,9 @@ function IndiaMapInner() {
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [tooltip, setTooltip] = useState<TooltipInfo | null>(null);
+  const [geographies, setGeographies] = useState<FeatureCollection | null>(
+    null,
+  );
   const mapRef = useRef<HTMLDivElement>(null);
 
   // We display info for the selected slug if it exists, otherwise fallback to hovered slug
@@ -293,6 +282,55 @@ function IndiaMapInner() {
     setSelectedSlug(null);
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadGeographies() {
+      try {
+        const response = await fetch(GEO_URL);
+        const data = await response.json();
+
+        if (cancelled) return;
+
+        if (data?.type === "FeatureCollection") {
+          setGeographies(data as FeatureCollection);
+          return;
+        }
+
+        if (data?.type === "Topology" && data.objects) {
+          const objectKey = Object.keys(data.objects)[0];
+          if (!objectKey) return;
+          const collection = feature(
+            data,
+            data.objects[objectKey],
+          ) as FeatureCollection;
+          setGeographies(collection);
+        }
+      } catch (error) {
+        console.error("Failed to load map data", error);
+      }
+    }
+
+    loadGeographies();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const projection = useMemo(
+    () =>
+      geoMercator()
+        .scale(1100)
+        .center([80.5, 22.5])
+        .translate([MAP_WIDTH / 2, MAP_HEIGHT / 2]),
+    [],
+  );
+
+  const pathGenerator = useMemo(() => geoPath(projection), [projection]);
+  const lakshadweep = projection([72.8, 10.5]);
+  const andaman = projection([92.9, 11]);
+
   return (
     <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 items-center relative">
       {/* ── Map Side ── */}
@@ -329,25 +367,28 @@ function IndiaMapInner() {
           className="relative w-full aspect-[1/1.12] transform transition-transform duration-700"
           onClick={handleBackgroundClick}
         >
-          <ComposableMap
-            projection="geoMercator"
-            projectionConfig={{ scale: 1100, center: [80.5, 22.5] }}
-            width={600}
-            height={600}
+          <svg
+            width={MAP_WIDTH}
+            height={MAP_HEIGHT}
+            viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`}
             className="w-full h-full object-contain"
           >
-            <RegionGeographies
-              hoveredSlug={hoveredSlug}
-              selectedSlug={selectedSlug}
-              onHover={handleHover}
-              onLeave={() => {}}
-              onSelect={handleSelect}
-              onMouseMove={handleMouseMove}
-            />
+            {geographies && (
+              <RegionGeographies
+                hoveredSlug={hoveredSlug}
+                selectedSlug={selectedSlug}
+                onHover={handleHover}
+                onLeave={() => {}}
+                onSelect={handleSelect}
+                onMouseMove={handleMouseMove}
+                geographies={geographies}
+                pathGenerator={pathGenerator}
+              />
+            )}
 
-            {/* Lakshadweep Highlights */}
-            <Marker coordinates={[72.8, 10.5]}>
+            {lakshadweep && (
               <g
+                transform={`translate(${lakshadweep[0]}, ${lakshadweep[1]})`}
                 onMouseEnter={() => handleHover("islands")}
                 onMouseLeave={handleLeave}
                 onMouseMove={(e) => {
@@ -387,11 +428,11 @@ function IndiaMapInner() {
                   }}
                 />
               </g>
-            </Marker>
+            )}
 
-            {/* Andaman & Nicobar Highlights */}
-            <Marker coordinates={[92.9, 11]}>
+            {andaman && (
               <g
+                transform={`translate(${andaman[0]}, ${andaman[1]})`}
                 onMouseEnter={() => handleHover("islands")}
                 onMouseLeave={handleLeave}
                 onMouseMove={(e) => {
@@ -431,8 +472,8 @@ function IndiaMapInner() {
                   }}
                 />
               </g>
-            </Marker>
-          </ComposableMap>
+            )}
+          </svg>
         </div>
 
         {/* ── Cursor tooltip ── */}
