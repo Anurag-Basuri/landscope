@@ -17,15 +17,24 @@ import { Menu, ChevronDown } from "lucide-react";
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLandformsOpen, setIsLandformsOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const pathname = usePathname();
 
   useEffect(() => {
     function onScroll() {
       setIsScrolled(window.scrollY > 50);
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = total > 0 ? (window.scrollY / total) * 100 : 0;
+      setScrollProgress(progress);
     }
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    setIsLandformsOpen(false);
+  }, [pathname]);
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -48,15 +57,26 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 relative ${
         isScrolled
-          ? "bg-background/95 backdrop-blur-xl shadow-lg py-3"
-          : "bg-transparent py-5"
+          ? "bg-background/95 backdrop-blur-xl shadow-lg border-b border-border/40 py-2.5"
+          : "bg-transparent py-4"
       }`}
     >
+      <div className="absolute left-0 top-0 h-0.5 w-full bg-transparent">
+        <div
+          className="h-full bg-primary transition-[width] duration-150"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
       <div className="max-w-7xl mx-auto px-5 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="relative z-10">
+        <Link
+          href="/"
+          className={`relative z-10 transition-transform duration-300 ${
+            isScrolled ? "scale-90 origin-left" : "scale-100"
+          }`}
+        >
           <Image
             src="/Landscope.png"
             width={119}
@@ -70,16 +90,14 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-1">
           <Link
             href="/"
-            className={`relative px-4 py-2 text-sm font-medium transition-colors ${
+            aria-current={isActive("/") ? "page" : undefined}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
               isActive("/")
-                ? "text-primary"
-                : "text-muted-foreground hover:text-primary"
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:text-foreground hover:bg-accent/60"
             }`}
           >
             Home
-            {isActive("/") && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary" />
-            )}
           </Link>
 
           {/* Landforms Dropdown */}
@@ -92,10 +110,11 @@ export default function Header() {
           >
             <Link
               href="/landforms"
-              className={`flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors ${
+              aria-current={isActive("/landforms") ? "page" : undefined}
+              className={`flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                 isActive("/landforms")
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-primary"
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:text-foreground hover:bg-accent/60"
               }`}
               aria-haspopup="menu"
               aria-expanded={isLandformsOpen}
@@ -116,9 +135,6 @@ export default function Header() {
                   isLandformsOpen ? "rotate-180" : ""
                 }`}
               />
-              {isActive("/landforms") && (
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary" />
-              )}
             </Link>
             <div
               id="landforms-menu"
@@ -126,8 +142,8 @@ export default function Header() {
               aria-label="Landforms"
               className={`absolute top-full left-0 min-w-[260px] bg-card/95 backdrop-blur-xl border border-border/50 rounded-xl p-2 transition-all duration-300 shadow-2xl shadow-black/20 ${
                 isLandformsOpen
-                  ? "opacity-100 visible translate-y-0"
-                  : "opacity-0 invisible translate-y-3"
+                  ? "opacity-100 visible translate-y-0 pointer-events-auto"
+                  : "opacity-0 invisible translate-y-3 pointer-events-none"
               }`}
             >
               {landforms.map((lf) => (
@@ -135,10 +151,13 @@ export default function Header() {
                   key={lf.slug}
                   href={`/landforms/${lf.slug}`}
                   role="menuitem"
-                  className={`block px-4 py-2.5 text-sm rounded-lg transition-colors ${
+                  aria-current={
+                    pathname === `/landforms/${lf.slug}` ? "page" : undefined
+                  }
+                  className={`block px-4 py-2.5 text-sm rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                     pathname === `/landforms/${lf.slug}`
                       ? "text-primary bg-accent/50"
-                      : "text-muted-foreground hover:text-primary hover:bg-accent/50"
+                      : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
                   }`}
                 >
                   {lf.name}
@@ -151,16 +170,14 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className={`relative px-4 py-2 text-sm font-medium transition-colors ${
+              aria-current={isActive(link.href) ? "page" : undefined}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                 isActive(link.href)
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-primary"
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:text-foreground hover:bg-accent/60"
               }`}
             >
               {link.label}
-              {isActive(link.href) && (
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary" />
-              )}
             </Link>
           ))}
         </nav>
@@ -171,7 +188,7 @@ export default function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-foreground"
+              className="md:hidden text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label="Open navigation menu"
             >
               <Menu className="h-6 w-6" />
@@ -190,10 +207,11 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                  aria-current={isActive(link.href) ? "page" : undefined}
+                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                     isActive(link.href)
                       ? "text-primary bg-accent/50"
-                      : "text-muted-foreground hover:text-primary hover:bg-accent/50"
+                      : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
                   }`}
                 >
                   {link.label}
@@ -205,10 +223,13 @@ export default function Header() {
                   <Link
                     key={lf.slug}
                     href={`/landforms/${lf.slug}`}
-                    className={`px-4 py-2 text-xs transition-colors ${
+                    aria-current={
+                      pathname === `/landforms/${lf.slug}` ? "page" : undefined
+                    }
+                    className={`px-4 py-2 text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                       pathname === `/landforms/${lf.slug}`
                         ? "text-primary"
-                        : "text-muted-foreground hover:text-primary"
+                        : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     {lf.name}

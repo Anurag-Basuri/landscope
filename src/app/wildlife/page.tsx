@@ -27,7 +27,7 @@ export default function WildlifePage() {
   }));
 
   return (
-    <section className="pt-28 pb-20">
+    <section className="pt-24 md:pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-5">
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-foreground mb-4">

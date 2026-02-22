@@ -68,7 +68,7 @@ export default async function WildlifeDetailPage({ params }: PageProps) {
   };
 
   return (
-    <section className="pt-28 pb-20">
+    <section className="pt-24 md:pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-5">
         {/* Breadcrumbs & back link */}
         <div className="flex items-center justify-between mb-8">

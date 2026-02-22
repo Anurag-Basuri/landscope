@@ -35,7 +35,7 @@ export default function Home() {
   return (
     <>
       {/* ─── HERO ─── */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      <section className="relative pt-28 md:pt-32 pb-20 overflow-hidden">
         {/* Background glow */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-primary/10 rounded-full blur-[120px] -z-10" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-teal-accent/10 rounded-full blur-[120px] -z-10" />
