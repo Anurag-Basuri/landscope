@@ -9,6 +9,8 @@ export interface Landform {
   galleryImages: string[];
   sections: ContentSection[];
   facts: Fact[];
+  vegetation: ContentSection;
+  agriculture: ContentSection;
   floraIds: string[];
   faunaIds: string[];
 }

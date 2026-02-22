@@ -2,9 +2,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { landforms, getLandformBySlug } from "@/data/landforms";
 import { getFloraByLandform, getFaunaByLandform } from "@/data/wildlife";
-import FactsSidebar from "@/components/FactsSidebar";
-import WildlifeCard from "@/components/WildlifeCard";
-import { Separator } from "@/components/ui/separator";
+import LandformTabs from "@/components/LandformTabs";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -54,39 +52,10 @@ export default async function LandformPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* Content + Sidebar */}
+      {/* Tabs */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-5 grid lg:grid-cols-[1fr_300px] gap-10 items-start">
-          <article className="space-y-10">
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              {lf.description}
-            </p>
-
-            {lf.sections.map((section) => (
-              <div key={section.id} className="space-y-4">
-                <h2 className="text-2xl font-bold text-foreground">
-                  {section.title}
-                </h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  {section.content}
-                </p>
-                {section.imageUrl && (
-                  <div className="rounded-xl overflow-hidden mt-4">
-                    <Image
-                      src={section.imageUrl}
-                      width={800}
-                      height={400}
-                      alt={section.title}
-                      className="w-full h-auto object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-              </div>
-            ))}
-          </article>
-
-          <FactsSidebar facts={lf.facts} />
+        <div className="max-w-7xl mx-auto px-5">
+          <LandformTabs landform={lf} flora={flora} fauna={fauna} />
         </div>
       </section>
 
@@ -111,46 +80,6 @@ export default async function LandformPage({ params }: PageProps) {
                     loading="lazy"
                   />
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      <Separator className="bg-border/30 max-w-7xl mx-auto" />
-
-      {/* Flora */}
-      {flora.length > 0 && (
-        <section className="py-16">
-          <div className="max-w-7xl mx-auto px-5">
-            <h2 className="text-2xl font-bold text-foreground mb-8">
-              🌿{" "}
-              <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
-                Flora
-              </span>
-            </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {flora.map((sp, i) => (
-                <WildlifeCard key={sp.slug} species={sp} index={i} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Fauna */}
-      {fauna.length > 0 && (
-        <section className="py-16">
-          <div className="max-w-7xl mx-auto px-5">
-            <h2 className="text-2xl font-bold text-foreground mb-8">
-              🐾{" "}
-              <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
-                Fauna
-              </span>
-            </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {fauna.map((sp, i) => (
-                <WildlifeCard key={sp.slug} species={sp} index={i} />
               ))}
             </div>
           </div>

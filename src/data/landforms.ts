@@ -47,6 +47,22 @@ export const landforms: Landform[] = [
       { label: "Major Rivers", value: "Ganga, Yamuna, Brahmaputra" },
       { label: "Climate Zones", value: "Subtropical to Arctic" },
     ],
+    vegetation: {
+      id: "vegetation",
+      title: "Vegetation",
+      content:
+        "The Himalayas display a spectacular vertical stratification of vegetation. Tropical and subtropical forests dominate the foothills (up to 1,500 m), featuring sal, teak, and bamboo. Between 1,500–3,000 m, temperate broadleaf and coniferous forests of oak, deodar cedar, blue pine, and rhododendron thrive. Above the tree line (3,500–4,500 m), alpine meadows called 'bugyals' burst with wildflowers during summer — including primulas, potentillas, and anemones. The higher reaches give way to sparse scrub, mosses, and lichens before permanent snowfields. The eastern Himalayas are particularly rich in orchids, with over 900 species recorded. The Valley of Flowers in Uttarakhand, a UNESCO World Heritage Site, hosts over 600 flowering plant species in a single valley.",
+      imageUrl:
+        "https://images.unsplash.com/photo-1585409677983-0f6c41ca9c3b?w=800",
+    },
+    agriculture: {
+      id: "agriculture",
+      title: "Agriculture",
+      content:
+        "Agriculture in the Himalayas is shaped by altitude and terrain. Terraced farming is the dominant practice on steep slopes, with rice paddies carved into hillsides up to 2,000 m. Key crops include rice, maize, millets, and barley at different elevations. The region is famous for horticulture — Himachal Pradesh and Kashmir produce some of India's finest apples, walnuts, cherries, and apricots. Tea plantations thrive in Darjeeling (West Bengal) and Kangra (Himachal Pradesh), producing world-renowned teas. Saffron cultivation in Kashmir's Pampore region is unique in India. At higher altitudes, yak and sheep herding supplement crop farming. The Himalayan states also grow medicinal herbs that form the basis of traditional Ayurvedic and Tibetan medicine.",
+      imageUrl:
+        "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800",
+    },
     floraIds: ["rhododendron", "deodar-cedar", "blue-pine", "himalayan-orchid"],
     faunaIds: ["snow-leopard", "red-panda", "himalayan-monal", "markhor"],
   },
@@ -94,6 +110,22 @@ export const landforms: Landform[] = [
       { label: "Soil Type", value: "Alluvial (Bhangar & Khadar)" },
       { label: "Key Crops", value: "Wheat, Rice, Sugarcane" },
     ],
+    vegetation: {
+      id: "vegetation",
+      title: "Vegetation",
+      content:
+        "The Northern Plains originally supported dense tropical deciduous forests, but centuries of cultivation have transformed most of the landscape. Remnant vegetation includes banyan, peepal, neem, and mango trees scattered across villages and field boundaries. The Terai belt at the base of the Himalayas retains patches of moist deciduous forest and tall grasslands — some of the finest grassland ecosystems in Asia, supporting species like the Indian rhinoceros. The Sundarbans delta in the east hosts the world's largest mangrove forest. Riverine forests along the Ganga and its tributaries feature khair, shisham, and various willow species. Despite heavy deforestation, the plains still harbour important tree species like teak, sal, and eucalyptus in plantation forests.",
+      imageUrl:
+        "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800",
+    },
+    agriculture: {
+      id: "agriculture",
+      title: "Agriculture",
+      content:
+        "The Northern Plains are India's agricultural powerhouse, often called the 'breadbasket of India.' The rich alluvial soil deposited by the Indus, Ganga, and Brahmaputra rivers makes this one of the most fertile regions on Earth. Wheat dominates the rabi (winter) season in Punjab, Haryana, and western UP, while rice is the primary kharif (summer) crop across Bihar, Bengal, and eastern UP. Sugarcane is extensively cultivated in UP, the world's largest producer. Punjab and Haryana together produce over 50% of India's marketed wheat and rice surplus. The Green Revolution of the 1960s–70s transformed agriculture here with high-yield varieties, chemical fertilizers, and canal irrigation from the Bhakra-Nangal and other dams. Other important crops include pulses, oilseeds (mustard), jute (Bengal), and vegetables. The region also supports significant dairy farming, making India the world's largest milk producer.",
+      imageUrl:
+        "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800",
+    },
     floraIds: ["banyan-tree", "peepal-tree", "mango-tree", "teak"],
     faunaIds: [
       "gangetic-dolphin",
@@ -146,6 +178,22 @@ export const landforms: Landform[] = [
       { label: "Major Rivers", value: "Godavari, Krishna, Kaveri, Narmada" },
       { label: "Minerals", value: "Iron ore, Coal, Manganese, Bauxite" },
     ],
+    vegetation: {
+      id: "vegetation",
+      title: "Vegetation",
+      content:
+        "The Peninsular Plateau hosts India's richest variety of forest types. The Western Ghats — a UNESCO biodiversity hotspot — support tropical evergreen and semi-evergreen forests on their western windward slopes, with towering trees reaching 40–50 m and a dense understory of ferns, orchids, and epiphytes. The rain shadow side features moist and dry deciduous forests dominated by teak, sal, sandalwood, rosewood, and bamboo. The Deccan Plateau's interior supports thorny scrubland and dry deciduous forests. The Chota Nagpur Plateau in the northeast has dense sal forests. The Western Ghats alone contain over 7,400 species of flowering plants, 1,814 of which are endemic. Notable vegetation includes the shola-grassland ecosystem at higher elevations — patches of stunted evergreen forest interspersed with rolling grasslands unique to the Western Ghats.",
+      imageUrl:
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800",
+    },
+    agriculture: {
+      id: "agriculture",
+      title: "Agriculture",
+      content:
+        "Agriculture on the Peninsular Plateau is highly diverse, shaped by the varying rainfall, soil types, and elevation. Black cotton soil (regur) on the Deccan supports extensive cotton cultivation — Maharashtra and Gujarat are India's top cotton producers. The red soils of Karnataka and Tamil Nadu are ideal for millets (ragi, jowar), groundnuts, and pulses. The Western Ghats' windward slopes support world-class plantation crops: coffee in Coorg and Chikmagalur (India's 6th globally), tea in the Nilgiris, cardamom in Kerala, and pepper — India's 'black gold.' Rubber plantations thrive in Kerala's tropical climate. The plateau's rich mineral soil also supports sugarcane (Maharashtra), turmeric (Andhra Pradesh), and arecanut. Irrigation is largely from tanks (traditional reservoirs) and tube wells, since the plateau's rivers are mostly seasonal. The Krishnaraja Sagar and Nagarjuna Sagar dams provide canal irrigation to large areas.",
+      imageUrl:
+        "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=800",
+    },
     floraIds: ["sandalwood", "teak", "bamboo", "rosewood"],
     faunaIds: [
       "indian-elephant",
@@ -199,6 +247,22 @@ export const landforms: Landform[] = [
       { label: "Annual Rainfall", value: "100–500 mm" },
       { label: "Only River", value: "Luni" },
     ],
+    vegetation: {
+      id: "vegetation",
+      title: "Vegetation",
+      content:
+        "The Thar Desert supports xerophytic (drought-adapted) vegetation that has evolved remarkable survival strategies. The Khejri tree (Prosopis cineraria) is the most iconic — declared Rajasthan's state tree, it provides shade, fodder, and fuel, and its roots can reach groundwater 30 m deep. Babool (Acacia nilotica), rohida, and neem are scattered across the sandy landscape. Cacti and thorny bushes like ker (Capparis decidua) and phog (Calligonum polygonoides) dominate the ground cover. After monsoon rains, the desert transforms briefly — annual grasses like sewan (Lasiurus sindicus) sprout rapidly, providing critical grazing for livestock. The Aravalli Range's eastern slopes receive more rainfall and support denser scrub and dry deciduous forests. Around oases and near the Luni River, date palms and ber (Indian jujube) trees provide fruit. Despite the harsh conditions, the Thar supports about 700 plant species.",
+      imageUrl:
+        "https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?w=800",
+    },
+    agriculture: {
+      id: "agriculture",
+      title: "Agriculture",
+      content:
+        "Agriculture in the Thar Desert is a testament to human resilience and adaptation. With rainfall averaging just 100–500 mm, farming is predominantly rainfed and dependent on the monsoon. Bajra (pearl millet) is the primary food crop — drought-resistant and nutritious, it thrives in sandy soils. Other important crops include guar (cluster bean) — India produces 80% of the world's guar gum, mostly from Rajasthan — jowar (sorghum), moth bean, and sesame. The Indira Gandhi Canal, India's longest canal stretching over 650 km from Punjab into the Thar, has transformed parts of western Rajasthan, enabling wheat, cotton, and mustard cultivation in previously barren areas. Cumin and coriander are major spice crops in the Jodhpur and Barmer districts. Animal husbandry is integral — camels, goats, sheep, and cattle are reared for milk, wool, and transport. The Tharparkar cow breed and Marwari sheep are indigenous livestock adapted to desert conditions.",
+      imageUrl:
+        "https://images.unsplash.com/photo-1547234935-80c7145ec969?w=800",
+    },
     floraIds: ["khejri-tree", "babool", "cactus", "date-palm"],
     faunaIds: [
       "great-indian-bustard",
@@ -251,6 +315,22 @@ export const landforms: Landform[] = [
       { label: "States/UTs", value: "9 states, 4 union territories" },
       { label: "Key Feature", value: "Kerala Backwaters, Sundarbans" },
     ],
+    vegetation: {
+      id: "vegetation",
+      title: "Vegetation",
+      content:
+        "India's coastal plains support a rich mosaic of vegetation types shaped by proximity to the sea, rainfall, and soil conditions. Coconut palms dominate the western coast, particularly in Kerala and Karnataka, creating iconic tropical landscapes. Mangrove forests — salt-tolerant trees that thrive in tidal zones — are found in the Sundarbans (Bengal), Bhitarkanika (Odisha), Pichavaram (Tamil Nadu), and along the Gujarat coast. Casuarina plantations line sandy beaches along the eastern coast, serving as windbreaks and stabilising dunes. The western coast's heavy rainfall supports tropical evergreen vegetation, particularly in the Konkan and Malabar regions. Backwater areas in Kerala feature distinctive wetland plants, water hyacinths, and pandanus. Coastal sand dunes support specialised vegetation including Ipomoea (beach morning glory) and Spinifex grasses. Lagoons like Chilika support submerged aquatic vegetation critical for fisheries.",
+      imageUrl:
+        "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800",
+    },
+    agriculture: {
+      id: "agriculture",
+      title: "Agriculture",
+      content:
+        "Coastal agriculture is heavily influenced by maritime conditions and the unique soil types found near the sea. Rice is the dominant crop on both coasts — the Godavari and Krishna deltas on the east coast, and the Kuttanad region of Kerala (where rice is grown below sea level) are among India's most productive rice bowls. Coconut cultivation dominates Kerala, Karnataka, and Tamil Nadu — India is the world's third-largest coconut producer. Cashew nuts thrive in Goa, Kerala, and Karnataka's coastal belt. The Konkan region of Maharashtra is famous for Alphonso mangoes. Betel nut (arecanut) and black pepper are important plantation crops. Fishing is a major livelihood — India's marine fisheries produce over 4 million tonnes annually, with Kerala, Gujarat, and Tamil Nadu leading. Aquaculture (shrimp farming) has expanded rapidly along the eastern coast. Salt production from seawater evaporation pans is another important coastal activity, particularly in Gujarat's Rann of Kutch.",
+      imageUrl:
+        "https://images.unsplash.com/photo-1484291150605-0860ed671425?w=800",
+    },
     floraIds: ["coconut-palm", "mangrove", "casuarina", "palm-tree"],
     faunaIds: ["olive-ridley-turtle", "kingfisher", "mudskipper", "flamingo"],
   },
@@ -298,6 +378,22 @@ export const landforms: Landform[] = [
       { label: "Climate", value: "Tropical maritime, 23–31°C" },
       { label: "Coral Reef Area", value: "~2,375 sq km" },
     ],
+    vegetation: {
+      id: "vegetation",
+      title: "Vegetation",
+      content:
+        "India's island territories possess some of the most pristine and unique vegetation in the country. The Andaman & Nicobar Islands are covered in tropical evergreen and semi-evergreen rainforests, with towering trees forming a dense canopy. The islands host over 2,200 plant species, including 200+ endemics found nowhere else on Earth. The Andaman Padauk (Pterocarpus dalbergioides) is a prized hardwood endemic to these islands. Mangrove forests fringe the coastlines, particularly around the creek systems. Coral reefs support rich underwater 'forests' of algae and seagrasses that are vital for marine life. Lakshadweep's coral atolls support coconut palms, breadfruit, and pandanus as the dominant vegetation — coconut plantations cover over 2,600 hectares. The islands' isolation has led to unique evolutionary paths, producing species like the Nicobar breadfruit and Andaman bullet wood that are found only in these archipelagos.",
+      imageUrl:
+        "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800",
+    },
+    agriculture: {
+      id: "agriculture",
+      title: "Agriculture",
+      content:
+        "Agriculture on India's islands is constrained by limited land area, remoteness, and environmental sensitivity, but is remarkably productive within its niche. Coconut is the dominant crop across both island groups — copra (dried coconut) production and coconut oil extraction are major economic activities. In the Andaman & Nicobar Islands, rice is cultivated in cleared valley bottoms, alongside plantation crops like arecanut, rubber, and oil palm. Spice cultivation includes black pepper, clove, cinnamon, and nutmeg in the Andaman Islands. Lakshadweep's economy revolves around coconut and tuna fishing — the islands produce some of India's finest coconut-based products including coir, copra, and virgin coconut oil. Marine fisheries are the most important 'agriculture' — both island groups have rich tuna, grouper, and reef fish resources. The Andaman & Nicobar Islands have also developed small-scale cultivation of exotic fruits like mangosteen, rambutan, and durian. Sustainable farming and fishing practices are increasingly emphasised to protect the fragile island ecosystems.",
+      imageUrl:
+        "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800",
+    },
     floraIds: ["padauk-tree", "tropical-evergreen", "coconut-palm", "mangrove"],
     faunaIds: [
       "dugong",
