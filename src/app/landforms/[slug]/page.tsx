@@ -7,7 +7,7 @@ import LandformTabs from "@/components/LandformTabs";
 import { ChevronRight, ChevronDown } from "lucide-react";
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
 export function generateStaticParams() {
@@ -15,14 +15,32 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug } = params;
   const lf = getLandformBySlug(slug);
   if (!lf) return { title: "Not Found" };
-  return { title: `${lf.name} — Landscope`, description: lf.tagline };
+  return {
+    title: `${lf.name} — Landscope`,
+    description: lf.tagline,
+    openGraph: {
+      title: `${lf.name} — Landscope`,
+      description: lf.tagline,
+      type: "article",
+      images: [lf.imageUrl],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${lf.name} — Landscope`,
+      description: lf.tagline,
+      images: [lf.imageUrl],
+    },
+    alternates: {
+      canonical: `/landforms/${lf.slug}`,
+    },
+  };
 }
 
 export default async function LandformPage({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug } = params;
   const lf = getLandformBySlug(slug);
   if (!lf) notFound();
 
@@ -39,6 +57,7 @@ export default async function LandformPage({ params }: PageProps) {
           height={600}
           alt={lf.name}
           className="w-full h-full object-cover"
+          sizes="100vw"
           priority
         />
         <div className="absolute inset-0 bg-linear-to-t from-background via-background/40 to-transparent" />
@@ -103,6 +122,7 @@ export default async function LandformPage({ params }: PageProps) {
                     height={400}
                     alt={`${lf.name} photo ${i + 1}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />

@@ -31,6 +31,7 @@ export default function LandformCard({ landform, index = 0 }: Props) {
           height={400}
           alt={landform.name}
           className="img-cover group-hover:scale-110"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           loading="lazy"
         />
         <div className="absolute inset-0 bg-linear-to-t from-background via-background/40 to-transparent group-hover:from-background/95 transition-all duration-500" />

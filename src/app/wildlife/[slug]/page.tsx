@@ -10,7 +10,7 @@ import WildlifeCard from "@/components/WildlifeCard";
 import { ChevronRight, ArrowLeft } from "lucide-react";
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
 export function generateStaticParams() {
@@ -18,17 +18,32 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug } = params;
   const sp = getWildlifeBySlug(slug);
   if (!sp) return { title: "Not Found" };
   return {
     title: `${sp.name} — Landscope Wildlife`,
     description: sp.description.slice(0, 160),
+    openGraph: {
+      title: `${sp.name} — Landscope Wildlife`,
+      description: sp.description.slice(0, 160),
+      type: "article",
+      images: [sp.imageUrl],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${sp.name} — Landscope Wildlife`,
+      description: sp.description.slice(0, 160),
+      images: [sp.imageUrl],
+    },
+    alternates: {
+      canonical: `/wildlife/${sp.slug}`,
+    },
   };
 }
 
 export default async function WildlifeDetailPage({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug } = params;
   const sp = getWildlifeBySlug(slug);
   if (!sp) notFound();
 
@@ -89,6 +104,7 @@ export default async function WildlifeDetailPage({ params }: PageProps) {
               height={450}
               alt={sp.name}
               className="w-full h-auto object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
               priority
             />
             {sp.conservationStatus && (
@@ -197,6 +213,7 @@ export default async function WildlifeDetailPage({ params }: PageProps) {
                     height={300}
                     alt={`${sp.name} photo ${i + 1}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />

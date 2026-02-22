@@ -183,6 +183,8 @@ function RegionGeographies({
                 geography={geo}
                 onMouseEnter={() => region && onHover(region.slug)}
                 onMouseLeave={onLeave}
+                onFocus={() => region && onHover(region.slug)}
+                onBlur={onLeave}
                 onMouseMove={(e: React.MouseEvent) => {
                   if (region) {
                     onMouseMove(e, region.label, region.color);
@@ -192,6 +194,16 @@ function RegionGeographies({
                   e.stopPropagation();
                   if (region) onSelect(region.slug);
                 }}
+                onKeyDown={(e: React.KeyboardEvent) => {
+                  if (!region) return;
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onSelect(region.slug);
+                  }
+                }}
+                tabIndex={region ? 0 : -1}
+                role={region ? "button" : "img"}
+                aria-label={region ? `${region.label} region` : undefined}
                 style={{
                   default: {
                     fill,
@@ -288,6 +300,8 @@ function IndiaMapInner() {
         ref={mapRef}
         className="relative w-full max-w-[600px] mx-auto group"
         onMouseLeave={handleLeave}
+        role="region"
+        aria-label="Interactive map of India by landform"
       >
         {/* Background glow */}
         <div className="absolute inset-0 bg-cyan-primary/4 rounded-3xl blur-[80px] -z-10" />
@@ -344,7 +358,16 @@ function IndiaMapInner() {
                   e.stopPropagation();
                   handleSelect("islands");
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleSelect("islands");
+                  }
+                }}
                 className="cursor-pointer"
+                tabIndex={0}
+                role="button"
+                aria-label="Islands region"
               >
                 <circle
                   r={22}
@@ -379,7 +402,16 @@ function IndiaMapInner() {
                   e.stopPropagation();
                   handleSelect("islands");
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleSelect("islands");
+                  }
+                }}
                 className="cursor-pointer"
+                tabIndex={0}
+                role="button"
+                aria-label="Islands region"
               >
                 <circle
                   r={28}
@@ -490,6 +522,17 @@ function IndiaMapInner() {
           <MousePointerClick className="h-3 w-3 opacity-70" />
           Click any region on the map or tab to pin details
         </p>
+
+        <div className="sr-only">
+          <p>Landform regions</p>
+          <ul>
+            {REGIONS.map((region) => (
+              <li key={region.slug}>
+                <Link href={`/landforms/${region.slug}`}>{region.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       {/* ── Info Panel ── */}

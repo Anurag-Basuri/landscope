@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FocusEvent } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -16,6 +16,7 @@ import { Menu, ChevronDown } from "lucide-react";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLandformsOpen, setIsLandformsOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -37,6 +38,12 @@ export default function Header() {
   function isActive(href: string) {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
+  }
+
+  function handleLandformsBlur(e: FocusEvent<HTMLDivElement>) {
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+      setIsLandformsOpen(false);
+    }
   }
 
   return (
@@ -76,7 +83,13 @@ export default function Header() {
           </Link>
 
           {/* Landforms Dropdown */}
-          <div className="relative group">
+          <div
+            className="relative"
+            onMouseEnter={() => setIsLandformsOpen(true)}
+            onMouseLeave={() => setIsLandformsOpen(false)}
+            onFocus={() => setIsLandformsOpen(true)}
+            onBlur={handleLandformsBlur}
+          >
             <Link
               href="/landforms"
               className={`flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors ${
@@ -84,18 +97,44 @@ export default function Header() {
                   ? "text-primary"
                   : "text-muted-foreground hover:text-primary"
               }`}
+              aria-haspopup="menu"
+              aria-expanded={isLandformsOpen}
+              aria-controls="landforms-menu"
+              onKeyDown={(e) => {
+                if (e.key === "ArrowDown") {
+                  e.preventDefault();
+                  setIsLandformsOpen(true);
+                }
+                if (e.key === "Escape") {
+                  setIsLandformsOpen(false);
+                }
+              }}
             >
               Landforms
-              <ChevronDown className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-180" />
+              <ChevronDown
+                className={`h-3.5 w-3.5 transition-transform duration-300 ${
+                  isLandformsOpen ? "rotate-180" : ""
+                }`}
+              />
               {isActive("/landforms") && (
                 <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary" />
               )}
             </Link>
-            <div className="absolute top-full left-0 min-w-[260px] bg-card/95 backdrop-blur-xl border border-border/50 rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-2xl shadow-black/20 translate-y-3 group-hover:translate-y-0">
+            <div
+              id="landforms-menu"
+              role="menu"
+              aria-label="Landforms"
+              className={`absolute top-full left-0 min-w-[260px] bg-card/95 backdrop-blur-xl border border-border/50 rounded-xl p-2 transition-all duration-300 shadow-2xl shadow-black/20 ${
+                isLandformsOpen
+                  ? "opacity-100 visible translate-y-0"
+                  : "opacity-0 invisible translate-y-3"
+              }`}
+            >
               {landforms.map((lf) => (
                 <Link
                   key={lf.slug}
                   href={`/landforms/${lf.slug}`}
+                  role="menuitem"
                   className={`block px-4 py-2.5 text-sm rounded-lg transition-colors ${
                     pathname === `/landforms/${lf.slug}`
                       ? "text-primary bg-accent/50"
@@ -133,6 +172,7 @@ export default function Header() {
               variant="ghost"
               size="icon"
               className="md:hidden text-foreground"
+              aria-label="Open navigation menu"
             >
               <Menu className="h-6 w-6" />
             </Button>
