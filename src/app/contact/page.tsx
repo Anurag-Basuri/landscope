@@ -16,7 +16,7 @@ export default function ContactPage() {
       <div className="max-w-5xl mx-auto px-5">
         <h1 className="text-4xl font-extrabold text-foreground text-center mb-4">
           Get in{" "}
-          <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
             Touch
           </span>
         </h1>
@@ -71,7 +71,7 @@ export default function ContactPage() {
                   placeholder="Your message..."
                 />
               </div>
-              <Button className="w-full bg-gradient-to-r from-cyan-primary to-teal-accent text-white">
+              <Button className="w-full bg-linear-to-r from-cyan-primary to-teal-accent text-white">
                 <Send className="h-4 w-4 mr-2" />
                 Send Message
               </Button>

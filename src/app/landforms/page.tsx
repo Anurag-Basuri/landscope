@@ -13,7 +13,7 @@ export default function LandformsPage() {
       <div className="max-w-7xl mx-auto px-5">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-extrabold text-foreground mb-4">
-            <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
               Landforms
             </span>{" "}
             of India

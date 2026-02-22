@@ -13,7 +13,7 @@ export default function AboutPage() {
       <div className="max-w-3xl mx-auto px-5">
         <h1 className="text-4xl font-extrabold text-foreground text-center mb-8">
           About{" "}
-          <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
             Landscope
           </span>
         </h1>
@@ -84,7 +84,7 @@ export default function AboutPage() {
             <Button
               asChild
               size="lg"
-              className="bg-gradient-to-r from-cyan-primary to-teal-accent text-white"
+              className="bg-linear-to-r from-cyan-primary to-teal-accent text-white"
             >
               <Link href="/landforms">
                 Start Exploring <ArrowRight className="h-4 w-4 ml-2" />

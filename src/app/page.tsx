@@ -8,6 +8,7 @@ import { landforms } from "@/data/landforms";
 import { wildlife } from "@/data/wildlife";
 import LandformCard from "@/components/LandformCard";
 import WildlifeCard from "@/components/WildlifeCard";
+import IndiaMap from "@/components/IndiaMap";
 import {
   ArrowRight,
   Mountain,
@@ -45,7 +46,7 @@ export default function Home() {
             </span>
             <h1 className="text-4xl lg:text-5xl font-extrabold text-foreground leading-tight mb-6">
               Discover India&apos;s{" "}
-              <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
                 Diverse Landscapes
               </span>
             </h1>
@@ -58,7 +59,7 @@ export default function Home() {
               <Button
                 asChild
                 size="lg"
-                className="bg-gradient-to-r from-cyan-primary to-teal-accent text-white hover:shadow-lg hover:shadow-cyan-primary/25 transition-all"
+                className="bg-linear-to-r from-cyan-primary to-teal-accent text-white hover:shadow-lg hover:shadow-cyan-primary/25 transition-all"
               >
                 <Link href="/landforms">
                   <Mountain className="h-4 w-4 mr-2" />
@@ -94,9 +95,35 @@ export default function Home() {
                 className="img-cover"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-background/60 to-transparent" />
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ─── INTERACTIVE MAP ─── */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/3 w-80 h-80 bg-cyan-primary/5 rounded-full blur-[100px] -z-10" />
+        <div className="max-w-7xl mx-auto px-5">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-14"
+          >
+            <h2 className="text-3xl font-bold text-foreground mb-3">
+              <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+                Interactive Map
+              </span>{" "}
+              of India
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              Discover the geographic diversity of India — hover over each
+              region to learn about its unique landform.
+            </p>
+          </motion.div>
+          <IndiaMap />
         </div>
       </section>
 
@@ -112,7 +139,7 @@ export default function Home() {
           >
             <h2 className="text-3xl font-bold text-foreground mb-3">
               The{" "}
-              <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
                 6 Landforms
               </span>{" "}
               of India
@@ -133,7 +160,7 @@ export default function Home() {
       </section>
 
       {/* ─── FEATURED WILDLIFE ─── */}
-      <section className="py-20 bg-gradient-to-b from-transparent via-primary/[0.03] to-transparent">
+      <section className="py-20 bg-linear-to-b from-transparent via-primary/[0.03] to-transparent">
         <div className="max-w-7xl mx-auto px-5">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -144,7 +171,7 @@ export default function Home() {
           >
             <h2 className="text-3xl font-bold text-foreground mb-3">
               Featured{" "}
-              <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
                 Wildlife
               </span>
             </h2>
@@ -209,7 +236,7 @@ export default function Home() {
                 className="text-center p-8 bg-card border border-border/50 rounded-2xl hover:border-primary/30 transition-all duration-300 group"
               >
                 <stat.icon className="h-6 w-6 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                <span className="block text-3xl font-extrabold bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+                <span className="block text-3xl font-extrabold bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
                   {stat.number}
                 </span>
                 <span className="text-muted-foreground text-sm mt-2 block">
@@ -223,7 +250,7 @@ export default function Home() {
 
       {/* ─── CTA BAND ─── */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-primary/10 via-teal-accent/5 to-cyan-primary/10 -z-10" />
+        <div className="absolute inset-0 bg-linear-to-r from-cyan-primary/10 via-teal-accent/5 to-cyan-primary/10 -z-10" />
         <div className="absolute top-0 left-1/3 w-80 h-80 bg-cyan-primary/10 rounded-full blur-[100px] -z-10" />
         <div className="absolute bottom-0 right-1/3 w-80 h-80 bg-teal-accent/10 rounded-full blur-[100px] -z-10" />
 
@@ -236,7 +263,7 @@ export default function Home() {
         >
           <h2 className="text-3xl font-bold text-foreground mb-4">
             Ready to{" "}
-            <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
               Explore?
             </span>
           </h2>
@@ -249,7 +276,7 @@ export default function Home() {
             <Button
               asChild
               size="lg"
-              className="bg-gradient-to-r from-cyan-primary to-teal-accent text-white hover:shadow-lg hover:shadow-cyan-primary/25 transition-all"
+              className="bg-linear-to-r from-cyan-primary to-teal-accent text-white hover:shadow-lg hover:shadow-cyan-primary/25 transition-all"
             >
               <Link href="/landforms">
                 <Mountain className="h-4 w-4 mr-2" />

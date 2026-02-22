@@ -13,7 +13,7 @@ export default function FAQPage() {
       <div className="max-w-3xl mx-auto px-5">
         <h1 className="text-4xl font-extrabold text-foreground text-center mb-4">
           Frequently Asked{" "}
-          <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
             Questions
           </span>
         </h1>

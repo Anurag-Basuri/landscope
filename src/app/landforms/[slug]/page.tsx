@@ -41,7 +41,7 @@ export default async function LandformPage({ params }: PageProps) {
           className="w-full h-full object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-background via-background/40 to-transparent" />
         <div className="absolute bottom-12 left-0 right-0 z-10">
           <div className="max-w-7xl mx-auto px-5">
             {/* Breadcrumbs */}
@@ -87,7 +87,7 @@ export default async function LandformPage({ params }: PageProps) {
         <section className="py-16 bg-card/50">
           <div className="max-w-7xl mx-auto px-5">
             <h2 className="text-2xl font-bold text-foreground text-center mb-8">
-              <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
                 Gallery
               </span>
             </h2>

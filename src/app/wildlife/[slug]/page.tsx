@@ -181,7 +181,7 @@ export default async function WildlifeDetailPage({ params }: PageProps) {
         {sp.galleryImages && sp.galleryImages.length > 0 && (
           <div className="mt-16">
             <h2 className="text-2xl font-bold text-foreground mb-6">
-              <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
                 Gallery
               </span>
             </h2>
@@ -211,7 +211,7 @@ export default async function WildlifeDetailPage({ params }: PageProps) {
           <div className="mt-16">
             <h2 className="text-2xl font-bold text-foreground mb-6">
               Related{" "}
-              <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
                 Species
               </span>
             </h2>
