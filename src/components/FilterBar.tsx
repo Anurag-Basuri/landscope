@@ -50,7 +50,7 @@ export default function FilterBar({ onFilterChange, landformOptions }: Props) {
               onClick={() => handleTypeChange(btn.key)}
               className={
                 activeType === btn.key
-                  ? "bg-gradient-to-r from-cyan-primary to-teal-accent text-white border-none"
+                  ? "bg-linear-to-r from-cyan-primary to-teal-accent text-white border-none"
                   : "border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50"
               }
             >

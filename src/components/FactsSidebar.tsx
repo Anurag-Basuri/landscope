@@ -10,7 +10,7 @@ export default function FactsSidebar({ facts }: Props) {
   return (
     <Card className="sticky top-24 border-border/50">
       <CardHeader>
-        <CardTitle className="text-lg bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+        <CardTitle className="text-lg bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
           Quick Facts
         </CardTitle>
       </CardHeader>

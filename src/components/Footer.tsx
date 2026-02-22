@@ -79,7 +79,7 @@ export default function Footer() {
                 placeholder="Your email"
                 className="bg-secondary border-border/50 text-foreground placeholder:text-muted-foreground"
               />
-              <Button className="bg-gradient-to-r from-cyan-primary to-teal-accent text-white shrink-0">
+              <Button className="bg-linear-to-r from-cyan-primary to-teal-accent text-white shrink-0">
                 <Mail className="h-4 w-4" />
               </Button>
             </form>

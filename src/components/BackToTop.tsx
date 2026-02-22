@@ -28,7 +28,7 @@ export default function BackToTop() {
           <Button
             size="icon"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="h-12 w-12 rounded-full bg-gradient-to-r from-cyan-primary to-teal-accent text-white shadow-lg shadow-cyan-primary/25 hover:shadow-xl hover:shadow-cyan-primary/40 transition-shadow"
+            className="h-12 w-12 rounded-full bg-linear-to-r from-cyan-primary to-teal-accent text-white shadow-lg shadow-cyan-primary/25 hover:shadow-xl hover:shadow-cyan-primary/40 transition-shadow"
           >
             <ArrowUp className="h-5 w-5" />
           </Button>

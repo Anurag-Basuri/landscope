@@ -33,7 +33,7 @@ export default function LandformCard({ landform, index = 0 }: Props) {
           className="img-cover group-hover:scale-110"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent group-hover:from-background/95 transition-all duration-500" />
+        <div className="absolute inset-0 bg-linear-to-t from-background via-background/40 to-transparent group-hover:from-background/95 transition-all duration-500" />
 
         {/* Numbered chip */}
         <span className="absolute top-4 left-4 z-10 text-xs font-bold bg-white/10 backdrop-blur-md text-white/80 px-2.5 py-1 rounded-lg border border-white/10">
