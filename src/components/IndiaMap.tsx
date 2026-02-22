@@ -4,7 +4,12 @@ import { useState, useCallback, useRef, memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+  Marker,
+} from "react-simple-maps";
 import { landforms } from "@/data/landforms";
 import { ArrowRight, MapPin, MousePointerClick } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -103,11 +108,10 @@ const REGIONS: Region[] = [
     color: "#14b8a6",
     bright: "#2dd4bf",
     dim: "#14b8a620",
-    states: ["Andaman & Nicobar", "Lakshadweep"],
+    states: ["Andaman & Nicobar Islands", "Andaman & Nicobar", "Lakshadweep"],
   },
 ];
 
-const ISLAND_STATES = new Set(["Andaman & Nicobar", "Lakshadweep"]);
 const GEO_URL = "/india-states.json";
 
 function getRegion(name: string): Region | undefined {
@@ -118,31 +122,31 @@ function getRegion(name: string): Region | undefined {
 interface TooltipInfo {
   x: number;
   y: number;
-  stateName: string;
   regionLabel: string;
   regionColor: string;
 }
 
 /* ─── Sub-map renderer ─── */
-function StateGeographies({
+function RegionGeographies({
   activeSlug,
   onHover,
   onLeave,
   onMouseMove,
-  filterFn,
 }: {
   activeSlug: string | null;
   onHover: (slug: string) => void;
   onLeave: () => void;
-  onMouseMove: (e: React.MouseEvent, stateName: string) => void;
-  filterFn: (stateName: string) => boolean;
+  onMouseMove: (
+    e: React.MouseEvent,
+    regionLabel: string,
+    regionColor: string,
+  ) => void;
 }) {
   return (
     <Geographies geography={GEO_URL}>
-      {({ geographies }) =>
-        geographies
-          .filter((geo) => filterFn(geo.properties.ST_NM))
-          .map((geo) => {
+      {({ geographies }) => (
+        <g strokeLinejoin="round">
+          {geographies.map((geo) => {
             const stateName = geo.properties.ST_NM;
             const region = getRegion(stateName);
             const isActive = activeSlug === region?.slug;
@@ -155,13 +159,21 @@ function StateGeographies({
               else fill = region.color;
             }
 
+            // Merge stroke with fill visually to create region blobs
+            let stroke = "#0f172a";
+            if (region) stroke = fill;
+
             return (
               <Geography
                 key={geo.rsmKey}
                 geography={geo}
                 onMouseEnter={() => region && onHover(region.slug)}
                 onMouseLeave={onLeave}
-                onMouseMove={(e: React.MouseEvent) => onMouseMove(e, stateName)}
+                onMouseMove={(e: React.MouseEvent) => {
+                  if (region) {
+                    onMouseMove(e, region.label, region.color);
+                  }
+                }}
                 onClick={() => {
                   if (region)
                     window.location.href = `/landforms/${region.slug}`;
@@ -169,8 +181,8 @@ function StateGeographies({
                 style={{
                   default: {
                     fill,
-                    stroke: "#0f172a",
-                    strokeWidth: 0.5,
+                    stroke,
+                    strokeWidth: 0.8,
                     cursor: region ? "pointer" : "default",
                     transition: "all 350ms ease",
                   },
@@ -183,12 +195,14 @@ function StateGeographies({
                   },
                   pressed: {
                     fill: region ? region.color : "#1e293b",
+                    stroke: region ? region.color : "#0f172a",
                   },
                 }}
               />
             );
-          })
-      }
+          })}
+        </g>
+      )}
     </Geographies>
   );
 }
@@ -213,105 +227,113 @@ function IndiaMapInner() {
   }, []);
 
   const handleMouseMove = useCallback(
-    (e: React.MouseEvent, stateName: string) => {
+    (e: React.MouseEvent, regionLabel: string, regionColor: string) => {
       if (!mapRef.current) return;
       const rect = mapRef.current.getBoundingClientRect();
-      const region = getRegion(stateName);
-      if (!region) return;
       setTooltip({
         x: e.clientX - rect.left,
         y: e.clientY - rect.top,
-        stateName,
-        regionLabel: region.label,
-        regionColor: region.color,
+        regionLabel,
+        regionColor,
       });
     },
     [],
   );
 
   return (
-    <div className="grid lg:grid-cols-[1.15fr_1fr] gap-10 items-center">
+    <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 items-center">
       {/* ── Map Side ── */}
       <div
         ref={mapRef}
-        className="relative w-full max-w-[540px] mx-auto"
+        className="relative w-full max-w-[600px] mx-auto group"
         onMouseLeave={handleLeave}
       >
         {/* Background glow */}
-        <div className="absolute inset-0 bg-cyan-primary/[0.04] rounded-3xl blur-[80px] -z-10" />
+        <div className="absolute inset-0 bg-cyan-primary/4 rounded-3xl blur-[80px] -z-10" />
 
-        {/* Main mainland map */}
-        <ComposableMap
-          projection="geoMercator"
-          projectionConfig={{ scale: 1100, center: [82.5, 23] }}
-          width={520}
-          height={530}
-          className="w-full h-auto"
-        >
-          <StateGeographies
-            activeSlug={activeSlug}
-            onHover={handleHover}
-            onLeave={() => {}}
-            onMouseMove={handleMouseMove}
-            filterFn={(name) => !ISLAND_STATES.has(name)}
-          />
-        </ComposableMap>
-
-        {/* ── Island insets ── */}
-        {/* Andaman & Nicobar inset */}
-        <div className="absolute bottom-12 right-2 w-[72px] rounded-lg border border-border/40 bg-background/80 backdrop-blur-sm overflow-hidden">
-          <span className="block text-[7px] text-center text-muted-foreground font-medium py-0.5 bg-card/80 border-b border-border/30">
-            A & N Islands
-          </span>
-          <div
-            onMouseEnter={() => handleHover("islands")}
-            onMouseLeave={handleLeave}
-            className="cursor-pointer"
+        {/* 
+          Mainland and Islands mapped together.
+          Scale and center properly frame the subcontinent.
+        */}
+        <div className="relative w-full aspect-[1/1.12] transform transition-transform duration-700">
+          <ComposableMap
+            projection="geoMercator"
+            projectionConfig={{ scale: 1250, center: [81.5, 22.5] }}
+            width={600}
+            height={670}
+            className="w-full h-full object-contain"
           >
-            <ComposableMap
-              projection="geoMercator"
-              projectionConfig={{ scale: 2200, center: [93, 10] }}
-              width={80}
-              height={120}
-              className="w-full h-auto"
-            >
-              <StateGeographies
-                activeSlug={activeSlug}
-                onHover={handleHover}
-                onLeave={() => {}}
-                onMouseMove={handleMouseMove}
-                filterFn={(name) => name === "Andaman & Nicobar"}
-              />
-            </ComposableMap>
-          </div>
-        </div>
+            <RegionGeographies
+              activeSlug={activeSlug}
+              onHover={handleHover}
+              onLeave={() => {}}
+              onMouseMove={handleMouseMove}
+            />
 
-        {/* Lakshadweep inset */}
-        <div className="absolute bottom-12 left-2 w-[56px] rounded-lg border border-border/40 bg-background/80 backdrop-blur-sm overflow-hidden">
-          <span className="block text-[7px] text-center text-muted-foreground font-medium py-0.5 bg-card/80 border-b border-border/30">
-            Lakshadweep
-          </span>
-          <div
-            onMouseEnter={() => handleHover("islands")}
-            onMouseLeave={handleLeave}
-            className="cursor-pointer"
-          >
-            <ComposableMap
-              projection="geoMercator"
-              projectionConfig={{ scale: 5000, center: [72.8, 10.5] }}
-              width={60}
-              height={60}
-              className="w-full h-auto"
-            >
-              <StateGeographies
-                activeSlug={activeSlug}
-                onHover={handleHover}
-                onLeave={() => {}}
-                onMouseMove={handleMouseMove}
-                filterFn={(name) => name === "Lakshadweep"}
-              />
-            </ComposableMap>
-          </div>
+            {/* Lakshadweep Highlights */}
+            <Marker coordinates={[72.8, 10.5]}>
+              <g
+                onMouseEnter={() => handleHover("islands")}
+                onMouseLeave={handleLeave}
+                onMouseMove={(e) => {
+                  const region = REGIONS.find((r) => r.slug === "islands");
+                  if (region) handleMouseMove(e, region.label, region.color);
+                }}
+                onClick={() => (window.location.href = `/landforms/islands`)}
+                className="cursor-pointer"
+              >
+                <circle
+                  r={22}
+                  fill={REGIONS.find((r) => r.slug === "islands")?.color}
+                  opacity={activeSlug === "islands" ? 0.3 : 0.08}
+                  className="transition-all duration-300 pointer-events-none"
+                />
+                <circle
+                  r={8}
+                  fill={REGIONS.find((r) => r.slug === "islands")?.color}
+                  stroke="#ffffff"
+                  strokeWidth={1.5}
+                  className="transition-all duration-300 cursor-pointer"
+                  style={{
+                    filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
+                    transformOrigin: "center",
+                  }}
+                />
+              </g>
+            </Marker>
+
+            {/* Andaman & Nicobar Highlights */}
+            <Marker coordinates={[92.9, 11]}>
+              <g
+                onMouseEnter={() => handleHover("islands")}
+                onMouseLeave={handleLeave}
+                onMouseMove={(e) => {
+                  const region = REGIONS.find((r) => r.slug === "islands");
+                  if (region) handleMouseMove(e, region.label, region.color);
+                }}
+                onClick={() => (window.location.href = `/landforms/islands`)}
+                className="cursor-pointer"
+              >
+                <circle
+                  r={28}
+                  fill={REGIONS.find((r) => r.slug === "islands")?.color}
+                  opacity={activeSlug === "islands" ? 0.3 : 0.08}
+                  className="transition-all duration-300 pointer-events-none"
+                />
+                <circle
+                  r={10}
+                  fill={REGIONS.find((r) => r.slug === "islands")?.color}
+                  stroke="#ffffff"
+                  strokeWidth={1.5}
+                  className="transition-all duration-300 cursor-pointer"
+                  style={{
+                    filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))",
+                    transformOrigin: "center",
+                  }}
+                />
+              </g>
+            </Marker>
+          </ComposableMap>
         </div>
 
         {/* ── Cursor tooltip ── */}
@@ -321,33 +343,33 @@ function IndiaMapInner() {
             style={{ left: tooltip.x + 14, top: tooltip.y - 10 }}
           >
             <div className="bg-card/95 backdrop-blur-md border border-border/50 rounded-lg px-3 py-2 shadow-xl min-w-[140px]">
-              <p className="text-foreground text-xs font-semibold">
-                {tooltip.stateName}
-              </p>
-              <div className="flex items-center gap-1.5 mt-1">
+              <div className="flex items-center gap-1.5">
                 <span
-                  className="w-2 h-2 rounded-full shrink-0"
+                  className="w-2.5 h-2.5 rounded-full shrink-0 shadow-inner"
                   style={{ backgroundColor: tooltip.regionColor }}
                 />
-                <span className="text-muted-foreground text-[10px]">
+                <span className="text-foreground text-xs font-bold tracking-wide">
                   {tooltip.regionLabel}
                 </span>
               </div>
+              <p className="text-muted-foreground text-[10px] mt-1 ml-4 opacity-80">
+                Click to explore
+              </p>
             </div>
           </div>
         )}
 
         {/* ── Legend ── */}
-        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-3 px-4">
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 px-4 bg-background/40 backdrop-blur-xs py-3 rounded-2xl border border-white/5 mx-4 shadow-sm">
           {REGIONS.map((region) => (
             <button
               key={region.slug}
               className={`flex items-center gap-1.5 text-[11px] transition-all rounded-full px-2.5 py-1 ${
                 activeSlug === region.slug
-                  ? "text-foreground bg-white/5 ring-1 ring-white/10"
+                  ? "text-foreground bg-white/10 ring-1 ring-white/20 shadow-sm"
                   : activeSlug
-                    ? "text-muted-foreground/40"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "text-muted-foreground/30 grayscale filter"
+                    : "text-muted-foreground hover:text-foreground hover:bg-white/5"
               }`}
               onMouseEnter={() => handleHover(region.slug)}
               onMouseLeave={handleLeave}
@@ -356,7 +378,7 @@ function IndiaMapInner() {
               }
             >
               <span
-                className="w-2 h-2 rounded-full shrink-0"
+                className="w-2.5 h-2.5 rounded-full shrink-0"
                 style={{
                   backgroundColor:
                     activeSlug === region.slug || !activeSlug
@@ -370,45 +392,48 @@ function IndiaMapInner() {
         </div>
 
         {/* Helper text */}
-        <p className="text-center text-[10px] text-muted-foreground/60 mt-2 flex items-center justify-center gap-1">
+        <p className="text-center text-[10px] text-muted-foreground/60 mt-3 flex items-center justify-center gap-1">
           <MousePointerClick className="h-3 w-3" />
-          Hover or click any state to explore
+          Hover or click any region to explore its landscapes
         </p>
       </div>
 
       {/* ── Info Panel ── */}
-      <div className="min-h-[400px] flex items-center">
+      <div className="min-h-[440px] flex items-center justify-center">
         <AnimatePresence mode="wait">
           {activeLandform && activeRegion ? (
             <motion.div
               key={activeLandform.slug}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.25 }}
-              className="space-y-5 w-full"
+              initial={{ opacity: 0, scale: 0.98, x: 10 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0.98, x: -10 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="space-y-6 w-full bg-card/30 p-6 rounded-[2rem] border border-border/50 shadow-xl backdrop-blur-sm"
             >
               {/* Region color bar */}
               <div
-                className="h-1 w-20 rounded-full"
+                className="h-1.5 w-24 rounded-full shadow-sm"
                 style={{ backgroundColor: activeRegion.color }}
               />
-              <h3 className="text-2xl font-bold text-foreground">
+              <h3 className="text-3xl font-extrabold text-foreground tracking-tight">
                 {activeLandform.name}
               </h3>
 
-              <div className="rounded-2xl overflow-hidden h-48 relative">
+              <div className="rounded-2xl overflow-hidden h-52 relative shadow-lg ring-1 ring-white/10">
                 <Image
                   src={activeLandform.imageUrl}
                   width={600}
                   height={300}
                   alt={activeLandform.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-background/70 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-background/90 via-background/20 to-transparent" />
                 <span
-                  className="absolute bottom-3 left-3 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded text-white/90"
-                  style={{ backgroundColor: `${activeRegion.color}cc` }}
+                  className="absolute bottom-4 left-4 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-md shadow-md text-white/95"
+                  style={{
+                    backgroundColor: `${activeRegion.color}e6`,
+                    backdropFilter: "blur(4px)",
+                  }}
                 >
                   {activeRegion.label}
                 </span>
@@ -418,42 +443,30 @@ function IndiaMapInner() {
                 {activeLandform.description.slice(0, 220)}…
               </p>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 pt-2">
                 {activeLandform.facts.slice(0, 3).map((fact, i) => (
                   <Badge
                     key={i}
                     variant="secondary"
-                    className="bg-secondary/60 text-muted-foreground font-normal text-xs"
+                    className="bg-secondary/40 text-foreground/80 font-medium text-[11px] px-2.5 py-1"
                   >
-                    {fact.label}: {fact.value}
+                    <span className="text-muted-foreground mr-1">
+                      {fact.label}:
+                    </span>{" "}
+                    {fact.value}
                   </Badge>
                 ))}
               </div>
 
-              {/* States list */}
-              <div>
-                <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
-                  States in this region
-                </span>
-                <div className="flex flex-wrap gap-1.5 mt-2">
-                  {activeRegion.states.map((s) => (
-                    <span
-                      key={s}
-                      className="text-[11px] px-2 py-0.5 rounded bg-card border border-border/40 text-muted-foreground"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
+              <div className="pt-2">
+                <Link
+                  href={`/landforms/${activeLandform.slug}`}
+                  className="inline-flex items-center justify-center w-full gap-2 bg-primary/10 text-primary font-semibold text-sm hover:bg-primary/20 transition-all py-3 rounded-xl hover:gap-3"
+                >
+                  Explore {activeLandform.name}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
               </div>
-
-              <Link
-                href={`/landforms/${activeLandform.slug}`}
-                className="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:gap-3 transition-all"
-              >
-                Explore {activeLandform.name}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
             </motion.div>
           ) : (
             <motion.div
@@ -461,39 +474,19 @@ function IndiaMapInner() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="space-y-5 w-full"
+              className="space-y-6 w-full p-6 text-center"
             >
-              <div className="p-3 bg-primary/10 rounded-xl inline-block">
-                <MapPin className="h-6 w-6 text-primary" />
+              <div className="mx-auto p-4 bg-primary/10 rounded-2xl inline-block shadow-inner ring-1 ring-primary/20">
+                <MapPin className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold text-foreground">
+              <h3 className="text-3xl font-extrabold text-foreground tracking-tight">
                 Explore by Region
               </h3>
-              <p className="text-muted-foreground leading-relaxed max-w-md text-sm">
+              <p className="text-muted-foreground leading-relaxed max-w-sm mx-auto text-sm">
                 India&apos;s diverse geography is divided into six major
-                landform regions. Hover over any state on the map to see which
-                region it belongs to, or click to explore it in detail.
+                landform zones. Interact with the map to discover the unique
+                characteristics of each landscape.
               </p>
-
-              <div className="grid grid-cols-2 gap-2.5 pt-1">
-                {REGIONS.map((region) => (
-                  <button
-                    key={region.slug}
-                    className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground p-3 rounded-xl bg-card/50 border border-border/30 hover:border-white/10 transition-all text-left group"
-                    onMouseEnter={() => handleHover(region.slug)}
-                    onMouseLeave={handleLeave}
-                    onClick={() =>
-                      (window.location.href = `/landforms/${region.slug}`)
-                    }
-                  >
-                    <span
-                      className="w-3.5 h-3.5 rounded shrink-0 group-hover:scale-110 transition-transform"
-                      style={{ backgroundColor: region.color }}
-                    />
-                    <span className="text-xs font-medium">{region.label}</span>
-                  </button>
-                ))}
-              </div>
             </motion.div>
           )}
         </AnimatePresence>
