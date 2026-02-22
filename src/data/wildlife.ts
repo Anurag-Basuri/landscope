@@ -123,7 +123,7 @@ export const wildlife: Wildlife[] = [
     type: "fauna",
     category: "Mammal",
     imageUrl:
-      "https://images.unsplash.com/photo-1518882515711-f614d0e57795?w=600",
+      "https://images.unsplash.com/photo-1518173946687-a1e33bbc4a5e?w=600",
     description:
       "The markhor, with its magnificent spiralling horns, is the largest wild goat species. Found in the western Himalayas (Pir Panjal range in J&K), it inhabits steep, rocky terrain. Its name means 'snake eater' in Persian, though it actually feeds on grass, leaves, and twigs.",
     habitat: "Rocky mountainous regions, 600–3,600 m",
@@ -220,7 +220,7 @@ export const wildlife: Wildlife[] = [
     type: "fauna",
     category: "Mammal",
     imageUrl:
-      "https://images.unsplash.com/photo-1535338454528-1b22a4d9fdb0?w=600",
+      "https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600",
     description:
       "The greater one-horned rhinoceros is the largest of Asia's rhino species. Once widespread across the Indo-Gangetic Plain, it now survives mainly in Kaziranga National Park (Assam) and Dudhwa National Park (UP). Conservation efforts have increased its population from ~200 in 1900 to ~3,500 today.",
     habitat:
@@ -528,7 +528,7 @@ export const wildlife: Wildlife[] = [
     type: "flora",
     category: "Tree",
     imageUrl:
-      "https://images.unsplash.com/photo-1518882515711-f614d0e57795?w=600",
+      "https://images.unsplash.com/photo-1518173946687-a1e33bbc4a5e?w=600",
     description:
       "Mangroves are salt-tolerant trees that form dense coastal forests in tidal zones. The Sundarbans (West Bengal) is the world's largest mangrove forest. Mangroves protect coastlines from erosion and storms, serve as fish nurseries, and sequester carbon at rates 3–5× higher than terrestrial forests.",
     habitat: "Tidal mudflats, estuaries, and coastal lagoons",
@@ -672,7 +672,7 @@ export const wildlife: Wildlife[] = [
     type: "fauna",
     category: "Mammal",
     imageUrl:
-      "https://images.unsplash.com/photo-1518882515711-f614d0e57795?w=600",
+      "https://images.unsplash.com/photo-1518173946687-a1e33bbc4a5e?w=600",
     description:
       "The dugong (sea cow) is a gentle marine herbivore that grazes on seagrass beds around the Andaman & Nicobar Islands and the Gulf of Mannar. India has only about 250 dugongs left, primarily in the Andamans. It is India's only marine herbivorous mammal.",
     habitat: "Shallow coastal waters with seagrass beds",

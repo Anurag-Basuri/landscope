@@ -215,7 +215,7 @@ export const landforms: Landform[] = [
     summary:
       "The Peninsular Plateau (Deccan Plateau) is a vast triangular tableland of Precambrian rocks. It is geologically stable, mineral rich, and home to dramatic escarpments, waterfalls, and biodiversity hotspots.",
     heroImageUrl:
-      "https://images.unsplash.com/photo-1590766940554-634f4e473065?w=1200",
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200",
     galleryImages: [
       "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=800",
       "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800",
@@ -319,7 +319,7 @@ export const landforms: Landform[] = [
       "https://images.unsplash.com/photo-1547234935-80c7145ec969?w=800",
       "https://images.unsplash.com/photo-1549144511-f099e773c147?w=800",
       "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=800",
-      "https://images.unsplash.com/photo-1518882515711-f614d0e57795?w=800",
+      "https://images.unsplash.com/photo-1518173946687-a1e33bbc4a5e?w=800",
       "https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=800",
     ],
     stats: [

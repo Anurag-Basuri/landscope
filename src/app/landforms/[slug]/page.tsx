@@ -9,7 +9,7 @@ import WildlifeCard from "@/components/WildlifeCard";
 import { ChevronRight, ChevronDown, Sparkles } from "lucide-react";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export function generateStaticParams() {
@@ -17,7 +17,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const lf = getLandformBySlug(slug);
   if (!lf) return { title: "Not Found" };
   return {
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function LandformPage({ params }: PageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const lf = getLandformBySlug(slug);
   if (!lf) notFound();
 
