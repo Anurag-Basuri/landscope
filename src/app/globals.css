@@ -96,9 +96,31 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground font-sans;
   }
+  ::selection {
+    background-color: hsl(199, 89%, 49%, 0.3);
+    color: hsl(216, 100%, 95%);
+  }
+}
+
+/* ─── Custom Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(222, 47%, 11%);
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(216, 33%, 28%);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(199, 89%, 49%);
 }
 
 /* ─── Image aspect ratio utility ─── */
@@ -111,4 +133,12 @@
   height: 100%;
   object-fit: cover;
   transition: transform 500ms ease;
+}
+
+/* ─── Masonry-ish gallery ─── */
+.gallery-masonry > :nth-child(1) {
+  grid-row: span 2;
+}
+.gallery-masonry > :nth-child(4) {
+  grid-row: span 2;
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { landforms } from "@/data/landforms";
@@ -15,6 +16,7 @@ import { Menu, ChevronDown } from "lucide-react";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     function onScroll() {
@@ -31,6 +33,11 @@ export default function Header() {
     { href: "/faq", label: "FAQ" },
     { href: "/contact", label: "Contact" },
   ];
+
+  function isActive(href: string) {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  }
 
   return (
     <header
@@ -56,26 +63,44 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-1">
           <Link
             href="/"
-            className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+            className={`relative px-4 py-2 text-sm font-medium transition-colors ${
+              isActive("/")
+                ? "text-primary"
+                : "text-muted-foreground hover:text-primary"
+            }`}
           >
             Home
+            {isActive("/") && (
+              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary" />
+            )}
           </Link>
 
           {/* Landforms Dropdown */}
           <div className="relative group">
             <Link
               href="/landforms"
-              className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              className={`flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors ${
+                isActive("/landforms")
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-primary"
+              }`}
             >
               Landforms
-              <ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180" />
+              <ChevronDown className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-180" />
+              {isActive("/landforms") && (
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary" />
+              )}
             </Link>
-            <div className="absolute top-full left-0 min-w-[260px] bg-card border border-border rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 shadow-xl translate-y-2 group-hover:translate-y-0">
+            <div className="absolute top-full left-0 min-w-[260px] bg-card/95 backdrop-blur-xl border border-border/50 rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-2xl shadow-black/20 translate-y-3 group-hover:translate-y-0">
               {landforms.map((lf) => (
                 <Link
                   key={lf.slug}
                   href={`/landforms/${lf.slug}`}
-                  className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-accent/50 rounded-lg transition-colors"
+                  className={`block px-4 py-2.5 text-sm rounded-lg transition-colors ${
+                    pathname === `/landforms/${lf.slug}`
+                      ? "text-primary bg-accent/50"
+                      : "text-muted-foreground hover:text-primary hover:bg-accent/50"
+                  }`}
                 >
                   {lf.name}
                 </Link>
@@ -87,17 +112,19 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              className={`relative px-4 py-2 text-sm font-medium transition-colors ${
+                isActive(link.href)
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-primary"
+              }`}
             >
               {link.label}
+              {isActive(link.href) && (
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary" />
+              )}
             </Link>
           ))}
         </nav>
-
-        {/* Desktop CTA */}
-        <Button className="hidden md:inline-flex bg-gradient-to-r from-cyan-primary to-teal-accent text-white hover:shadow-lg hover:shadow-cyan-primary/25 transition-all">
-          Login
-        </Button>
 
         {/* Mobile Nav */}
         <Sheet>
@@ -123,7 +150,11 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="px-4 py-3 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-accent/50 rounded-lg transition-colors"
+                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                    isActive(link.href)
+                      ? "text-primary bg-accent/50"
+                      : "text-muted-foreground hover:text-primary hover:bg-accent/50"
+                  }`}
                 >
                   {link.label}
                 </Link>
@@ -134,7 +165,11 @@ export default function Header() {
                   <Link
                     key={lf.slug}
                     href={`/landforms/${lf.slug}`}
-                    className="px-4 py-2 text-xs text-muted-foreground hover:text-primary transition-colors"
+                    className={`px-4 py-2 text-xs transition-colors ${
+                      pathname === `/landforms/${lf.slug}`
+                        ? "text-primary"
+                        : "text-muted-foreground hover:text-primary"
+                    }`}
                   >
                     {lf.name}
                   </Link>

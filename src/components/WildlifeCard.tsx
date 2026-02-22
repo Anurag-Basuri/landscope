@@ -29,7 +29,7 @@ export default function WildlifeCard({ species, index = 0 }: Props) {
     >
       <Link href={`/wildlife/${species.slug}`}>
         <Card className="group overflow-hidden border-border/50 hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 py-0 gap-0">
-          <div className="relative h-[200px] overflow-hidden">
+          <div className="relative h-[220px] overflow-hidden">
             <Image
               src={species.imageUrl}
               width={400}
@@ -49,16 +49,26 @@ export default function WildlifeCard({ species, index = 0 }: Props) {
               </Badge>
             )}
           </div>
-          <CardContent className="p-4 space-y-2">
-            <span className="text-xs font-semibold text-primary">
-              {species.type === "flora" ? "🌿 Flora" : "🐾 Fauna"} ·{" "}
-              {species.category}
-            </span>
+          <CardContent className="relative p-4 space-y-1.5 bg-card/80 backdrop-blur-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-primary">
+                {species.type === "flora" ? "🌿 Flora" : "🐾 Fauna"} ·{" "}
+                {species.category}
+              </span>
+              {species.habitat && (
+                <span className="text-[10px] font-medium text-muted-foreground bg-secondary/80 px-2 py-0.5 rounded-full truncate max-w-[100px]">
+                  {species.habitat.split(",")[0]}
+                </span>
+              )}
+            </div>
             <h3 className="text-foreground font-bold text-base group-hover:text-primary transition-colors">
               {species.name}
             </h3>
             <p className="text-muted-foreground text-xs italic">
               {species.scientificName}
+            </p>
+            <p className="text-muted-foreground text-xs line-clamp-2 leading-relaxed pt-0.5">
+              {species.description}
             </p>
           </CardContent>
         </Card>
