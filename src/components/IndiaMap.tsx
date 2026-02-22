@@ -9,6 +9,7 @@ import { feature } from "topojson-client";
 import type { FeatureCollection } from "geojson";
 import { landforms } from "@/data/landforms";
 import { regionGroups } from "@/data/regions";
+import type { Landform } from "@/data/types";
 import { ArrowRight, MapPin, MousePointerClick } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -138,8 +139,8 @@ function IndiaMapInner() {
   // We display info for the selected slug if it exists, otherwise fallback to hovered slug
   const activeDisplaySlug = selectedSlug || hoveredSlug;
 
-  const activeLandform = activeDisplaySlug
-    ? landforms.find((lf) => lf.slug === activeDisplaySlug)
+  const activeLandform: Landform | null = activeDisplaySlug
+    ? (landforms.find((lf) => lf.slug === activeDisplaySlug) ?? null)
     : null;
   const activeRegion = activeDisplaySlug
     ? regionGroups.find((r) => r.id === activeDisplaySlug)
@@ -551,16 +552,16 @@ function IndiaMapInner() {
                   </p>
 
                   <div className="flex flex-wrap gap-2 pt-1">
-                    {activeLandform.stats.slice(0, 3).map((fact, i) => (
+                    {activeLandform.stats.slice(0, 3).map((stat) => (
                       <Badge
-                        key={i}
+                        key={stat.label}
                         variant="secondary"
                         className="bg-black/20 text-white/80 font-medium text-[10px] sm:text-[11px] px-3 py-1.5 border border-white/5 backdrop-blur-md"
                       >
                         <span className="text-white/40 mr-1.5">
-                          {fact.label}
+                          {stat.label}
                         </span>
-                        {fact.value}
+                        {stat.value}
                       </Badge>
                     ))}
                   </div>

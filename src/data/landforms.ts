@@ -78,7 +78,7 @@ export const landforms: Landform[] = [
         id: "culture",
         title: "Culture & Heritage",
         content:
-          "The Himalayas hold immense spiritual significance across Hinduism, Buddhism, Jainism, and Sikhism. Sacred sites include Kedarnath and Badrinath (part of the Char Dham pilgrimage), Amarnath Cave, Hemkund Sahib, and numerous Buddhist monasteries across Ladakh, Spiti, and Sikkim — including Hemis, Key, and Rumtek. The region is home to diverse ethnic communities: Ladakhis, Garhwalis, Kumaonis, Lepchas, Bhutias, and Monpas, each with distinct languages, festivals, and traditions. The Valley of Flowers in Uttarakhand, a UNESCO World Heritage Site, was described in 1931 as "the most beautiful valley in the world." Nanda Devi Biosphere Reserve and Khangchendzonga National Park are also UNESCO sites.",
+          'The Himalayas hold immense spiritual significance across Hinduism, Buddhism, Jainism, and Sikhism. Sacred sites include Kedarnath and Badrinath (part of the Char Dham pilgrimage), Amarnath Cave, Hemkund Sahib, and numerous Buddhist monasteries across Ladakh, Spiti, and Sikkim — including Hemis, Key, and Rumtek. The region is home to diverse ethnic communities: Ladakhis, Garhwalis, Kumaonis, Lepchas, Bhutias, and Monpas, each with distinct languages, festivals, and traditions. The Valley of Flowers in Uttarakhand, a UNESCO World Heritage Site, was described in 1931 as "the most beautiful valley in the world." Nanda Devi Biosphere Reserve and Khangchendzonga National Park are also UNESCO sites.',
       },
       {
         id: "conservation",
@@ -235,14 +235,12 @@ export const landforms: Landform[] = [
     highlights: [
       {
         title: "Ancient Shield",
-        description:
-          "Some of the oldest rocks on Earth underpin the plateau.",
+        description: "Some of the oldest rocks on Earth underpin the plateau.",
         accent: "#f97316",
       },
       {
         title: "Mineral Heartland",
-        description:
-          "Coal, iron ore, and bauxite deposits fuel industry.",
+        description: "Coal, iron ore, and bauxite deposits fuel industry.",
         accent: "#fb923c",
       },
       {
@@ -435,14 +433,12 @@ export const landforms: Landform[] = [
     highlights: [
       {
         title: "Two Coasts",
-        description:
-          "Narrow, rain-soaked west and broad, deltaic east.",
+        description: "Narrow, rain-soaked west and broad, deltaic east.",
         accent: "#0ea5e9",
       },
       {
         title: "Marine Biodiversity",
-        description:
-          "Coral reefs, mangroves, lagoons, and nesting beaches.",
+        description: "Coral reefs, mangroves, lagoons, and nesting beaches.",
         accent: "#38bdf8",
       },
       {
@@ -530,8 +526,7 @@ export const landforms: Landform[] = [
     highlights: [
       {
         title: "Island Biodiversity",
-        description:
-          "Endemic species, coral reefs, and nesting beaches.",
+        description: "Endemic species, coral reefs, and nesting beaches.",
         accent: "#14b8a6",
       },
       {
@@ -542,8 +537,7 @@ export const landforms: Landform[] = [
       },
       {
         title: "Living Heritage",
-        description:
-          "Indigenous communities with ancient cultural lineages.",
+        description: "Indigenous communities with ancient cultural lineages.",
         accent: "#5eead4",
       },
     ],

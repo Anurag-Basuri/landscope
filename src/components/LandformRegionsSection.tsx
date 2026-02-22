@@ -82,7 +82,7 @@ export default function LandformRegionsSection({ regionGroup }: Props) {
           const collection = feature(
             data,
             data.objects[objectKey],
-          ) as FeatureCollection;
+          ) as unknown as FeatureCollection;
           setGeographies(collection);
         }
       } catch (error) {
