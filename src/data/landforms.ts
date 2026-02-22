@@ -19,15 +19,36 @@ export const landforms: Landform[] = [
       "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800",
     ],
     stats: [
-      { label: "Length", value: "~2,400 km" },
-      { label: "Highest Peak", value: "Kanchenjunga (8,586 m)" },
-      { label: "Glaciers", value: "~15,000" },
-      { label: "Climate Zones", value: "Subtropical to Arctic" },
+      {
+        label: "Length",
+        value: "~2,400 km",
+        detail: "Extends across India's entire northern rim",
+      },
+      {
+        label: "Highest Peak",
+        value: "Kanchenjunga (8,586 m)",
+        detail: "Highest peak within Indian territory",
+      },
+      {
+        label: "Glaciers",
+        value: "~15,000",
+        detail: "Largest ice reserve outside the poles",
+      },
+      {
+        label: "Climate Zones",
+        value: "Subtropical to Arctic",
+        detail: "Compressed into steep elevation bands",
+      },
       {
         label: "Major Rivers",
         value: "Ganga, Yamuna, Brahmaputra, Indus",
+        detail: "Headwaters sustain 1.5B people downstream",
       },
-      { label: "Tectonic Rise", value: "~1 cm per year" },
+      {
+        label: "Tectonic Rise",
+        value: "~1 cm per year",
+        detail: "Still rising due to plate collision",
+      },
     ],
     highlights: [
       {
@@ -125,12 +146,36 @@ export const landforms: Landform[] = [
       "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800",
     ],
     stats: [
-      { label: "Area", value: "~700,000 sq km" },
-      { label: "Length", value: "~2,400 km" },
-      { label: "Population", value: "500+ million" },
-      { label: "Soil Depth", value: "Up to 2,000 m" },
-      { label: "Major Rivers", value: "Ganga, Yamuna, Brahmaputra, Indus" },
-      { label: "Key Crops", value: "Wheat, rice, sugarcane, jute" },
+      {
+        label: "Area",
+        value: "~700,000 sq km",
+        detail: "One of the world's largest alluvial plains",
+      },
+      {
+        label: "Length",
+        value: "~2,400 km",
+        detail: "Stretches from Punjab to Assam",
+      },
+      {
+        label: "Population",
+        value: "500+ million",
+        detail: "Among the highest population densities on Earth",
+      },
+      {
+        label: "Soil Depth",
+        value: "Up to 2,000 m",
+        detail: "Deep, renewed alluvium supports multiple crops",
+      },
+      {
+        label: "Major Rivers",
+        value: "Ganga, Yamuna, Brahmaputra, Indus",
+        detail: "River systems shape agriculture and settlement",
+      },
+      {
+        label: "Key Crops",
+        value: "Wheat, rice, sugarcane, jute",
+        detail: "India's primary food-grain belt",
+      },
     ],
     highlights: [
       {
@@ -225,12 +270,36 @@ export const landforms: Landform[] = [
       "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800",
     ],
     stats: [
-      { label: "Area", value: "~1.6 million sq km" },
-      { label: "Rock Age", value: "Up to 3.6 billion years" },
-      { label: "Highest Point", value: "Anamudi (2,695 m)" },
-      { label: "Deccan Traps", value: "~500,000 sq km" },
-      { label: "Major Rivers", value: "Godavari, Krishna, Kaveri, Narmada" },
-      { label: "Key Minerals", value: "Iron ore, coal, manganese, mica" },
+      {
+        label: "Area",
+        value: "~1.6 million sq km",
+        detail: "Triangular plateau covering much of southern India",
+      },
+      {
+        label: "Rock Age",
+        value: "Up to 3.6 billion years",
+        detail: "Among the oldest rocks on Earth",
+      },
+      {
+        label: "Highest Point",
+        value: "Anamudi (2,695 m)",
+        detail: "Tallest peak south of the Himalayas",
+      },
+      {
+        label: "Deccan Traps",
+        value: "~500,000 sq km",
+        detail: "Massive basalt flows from ancient eruptions",
+      },
+      {
+        label: "Major Rivers",
+        value: "Godavari, Krishna, Kaveri, Narmada",
+        detail: "Mostly east-flowing river systems",
+      },
+      {
+        label: "Key Minerals",
+        value: "Iron ore, coal, manganese, mica",
+        detail: "India's mineral heartland",
+      },
     ],
     highlights: [
       {
@@ -323,12 +392,36 @@ export const landforms: Landform[] = [
       "https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=800",
     ],
     stats: [
-      { label: "Area", value: "~200,000 sq km" },
-      { label: "Population", value: "~23 million" },
-      { label: "Annual Rainfall", value: "100–500 mm" },
-      { label: "Temperature Range", value: "-2C to 51C" },
-      { label: "Only River", value: "Luni (495 km)" },
-      { label: "Salt Flats", value: "Rann of Kutch" },
+      {
+        label: "Area",
+        value: "~200,000 sq km",
+        detail: "About 10% of India's land area",
+      },
+      {
+        label: "Population",
+        value: "~23 million",
+        detail: "World's most densely populated desert",
+      },
+      {
+        label: "Annual Rainfall",
+        value: "100–500 mm",
+        detail: "Monsoon-fed, highly variable",
+      },
+      {
+        label: "Temperature Range",
+        value: "-2C to 51C",
+        detail: "Extreme daily and seasonal swings",
+      },
+      {
+        label: "Only River",
+        value: "Luni (495 km)",
+        detail: "Seasonal flow into the Rann of Kutch",
+      },
+      {
+        label: "Salt Flats",
+        value: "Rann of Kutch",
+        detail: "Seasonal wetland and salt-pan landscape",
+      },
     ],
     highlights: [
       {
@@ -423,12 +516,36 @@ export const landforms: Landform[] = [
       "https://images.unsplash.com/photo-1468413253725-0d5181091126?w=800",
     ],
     stats: [
-      { label: "Total Coastline", value: "7,516 km" },
-      { label: "Western Coast Width", value: "10–25 km" },
-      { label: "Eastern Coast Width", value: "80–100 km" },
-      { label: "Coastal Population", value: "250+ million" },
-      { label: "Major Ports", value: "12 major, 200+ minor" },
-      { label: "Mangroves", value: "4,975 sq km" },
+      {
+        label: "Total Coastline",
+        value: "7,516 km",
+        detail: "Touches 9 states and 4 union territories",
+      },
+      {
+        label: "Western Coast Width",
+        value: "10–25 km",
+        detail: "Narrow, rain-soaked coastal strip",
+      },
+      {
+        label: "Eastern Coast Width",
+        value: "80–100 km",
+        detail: "Broad deltaic plains",
+      },
+      {
+        label: "Coastal Population",
+        value: "250+ million",
+        detail: "Dense settlement and trade hubs",
+      },
+      {
+        label: "Major Ports",
+        value: "12 major, 200+ minor",
+        detail: "Handles 95% of trade by volume",
+      },
+      {
+        label: "Mangroves",
+        value: "4,975 sq km",
+        detail: "Critical coastal buffer ecosystems",
+      },
     ],
     highlights: [
       {
@@ -516,12 +633,36 @@ export const landforms: Landform[] = [
       "https://images.unsplash.com/photo-1471922694854-ff1b63b20054?w=800",
     ],
     stats: [
-      { label: "Andaman & Nicobar", value: "572 islands (37 inhabited)" },
-      { label: "Lakshadweep", value: "36 atolls (10 inhabited)" },
-      { label: "Active Volcano", value: "Barren Island" },
-      { label: "Coral Reef Area", value: "~2,375 sq km" },
-      { label: "Endemic Birds", value: "99 subspecies" },
-      { label: "Dugongs", value: "~200 (India's only)" },
+      {
+        label: "Andaman & Nicobar",
+        value: "572 islands (37 inhabited)",
+        detail: "Bay of Bengal volcanic arc",
+      },
+      {
+        label: "Lakshadweep",
+        value: "36 atolls (10 inhabited)",
+        detail: "Arabian Sea coral atolls",
+      },
+      {
+        label: "Active Volcano",
+        value: "Barren Island",
+        detail: "India's only active volcano",
+      },
+      {
+        label: "Coral Reef Area",
+        value: "~2,375 sq km",
+        detail: "Reef systems with high marine diversity",
+      },
+      {
+        label: "Endemic Birds",
+        value: "99 subspecies",
+        detail: "Isolation drives endemism",
+      },
+      {
+        label: "Dugongs",
+        value: "~200 (India's only)",
+        detail: "Found in seagrass meadows",
+      },
     ],
     highlights: [
       {

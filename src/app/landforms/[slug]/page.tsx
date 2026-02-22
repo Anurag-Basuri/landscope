@@ -104,6 +104,11 @@ export default async function LandformPage({ params }: PageProps) {
                   <div className="text-sm font-semibold text-white mt-1">
                     {stat.value}
                   </div>
+                  {stat.detail && (
+                    <div className="text-[11px] text-muted-foreground mt-1">
+                      {stat.detail}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

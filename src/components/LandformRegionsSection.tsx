@@ -50,6 +50,15 @@ export default function LandformRegionsSection({ regionGroup }: Props) {
     return regionGroup.subregions.find((sub) => sub.id === id) ?? null;
   }, [hoveredId, selectedId, regionGroup.subregions]);
 
+  const highlightCount = useMemo(
+    () =>
+      regionGroup.subregions.reduce(
+        (total, subregion) => total + subregion.highlights.length,
+        0,
+      ),
+    [regionGroup.subregions],
+  );
+
   const projection = useMemo(
     () =>
       geoMercator()
@@ -134,6 +143,11 @@ export default function LandformRegionsSection({ regionGroup }: Props) {
             ref={mapRef}
             className="relative rounded-3xl border border-white/10 bg-card/40 backdrop-blur-md p-4 shadow-2xl"
           >
+            <div className="absolute left-4 top-4 hidden md:flex items-center gap-3 rounded-full border border-white/10 bg-background/70 px-3 py-2 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+              <span>{regionGroup.states.length} states</span>
+              <span className="h-1 w-1 rounded-full bg-white/40" />
+              <span>{highlightCount} highlights</span>
+            </div>
             <svg
               width={MAP_WIDTH}
               height={MAP_HEIGHT}
@@ -283,6 +297,18 @@ export default function LandformRegionsSection({ regionGroup }: Props) {
                 ? activeSubregion.description
                 : "Select a subregion on the map to reveal local landscapes, key features, and state coverage."}
             </p>
+            <div className="mt-4 flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              <span className="rounded-full border border-white/10 bg-background/60 px-3 py-1">
+                {activeSubregion
+                  ? `${activeSubregion.states.length} states`
+                  : `${regionGroup.states.length} states`}
+              </span>
+              <span className="rounded-full border border-white/10 bg-background/60 px-3 py-1">
+                {activeSubregion
+                  ? `${activeSubregion.highlights.length} highlights`
+                  : `${highlightCount} highlights`}
+              </span>
+            </div>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-card/40 backdrop-blur-md p-6 shadow-xl">
@@ -318,6 +344,47 @@ export default function LandformRegionsSection({ regionGroup }: Props) {
                   {state}
                 </span>
               ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-card/40 backdrop-blur-md p-6 shadow-xl">
+            <h4 className="text-sm font-semibold text-foreground mb-3">
+              Subregion guide
+            </h4>
+            <div className="space-y-3">
+              {regionGroup.subregions.map((subregion) => {
+                const isActive = selectedId === subregion.id;
+                return (
+                  <button
+                    key={subregion.id}
+                    type="button"
+                    onClick={() => setSelectedId(subregion.id)}
+                    className={`w-full text-left rounded-xl border px-4 py-3 transition-all ${
+                      isActive
+                        ? "border-transparent bg-white/10"
+                        : "border-border/60 bg-background/40 hover:border-white/20"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="h-2.5 w-2.5 rounded-full"
+                          style={{ backgroundColor: subregion.color }}
+                        />
+                        <span className="text-sm font-semibold text-foreground">
+                          {subregion.label}
+                        </span>
+                      </div>
+                      <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                        {subregion.states.length} states
+                      </span>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      {subregion.highlights[0]}
+                    </p>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
