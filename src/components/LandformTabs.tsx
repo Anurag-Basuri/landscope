@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,8 +17,22 @@ interface Props {
 }
 
 export default function LandformTabs({ landform, flora, fauna }: Props) {
+  const tabsRef = useRef<HTMLDivElement>(null);
+
+  function scrollToTabs() {
+    tabsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   return (
-    <Tabs defaultValue="overview" className="w-full">
+    <Tabs
+      defaultValue="overview"
+      className="w-full scroll-mt-24"
+      ref={tabsRef}
+      onValueChange={() => {
+        // Small delay to let tab content render before scrolling
+        setTimeout(scrollToTabs, 50);
+      }}
+    >
       <TabsList className="w-full max-w-2xl mx-auto bg-card border border-border/50 p-1 rounded-xl mb-10 grid grid-cols-4">
         <TabsTrigger
           value="overview"
@@ -113,6 +128,9 @@ export default function LandformTabs({ landform, flora, fauna }: Props) {
                 <Separator className="bg-border/30" />
                 <h3 className="text-lg font-semibold text-foreground">
                   🌿 Native Flora
+                  <span className="text-sm font-normal text-muted-foreground ml-2">
+                    ({flora.length} species)
+                  </span>
                 </h3>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {flora.map((sp, i) => (
@@ -155,6 +173,27 @@ export default function LandformTabs({ landform, flora, fauna }: Props) {
       {/* ─── Wildlife Tab ─── */}
       <TabsContent value="wildlife">
         <div className="space-y-12">
+          {/* Species count summary */}
+          {(fauna.length > 0 || flora.length > 0) && (
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <span className="bg-card border border-border/50 px-4 py-2 rounded-lg">
+                🐾 <strong className="text-foreground">{fauna.length}</strong>{" "}
+                Fauna
+              </span>
+              <span className="bg-card border border-border/50 px-4 py-2 rounded-lg">
+                🌿 <strong className="text-foreground">{flora.length}</strong>{" "}
+                Flora
+              </span>
+              <span className="bg-card border border-border/50 px-4 py-2 rounded-lg">
+                Total:{" "}
+                <strong className="text-foreground">
+                  {fauna.length + flora.length}
+                </strong>{" "}
+                species
+              </span>
+            </div>
+          )}
+
           {fauna.length > 0 && (
             <div>
               <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-3">

@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import { landforms, getLandformBySlug } from "@/data/landforms";
 import { getFloraByLandform, getFaunaByLandform } from "@/data/wildlife";
 import LandformTabs from "@/components/LandformTabs";
+import { ChevronRight, ChevronDown } from "lucide-react";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -42,6 +44,22 @@ export default async function LandformPage({ params }: PageProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
         <div className="absolute bottom-12 left-0 right-0 z-10">
           <div className="max-w-7xl mx-auto px-5">
+            {/* Breadcrumbs */}
+            <nav className="flex items-center gap-1.5 text-sm text-muted-foreground mb-4">
+              <Link href="/" className="hover:text-primary transition-colors">
+                Home
+              </Link>
+              <ChevronRight className="h-3.5 w-3.5" />
+              <Link
+                href="/landforms"
+                className="hover:text-primary transition-colors"
+              >
+                Landforms
+              </Link>
+              <ChevronRight className="h-3.5 w-3.5" />
+              <span className="text-primary font-medium">{lf.name}</span>
+            </nav>
+
             <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-2">
               {lf.name}
             </h1>
@@ -49,6 +67,11 @@ export default async function LandformPage({ params }: PageProps) {
               {lf.tagline}
             </p>
           </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+          <ChevronDown className="h-5 w-5 text-white/40" />
         </div>
       </section>
 
@@ -59,7 +82,7 @@ export default async function LandformPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* Gallery */}
+      {/* Gallery — Masonry style */}
       {lf.galleryImages.length > 0 && (
         <section className="py-16 bg-card/50">
           <div className="max-w-7xl mx-auto px-5">
@@ -68,17 +91,21 @@ export default async function LandformPage({ params }: PageProps) {
                 Gallery
               </span>
             </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[200px] gallery-masonry">
               {lf.galleryImages.map((img, i) => (
-                <div key={i} className="rounded-xl overflow-hidden group">
+                <div
+                  key={i}
+                  className="rounded-xl overflow-hidden group relative"
+                >
                   <Image
                     src={img}
-                    width={400}
-                    height={300}
+                    width={600}
+                    height={400}
                     alt={`${lf.name} photo ${i + 1}`}
-                    className="img-cover group-hover:scale-105"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                 </div>
               ))}
             </div>

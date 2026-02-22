@@ -6,6 +6,8 @@ import { getLandformBySlug } from "@/data/landforms";
 import { Landform } from "@/data/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import WildlifeCard from "@/components/WildlifeCard";
+import { ChevronRight, ArrowLeft } from "lucide-react";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -34,6 +36,15 @@ export default async function WildlifeDetailPage({ params }: PageProps) {
     .map(getLandformBySlug)
     .filter((lf): lf is Landform => lf !== undefined);
 
+  // Related species: share at least one landform, exclude self, take 3
+  const related = wildlife
+    .filter(
+      (w) =>
+        w.slug !== sp.slug &&
+        w.landformSlugs.some((ls) => sp.landformSlugs.includes(ls)),
+    )
+    .slice(0, 3);
+
   const statusColors: Record<string, string> = {
     "Critically Endangered": "bg-red-500/90 text-white hover:bg-red-500",
     Endangered: "bg-orange-500/90 text-white hover:bg-orange-500",
@@ -44,6 +55,31 @@ export default async function WildlifeDetailPage({ params }: PageProps) {
   return (
     <section className="pt-28 pb-20">
       <div className="max-w-7xl mx-auto px-5">
+        {/* Breadcrumbs & back link */}
+        <div className="flex items-center justify-between mb-8">
+          <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
+            <Link href="/" className="hover:text-primary transition-colors">
+              Home
+            </Link>
+            <ChevronRight className="h-3.5 w-3.5" />
+            <Link
+              href="/wildlife"
+              className="hover:text-primary transition-colors"
+            >
+              Wildlife
+            </Link>
+            <ChevronRight className="h-3.5 w-3.5" />
+            <span className="text-primary font-medium">{sp.name}</span>
+          </nav>
+          <Link
+            href="/wildlife"
+            className="hidden sm:flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+            Back to Wildlife
+          </Link>
+        </div>
+
         <div className="grid md:grid-cols-2 gap-10 items-start">
           {/* Image */}
           <div className="relative rounded-2xl overflow-hidden">
@@ -140,6 +176,52 @@ export default async function WildlifeDetailPage({ params }: PageProps) {
             )}
           </div>
         </div>
+
+        {/* Gallery Images */}
+        {sp.galleryImages && sp.galleryImages.length > 0 && (
+          <div className="mt-16">
+            <h2 className="text-2xl font-bold text-foreground mb-6">
+              <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+                Gallery
+              </span>
+            </h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {sp.galleryImages.map((img, i) => (
+                <div
+                  key={i}
+                  className="rounded-xl overflow-hidden group relative h-[220px]"
+                >
+                  <Image
+                    src={img}
+                    width={400}
+                    height={300}
+                    alt={`${sp.name} photo ${i + 1}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Related Species */}
+        {related.length > 0 && (
+          <div className="mt-16">
+            <h2 className="text-2xl font-bold text-foreground mb-6">
+              Related{" "}
+              <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+                Species
+              </span>
+            </h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {related.map((r, i) => (
+                <WildlifeCard key={r.slug} species={r} index={i} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

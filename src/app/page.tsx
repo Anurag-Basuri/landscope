@@ -8,7 +8,16 @@ import { landforms } from "@/data/landforms";
 import { wildlife } from "@/data/wildlife";
 import LandformCard from "@/components/LandformCard";
 import WildlifeCard from "@/components/WildlifeCard";
-import { ArrowRight, Mountain, TreePine, Compass } from "lucide-react";
+import {
+  ArrowRight,
+  Mountain,
+  TreePine,
+  Compass,
+  MapPin,
+  Leaf,
+  PawPrint,
+  Layers,
+} from "lucide-react";
 
 const featuredWildlife = wildlife
   .filter((w) => w.conservationStatus)
@@ -22,6 +31,7 @@ export default function Home() {
         {/* Background glow */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-primary/10 rounded-full blur-[120px] -z-10" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-teal-accent/10 rounded-full blur-[120px] -z-10" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-primary/5 rounded-full blur-[200px] -z-10" />
 
         <div className="max-w-7xl mx-auto px-5 grid lg:grid-cols-2 gap-12 items-center">
           <motion.div
@@ -169,10 +179,26 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-5">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { number: "6", label: "Major Landforms" },
-              { number: "3.3M", label: "sq km Total Area" },
-              { number: "~1,00,000", label: "Fauna Species" },
-              { number: "~45,000", label: "Flora Species" },
+              {
+                number: "6",
+                label: "Major Landforms",
+                icon: Layers,
+              },
+              {
+                number: "3.3M",
+                label: "sq km Total Area",
+                icon: MapPin,
+              },
+              {
+                number: "~1,00,000",
+                label: "Fauna Species",
+                icon: PawPrint,
+              },
+              {
+                number: "~45,000",
+                label: "Flora Species",
+                icon: Leaf,
+              },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -180,8 +206,9 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="text-center p-8 bg-card border border-border/50 rounded-2xl hover:border-primary/30 transition-colors"
+                className="text-center p-8 bg-card border border-border/50 rounded-2xl hover:border-primary/30 transition-all duration-300 group"
               >
+                <stat.icon className="h-6 w-6 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
                 <span className="block text-3xl font-extrabold bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
                   {stat.number}
                 </span>
@@ -192,6 +219,55 @@ export default function Home() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* ─── CTA BAND ─── */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-primary/10 via-teal-accent/5 to-cyan-primary/10 -z-10" />
+        <div className="absolute top-0 left-1/3 w-80 h-80 bg-cyan-primary/10 rounded-full blur-[100px] -z-10" />
+        <div className="absolute bottom-0 right-1/3 w-80 h-80 bg-teal-accent/10 rounded-full blur-[100px] -z-10" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="max-w-3xl mx-auto px-5 text-center"
+        >
+          <h2 className="text-3xl font-bold text-foreground mb-4">
+            Ready to{" "}
+            <span className="bg-gradient-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+              Explore?
+            </span>
+          </h2>
+          <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
+            Dive deeper into India&apos;s geography — learn about each
+            landform&apos;s unique ecology, culture, and the species that call
+            it home.
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Button
+              asChild
+              size="lg"
+              className="bg-gradient-to-r from-cyan-primary to-teal-accent text-white hover:shadow-lg hover:shadow-cyan-primary/25 transition-all"
+            >
+              <Link href="/landforms">
+                <Mountain className="h-4 w-4 mr-2" />
+                Browse Landforms
+              </Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-border/50 text-foreground hover:border-primary/50 hover:text-primary"
+            >
+              <Link href="/about">
+                Learn More <ArrowRight className="h-4 w-4 ml-2" />
+              </Link>
+            </Button>
+          </div>
+        </motion.div>
       </section>
     </>
   );
