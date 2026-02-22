@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -8,7 +9,6 @@ import { landforms } from "@/data/landforms";
 import { wildlife } from "@/data/wildlife";
 import LandformCard from "@/components/LandformCard";
 import WildlifeCard from "@/components/WildlifeCard";
-import IndiaMap from "@/components/IndiaMap";
 import {
   ArrowRight,
   Mountain,
@@ -19,6 +19,13 @@ import {
   PawPrint,
   Layers,
 } from "lucide-react";
+
+const IndiaMap = dynamic(() => import("@/components/IndiaMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="rounded-3xl border border-border/60 bg-card/40 h-[520px] w-full" />
+  ),
+});
 
 const featuredWildlife = wildlife
   .filter((w) => w.conservationStatus)

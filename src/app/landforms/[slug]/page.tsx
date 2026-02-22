@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,9 +9,18 @@ import {
   getFaunaByLandform,
   getWildlifeBySlug,
 } from "@/data/wildlife";
-import LandformRegionsSection from "@/components/LandformRegionsSection";
 import WildlifeCard from "@/components/WildlifeCard";
 import { ChevronRight, ChevronDown, Sparkles } from "lucide-react";
+
+const LandformRegionsSection = dynamic(
+  () => import("@/components/LandformRegionsSection"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="rounded-3xl border border-border/60 bg-card/40 h-[640px] w-full" />
+    ),
+  },
+);
 
 interface PageProps {
   params: Promise<{ slug: string }>;
