@@ -10,7 +10,6 @@ import { landforms } from "@/data/landforms";
 import { regionGroups } from "@/data/regions";
 import type { Landform } from "@/data/types";
 import { ArrowRight, MapPin, MousePointerClick } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { getIndiaGeographies } from "@/lib/indiaGeo";
 
 const MAP_WIDTH = 600;
@@ -221,11 +220,11 @@ function IndiaMapInner() {
   const andaman = projection([92.9, 11]);
 
   return (
-    <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 items-center relative">
+    <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-12 items-start relative">
       {/* ── Map Side ── */}
       <div
         ref={mapRef}
-        className="relative w-full max-w-[600px] mx-auto group"
+        className="relative w-full max-w-[520px] sm:max-w-[600px] mx-auto lg:mx-0 group"
         onMouseLeave={handleLeave}
         role="region"
         aria-label="Interactive map of India by landform"
@@ -395,26 +394,29 @@ function IndiaMapInner() {
         </AnimatePresence>
 
         {/* ── Legend / Tabs ── */}
-        <div className="mt-2 relative z-30 w-full px-2">
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 bg-background/50 backdrop-blur-md p-2 rounded-2xl border border-white/5 shadow-inner">
+        <div className="mt-3 relative z-30 w-full px-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 bg-background/50 backdrop-blur-md p-2 rounded-2xl border border-white/5 shadow-inner">
             {regionGroups.map((region) => {
               const isSelected = selectedSlug === region.id;
               const isHovered = hoveredSlug === region.id;
               const isActive = isSelected || (isHovered && !selectedSlug);
+              const landform = landformBySlug.get(region.landformSlug);
+              const topStat = landform?.stats[0];
 
               return (
                 <button
                   key={region.id}
-                  className={`relative flex flex-col items-start justify-center gap-1 text-left p-2.5 sm:p-3 rounded-xl transition-all duration-300 overflow-hidden group/tab ${
+                  type="button"
+                  aria-pressed={isActive}
+                  className={`relative flex flex-col items-start justify-between gap-2 text-left p-3 sm:p-4 min-h-[124px] rounded-xl transition-all duration-300 overflow-hidden group/tab focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 ${
                     isActive
                       ? "bg-white/10 ring-1 ring-white/20 shadow-md"
-                      : "hover:bg-white/5 opacity-70 hover:opacity-100"
+                      : "hover:bg-white/5 opacity-80 hover:opacity-100"
                   }`}
                   onMouseEnter={() => handleHover(region.id)}
                   onMouseLeave={handleLeave}
                   onClick={() => handleSelect(region.id)}
                 >
-                  {/* Subtle active glow */}
                   <div
                     className={`absolute inset-0 opacity-0 transition-opacity duration-300 ${isActive ? "opacity-20" : "group-hover/tab:opacity-10"}`}
                     style={{
@@ -422,25 +424,48 @@ function IndiaMapInner() {
                     }}
                   />
 
-                  <div className="flex items-center justify-between w-full relative z-10">
-                    <span
-                      className="w-2 h-2 rounded-full shrink-0 transition-colors"
-                      style={{
-                        backgroundColor:
-                          isActive || !activeDisplaySlug
-                            ? region.color
-                            : `${region.color}40`,
-                        boxShadow: isActive
-                          ? `0 0 8px ${region.color}`
-                          : "none",
-                      }}
-                    />
+                  <div className="flex items-start justify-between w-full relative z-10 gap-3">
+                    <div className="flex items-start gap-2">
+                      <span
+                        className="mt-1 w-2.5 h-2.5 rounded-full shrink-0 transition-colors"
+                        style={{
+                          backgroundColor:
+                            isActive || !activeDisplaySlug
+                              ? region.color
+                              : `${region.color}40`,
+                          boxShadow: isActive
+                            ? `0 0 8px ${region.color}`
+                            : "none",
+                        }}
+                      />
+                      <div className="space-y-1">
+                        <span
+                          className={`text-[11px] sm:text-[12px] font-semibold tracking-wide ${isActive ? "text-white" : "text-muted-foreground"}`}
+                        >
+                          {region.label}
+                        </span>
+                        {landform && (
+                          <span className="block text-[10px] text-muted-foreground/80 line-clamp-2">
+                            {landform.tagline}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <span className="text-[9px] uppercase tracking-widest text-muted-foreground/70">
+                      {region.states.length} states
+                    </span>
                   </div>
-                  <span
-                    className={`text-[10px] sm:text-[11px] font-semibold tracking-wide mt-1 relative z-10 ${isActive ? "text-white" : "text-muted-foreground"}`}
-                  >
-                    {region.label}
-                  </span>
+
+                  {topStat && (
+                    <div className="relative z-10 flex flex-wrap items-center gap-2 text-[10px]">
+                      <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-muted-foreground/80">
+                        {topStat.label}
+                      </span>
+                      <span className="text-foreground/90 font-semibold">
+                        {topStat.value}
+                      </span>
+                    </div>
+                  )}
                 </button>
               );
             })}
@@ -466,7 +491,7 @@ function IndiaMapInner() {
       </div>
 
       {/* ── Info Panel ── */}
-      <div className="min-h-[440px] flex items-center justify-center relative z-10 w-full max-w-md mx-auto lg:mx-0">
+      <div className="min-h-[360px] lg:min-h-[440px] flex items-center justify-center relative z-10 w-full max-w-md mx-auto lg:mx-0">
         <AnimatePresence mode="wait">
           {activeLandform && activeRegion ? (
             <motion.div
@@ -507,6 +532,9 @@ function IndiaMapInner() {
                     <h3 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-none bg-clip-text text-transparent bg-linear-to-b from-white to-white/70">
                       {activeLandform.name}
                     </h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-2 max-w-xs">
+                      {activeLandform.tagline}
+                    </p>
                   </div>
 
                   {selectedSlug === activeLandform.slug && (
@@ -531,24 +559,67 @@ function IndiaMapInner() {
                 </div>
 
                 {/* Body */}
-                <div className="space-y-4 relative z-10">
-                  <p className="text-muted-foreground leading-relaxed text-sm sm:text-base line-clamp-3">
-                    {activeLandform.summary}
-                  </p>
+                <div className="space-y-5 relative z-10">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground/80">
+                      Overview
+                    </p>
+                    <p className="text-muted-foreground leading-relaxed text-sm sm:text-base line-clamp-4 mt-2">
+                      {activeLandform.summary}
+                    </p>
+                  </div>
 
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {activeLandform.stats.slice(0, 3).map((stat) => (
-                      <Badge
-                        key={stat.label}
-                        variant="secondary"
-                        className="bg-black/20 text-white/80 font-medium text-[10px] sm:text-[11px] px-3 py-1.5 border border-white/5 backdrop-blur-md"
-                      >
-                        <span className="text-white/40 mr-1.5">
-                          {stat.label}
-                        </span>
-                        {stat.value}
-                      </Badge>
-                    ))}
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground/80">
+                      Key facts
+                    </p>
+                    <div className="grid grid-cols-2 gap-2 mt-2">
+                      {activeLandform.stats.slice(0, 4).map((stat) => (
+                        <div
+                          key={stat.label}
+                          className="rounded-lg border border-white/10 bg-black/20 px-3 py-2"
+                        >
+                          <p className="text-[10px] uppercase tracking-widest text-white/50">
+                            {stat.label}
+                          </p>
+                          <p className="text-sm text-white font-semibold mt-1">
+                            {stat.value}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground/80">
+                      Highlights
+                    </p>
+                    <ul className="mt-2 space-y-2">
+                      {activeLandform.highlights
+                        .slice(0, 3)
+                        .map((highlight) => (
+                          <li
+                            key={highlight.title}
+                            className="flex items-start gap-2 text-sm text-muted-foreground"
+                          >
+                            <span
+                              className="mt-1.5 h-1.5 w-1.5 rounded-full"
+                              style={{
+                                backgroundColor:
+                                  highlight.accent ?? activeRegion.color,
+                              }}
+                            />
+                            <span>
+                              <span className="text-white/90 font-semibold">
+                                {highlight.title}
+                              </span>{" "}
+                              <span className="text-muted-foreground">
+                                {highlight.description}
+                              </span>
+                            </span>
+                          </li>
+                        ))}
+                    </ul>
                   </div>
                 </div>
 

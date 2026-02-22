@@ -23,7 +23,7 @@ export default function LandformCard({ landform, index = 0 }: Props) {
     >
       <Link
         href={`/landforms/${landform.slug}`}
-        className="group relative block rounded-2xl overflow-hidden h-[340px] border border-transparent hover:border-cyan-primary/40 transition-all duration-500 hover:shadow-lg hover:shadow-cyan-primary/10"
+        className="group relative block rounded-2xl overflow-hidden h-[300px] sm:h-[320px] lg:h-[340px] border border-transparent hover:border-cyan-primary/40 transition-all duration-500 hover:shadow-lg hover:shadow-cyan-primary/10"
       >
         <Image
           src={landform.heroImageUrl}
@@ -34,14 +34,14 @@ export default function LandformCard({ landform, index = 0 }: Props) {
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-background via-background/40 to-transparent group-hover:from-background/95 transition-all duration-500" />
+        <div className="absolute inset-0 bg-linear-to-t from-background/95 via-background/40 to-transparent group-hover:from-background/98 transition-all duration-500" />
 
         {/* Numbered chip */}
-        <span className="absolute top-4 left-4 z-10 text-xs font-bold bg-white/10 backdrop-blur-md text-white/80 px-2.5 py-1 rounded-lg border border-white/10">
+        <span className="absolute top-4 left-4 z-10 text-[10px] sm:text-xs font-bold bg-white/10 backdrop-blur-md text-white/80 px-2.5 py-1 rounded-lg border border-white/10">
           {num}
         </span>
 
-        <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
+        <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 z-10">
           <h3 className="text-white text-lg font-bold mb-1 group-hover:text-primary transition-colors">
             {landform.name}
           </h3>

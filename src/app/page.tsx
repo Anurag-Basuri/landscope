@@ -35,13 +35,13 @@ export default function Home() {
   return (
     <>
       {/* ─── HERO ─── */}
-      <section className="relative pt-28 md:pt-32 pb-20 overflow-hidden">
+      <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-20 overflow-hidden">
         {/* Background glow */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-primary/10 rounded-full blur-[120px] -z-10" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-teal-accent/10 rounded-full blur-[120px] -z-10" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-primary/5 rounded-full blur-[200px] -z-10" />
+        <div className="absolute top-0 left-1/4 w-72 h-72 sm:w-96 sm:h-96 bg-cyan-primary/10 rounded-full blur-[120px] -z-10" />
+        <div className="absolute bottom-0 right-1/4 w-72 h-72 sm:w-96 sm:h-96 bg-teal-accent/10 rounded-full blur-[120px] -z-10" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] sm:w-[600px] sm:h-[600px] bg-cyan-primary/5 rounded-full blur-[200px] -z-10" />
 
-        <div className="max-w-7xl mx-auto px-5 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-5 grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -51,13 +51,13 @@ export default function Home() {
               <Compass className="h-3.5 w-3.5" />
               Explore India&apos;s Geography
             </span>
-            <h1 className="text-4xl lg:text-5xl font-extrabold text-foreground leading-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight mb-6">
               Discover India&apos;s{" "}
               <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
                 Diverse Landscapes
               </span>
             </h1>
-            <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-lg">
+            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-8 max-w-lg">
               From the towering Himalayas to tropical island paradises — explore
               the six major landforms that shape India&apos;s geography, and the
               incredible flora and fauna they sustain.
@@ -106,6 +106,21 @@ export default function Home() {
               <div className="absolute inset-0 bg-linear-to-t from-background/60 to-transparent" />
             </div>
           </motion.div>
+
+          <div className="lg:hidden">
+            <div className="relative rounded-2xl overflow-hidden h-[240px] sm:h-[300px]">
+              <Image
+                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
+                width={900}
+                height={520}
+                alt="Indian landscape"
+                className="img-cover"
+                sizes="100vw"
+                priority
+              />
+              <div className="absolute inset-0 bg-linear-to-t from-background/70 to-transparent" />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -141,7 +156,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="text-center p-8 bg-card border border-border/50 rounded-2xl hover:border-primary/30 transition-all duration-300 group"
+                className="text-center p-6 sm:p-8 bg-card/80 border border-border/50 rounded-2xl hover:border-primary/30 transition-all duration-300 group backdrop-blur-sm"
               >
                 <stat.icon className="h-6 w-6 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
                 <span className="block text-3xl font-extrabold bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
@@ -157,7 +172,7 @@ export default function Home() {
       </section>
 
       {/* ─── INTERACTIVE MAP ─── */}
-      <section className="py-20 relative overflow-hidden">
+      <section className="py-16 lg:py-20 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/3 w-80 h-80 bg-cyan-primary/5 rounded-full blur-[100px] -z-10" />
         <div className="max-w-7xl mx-auto px-5">
           <motion.div
@@ -178,12 +193,14 @@ export default function Home() {
               region to learn about its unique landform.
             </p>
           </motion.div>
-          <IndiaMap />
+          <div className="rounded-3xl border border-white/10 bg-card/30 p-4 sm:p-6">
+            <IndiaMap />
+          </div>
         </div>
       </section>
 
       {/* ─── LANDFORMS GRID ─── */}
-      <section className="py-20">
+      <section className="py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-5">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -206,7 +223,7 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {landforms.map((lf, i) => (
               <LandformCard key={lf.slug} landform={lf} index={i} />
             ))}
