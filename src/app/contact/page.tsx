@@ -11,21 +11,24 @@ export const metadata = {
 export default function ContactPage() {
   return (
     <section className="pt-24 md:pt-28 pb-20">
-      <div className="max-w-5xl mx-auto px-5">
-        <h1 className="text-4xl font-extrabold text-foreground text-center mb-4">
-          Get in{" "}
-          <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
-            Touch
-          </span>
-        </h1>
-        <p className="text-muted-foreground text-center mb-12 max-w-xl mx-auto">
-          Have a question or want to collaborate? We&apos;d love to hear from
-          you.
-        </p>
+      <div className="atlas-container max-w-6xl">
+        <div className="atlas-panel bg-card/50 p-6 sm:p-10 mb-10">
+          <p className="atlas-kicker mb-3">Contact</p>
+          <h1 className="atlas-title">
+            Get in{" "}
+            <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+              Touch
+            </span>
+          </h1>
+          <p className="atlas-subtitle mt-4 max-w-2xl">
+            Have a question or want to collaborate? We&apos;d love to hear from
+            you.
+          </p>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-8">
           {/* Form */}
-          <Card className="border-border/50">
+          <Card className="border-border/50 bg-card/60">
             <CardContent className="p-6 space-y-5">
               <h3 className="text-lg font-bold text-foreground mb-2">
                 Send a Message
@@ -35,7 +38,7 @@ export default function ContactPage() {
           </Card>
 
           {/* Contact Info */}
-          <Card className="border-border/50">
+          <Card className="border-border/50 bg-card/60">
             <CardContent className="p-6 space-y-6">
               <h3 className="text-lg font-bold text-foreground mb-2">
                 Contact Information

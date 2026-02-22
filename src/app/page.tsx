@@ -41,7 +41,7 @@ export default function Home() {
         <div className="absolute bottom-0 right-1/4 w-72 h-72 sm:w-96 sm:h-96 bg-teal-accent/10 rounded-full blur-[120px] -z-10" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] sm:w-[600px] sm:h-[600px] bg-cyan-primary/5 rounded-full blur-[200px] -z-10" />
 
-        <div className="max-w-7xl mx-auto px-5 grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-12 items-center">
+        <div className="atlas-container grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -49,18 +49,19 @@ export default function Home() {
           >
             <span className="inline-flex items-center gap-2 text-xs font-semibold text-primary bg-primary/10 px-3 py-1.5 rounded-full mb-6">
               <Compass className="h-3.5 w-3.5" />
-              Explore India&apos;s Geography
+              Cinematic Atlas of India
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight mb-6">
-              Discover India&apos;s{" "}
+              Trace India&apos;s{" "}
               <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
-                Diverse Landscapes
+                living landscapes
               </span>
             </h1>
-            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-8 max-w-lg">
-              From the towering Himalayas to tropical island paradises — explore
-              the six major landforms that shape India&apos;s geography, and the
-              incredible flora and fauna they sustain.
+            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-8 max-w-xl">
+              An atlas-style journey through mountains, plains, plateaus,
+              deserts, coasts, and islands. Each landform is mapped with the
+              climate bands, species, and cultural corridors that make it
+              distinct.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button
@@ -93,40 +94,76 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="hidden lg:block"
           >
-            <div className="relative rounded-3xl overflow-hidden h-[480px]">
-              <Image
-                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
-                width={700}
-                height={520}
-                alt="Indian landscape"
-                className="img-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                priority
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-background/60 to-transparent" />
+            <div className="atlas-panel overflow-hidden">
+              <div className="relative h-[480px]">
+                <Image
+                  src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
+                  width={700}
+                  height={520}
+                  alt="Indian landscape"
+                  className="img-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-background/70 via-background/20 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { label: "Major landforms", value: "6" },
+                      { label: "Climate bands", value: "12+" },
+                      { label: "Key corridors", value: "40+" },
+                      { label: "Signature species", value: "60+" },
+                    ].map((item) => (
+                      <div
+                        key={item.label}
+                        className="rounded-xl border border-white/10 bg-background/60 px-3 py-2"
+                      >
+                        <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                          {item.label}
+                        </p>
+                        <p className="text-lg font-semibold text-white">
+                          {item.value}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
 
           <div className="lg:hidden">
-            <div className="relative rounded-2xl overflow-hidden h-[240px] sm:h-[300px]">
-              <Image
-                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
-                width={900}
-                height={520}
-                alt="Indian landscape"
-                className="img-cover"
-                sizes="100vw"
-                priority
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-background/70 to-transparent" />
+            <div className="atlas-panel overflow-hidden">
+              <div className="relative h-[240px] sm:h-[300px]">
+                <Image
+                  src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
+                  width={900}
+                  height={520}
+                  alt="Indian landscape"
+                  className="img-cover"
+                  sizes="100vw"
+                  priority
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-background/70 to-transparent" />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ─── STATS ─── */}
-      <section className="py-12 lg:py-16">
-        <div className="max-w-7xl mx-auto px-5">
+      <section className="atlas-section">
+        <div className="atlas-container">
+          <div className="flex items-end justify-between flex-wrap gap-4 mb-8">
+            <div>
+              <p className="atlas-kicker">Field notes</p>
+              <h2 className="atlas-title">India at a glance</h2>
+            </div>
+            <p className="atlas-subtitle max-w-md">
+              Macro indicators that shape the atlas — terrain, biodiversity, and
+              scale.
+            </p>
+          </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
@@ -156,9 +193,9 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="text-center p-6 sm:p-8 bg-card/80 border border-border/50 rounded-2xl hover:border-primary/30 transition-all duration-300 group backdrop-blur-sm"
+                className="text-left p-6 sm:p-7 bg-card/80 border border-border/50 rounded-2xl hover:border-primary/30 transition-all duration-300 group backdrop-blur-sm"
               >
-                <stat.icon className="h-6 w-6 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                <stat.icon className="h-6 w-6 text-primary mb-3 group-hover:scale-110 transition-transform" />
                 <span className="block text-3xl font-extrabold bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
                   {stat.number}
                 </span>
@@ -172,56 +209,38 @@ export default function Home() {
       </section>
 
       {/* ─── INTERACTIVE MAP ─── */}
-      <section className="py-16 lg:py-20 relative overflow-hidden">
+      <section className="atlas-section relative overflow-hidden">
         <div className="absolute top-1/2 left-1/3 w-80 h-80 bg-cyan-primary/5 rounded-full blur-[100px] -z-10" />
-        <div className="max-w-7xl mx-auto px-5">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-14"
-          >
-            <h2 className="text-3xl font-bold text-foreground mb-3">
-              <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
-                Interactive Map
-              </span>{" "}
-              of India
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Discover the geographic diversity of India — hover over each
-              region to learn about its unique landform.
+        <div className="atlas-container">
+          <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
+            <div>
+              <p className="atlas-kicker">Atlas grid</p>
+              <h2 className="atlas-title">Interactive map</h2>
+            </div>
+            <p className="atlas-subtitle max-w-md">
+              Hover to preview, click to pin, and explore each landform zone in
+              detail.
             </p>
-          </motion.div>
-          <div className="rounded-3xl border border-white/10 bg-card/30 p-4 sm:p-6">
+          </div>
+          <div className="atlas-panel border-white/10 bg-card/30 p-4 sm:p-6">
             <IndiaMap />
           </div>
         </div>
       </section>
 
       {/* ─── LANDFORMS GRID ─── */}
-      <section className="py-16 lg:py-20">
-        <div className="max-w-7xl mx-auto px-5">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold text-foreground mb-3">
-              The{" "}
-              <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
-                6 Landforms
-              </span>{" "}
-              of India
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              India&apos;s landmass is divided into six major physiographic
-              divisions, each with unique geological features, climates, and
-              ecosystems.
+      <section className="atlas-section">
+        <div className="atlas-container">
+          <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
+            <div>
+              <p className="atlas-kicker">Atlas index</p>
+              <h2 className="atlas-title">Six major landforms</h2>
+            </div>
+            <p className="atlas-subtitle max-w-md">
+              A quick index of India&apos;s physiographic divisions and the
+              ecosystems they sustain.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {landforms.map((lf, i) => (
@@ -232,26 +251,18 @@ export default function Home() {
       </section>
 
       {/* ─── FEATURED WILDLIFE ─── */}
-      <section className="py-20 bg-linear-to-b from-transparent via-primary/[0.03] to-transparent">
-        <div className="max-w-7xl mx-auto px-5">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold text-foreground mb-3">
-              Featured{" "}
-              <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
-                Wildlife
-              </span>
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Iconic species across India&apos;s diverse habitats — many
-              threatened, all remarkable.
+      <section className="atlas-section bg-linear-to-b from-transparent via-primary/[0.03] to-transparent">
+        <div className="atlas-container">
+          <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
+            <div>
+              <p className="atlas-kicker">Wildlife highlights</p>
+              <h2 className="atlas-title">Signature wildlife</h2>
+            </div>
+            <p className="atlas-subtitle max-w-md">
+              Iconic species across India&apos;s habitats — fragile, rare, and
+              unforgettable.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredWildlife.map((sp, i) => (

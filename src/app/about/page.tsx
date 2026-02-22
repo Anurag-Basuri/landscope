@@ -10,15 +10,22 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <section className="pt-24 md:pt-28 pb-20">
-      <div className="max-w-3xl mx-auto px-5">
-        <h1 className="text-4xl font-extrabold text-foreground text-center mb-8">
-          About{" "}
-          <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
-            Landscope
-          </span>
-        </h1>
+      <div className="atlas-container max-w-4xl">
+        <div className="atlas-panel bg-card/50 p-6 sm:p-10">
+          <p className="atlas-kicker mb-3">About the atlas</p>
+          <h1 className="atlas-title">
+            About{" "}
+            <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+              Landscope
+            </span>
+          </h1>
+          <p className="atlas-subtitle mt-4">
+            An atlas-style guide to India&apos;s geographic diversity, designed
+            for explorers, students, and conservation storytellers.
+          </p>
+        </div>
 
-        <div className="space-y-6 text-muted-foreground leading-relaxed">
+        <div className="mt-10 space-y-6 text-muted-foreground leading-relaxed">
           <p>
             <strong className="text-foreground">Landscope</strong> is a platform
             dedicated to exploring and understanding India&apos;s extraordinary

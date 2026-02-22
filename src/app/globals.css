@@ -101,6 +101,22 @@
   }
   body {
     @apply bg-background text-foreground font-sans;
+    background-image:
+      radial-gradient(
+        circle at 20% 20%,
+        rgba(14, 165, 233, 0.08),
+        transparent 45%
+      ),
+      radial-gradient(
+        circle at 80% 10%,
+        rgba(13, 209, 209, 0.06),
+        transparent 35%
+      ),
+      radial-gradient(
+        circle at 50% 90%,
+        rgba(14, 165, 233, 0.08),
+        transparent 40%
+      );
   }
   ::selection {
     background-color: hsl(199, 89%, 49%, 0.3);
@@ -141,4 +157,38 @@
 }
 .gallery-masonry > :nth-child(4) {
   grid-row: span 2;
+}
+
+@layer components {
+  .atlas-section {
+    @apply py-16 sm:py-20;
+  }
+
+  .atlas-container {
+    @apply max-w-7xl mx-auto px-5;
+  }
+
+  .atlas-kicker {
+    @apply text-[10px] uppercase tracking-[0.35em] text-muted-foreground;
+  }
+
+  .atlas-title {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground;
+  }
+
+  .atlas-subtitle {
+    @apply text-muted-foreground text-sm sm:text-base leading-relaxed;
+  }
+
+  .atlas-panel {
+    @apply rounded-3xl border border-white/10 bg-card/60 backdrop-blur-md shadow-2xl;
+  }
+
+  .atlas-chip {
+    @apply text-[10px] uppercase tracking-widest text-muted-foreground bg-background/60 border border-white/10 px-3 py-1 rounded-full;
+  }
+
+  .atlas-divider {
+    @apply h-px w-full bg-border/50;
+  }
 }

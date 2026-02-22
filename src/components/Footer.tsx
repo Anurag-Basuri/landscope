@@ -9,8 +9,9 @@ import { Mail } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-card border-t border-border/50 pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-5">
+    <footer className="relative bg-card/80 border-t border-border/50 pt-16 pb-8">
+      <div className="absolute inset-x-0 -top-10 h-10 bg-linear-to-b from-transparent to-background/40" />
+      <div className="atlas-container">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Brand */}
           <div>
@@ -23,16 +24,15 @@ export default function Footer() {
               />
             </Link>
             <p className="text-muted-foreground text-sm mt-4 leading-relaxed">
-              Exploring India&apos;s diverse landscapes — from the towering
-              Himalayas to tropical island paradises. Your guide to
-              understanding India&apos;s geography and wildlife.
+              A cinematic atlas of India&apos;s landscapes — mapping landforms,
+              biodiversity, and the cultural corridors shaped by terrain.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
             <h3 className="text-foreground font-bold text-base mb-5">
-              Explore
+              Atlas index
             </h3>
             <ul className="space-y-2.5">
               {[
@@ -67,11 +67,11 @@ export default function Footer() {
           {/* Newsletter */}
           <div>
             <h3 className="text-foreground font-bold text-base mb-5">
-              Newsletter
+              Field notes
             </h3>
             <p className="text-muted-foreground text-sm mb-4">
-              Stay updated on India&apos;s geography, wildlife, and
-              conservation.
+              Monthly dispatches from the atlas — new regions, species, and
+              conservation updates.
             </p>
             <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
               <Input
