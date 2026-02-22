@@ -26,7 +26,7 @@ export default function LandformCard({ landform, index = 0 }: Props) {
         className="group relative block rounded-2xl overflow-hidden h-[340px] border border-transparent hover:border-cyan-primary/40 transition-all duration-500 hover:shadow-lg hover:shadow-cyan-primary/10"
       >
         <Image
-          src={landform.imageUrl}
+          src={landform.heroImageUrl}
           width={600}
           height={400}
           alt={landform.name}
@@ -46,8 +46,12 @@ export default function LandformCard({ landform, index = 0 }: Props) {
             {landform.name}
           </h3>
           <p className="text-muted-foreground text-sm line-clamp-2">
-            {landform.tagline}
+            {landform.summary}
           </p>
+
+          <span className="text-[10px] text-muted-foreground mt-2 block">
+            {landform.stats[0]?.label}: {landform.stats[0]?.value}
+          </span>
 
           {/* Hover reveal */}
           <span className="flex items-center gap-1.5 text-primary text-sm font-semibold mt-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">

@@ -8,113 +8,16 @@ import { geoMercator, geoPath, type GeoPermissibleObjects } from "d3-geo";
 import { feature } from "topojson-client";
 import type { FeatureCollection } from "geojson";
 import { landforms } from "@/data/landforms";
+import { regionGroups } from "@/data/regions";
 import { ArrowRight, MapPin, MousePointerClick } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-
-/* ─── Region config ─── */
-interface Region {
-  slug: string;
-  label: string;
-  color: string;
-  bright: string;
-  dim: string;
-  states: string[];
-}
-
-const REGIONS: Region[] = [
-  {
-    slug: "himalayan-mountains",
-    label: "Himalayan Mountains",
-    color: "#8b5cf6",
-    bright: "#a78bfa",
-    dim: "#8b5cf620",
-    states: [
-      "Jammu & Kashmir",
-      "Ladakh",
-      "Himachal Pradesh",
-      "Uttarakhand",
-      "Sikkim",
-      "Arunachal Pradesh",
-    ],
-  },
-  {
-    slug: "northern-plains",
-    label: "Northern Plains",
-    color: "#10b981",
-    bright: "#34d399",
-    dim: "#10b98120",
-    states: [
-      "Punjab",
-      "Haryana",
-      "Delhi",
-      "Chandigarh",
-      "Uttar Pradesh",
-      "Bihar",
-      "West Bengal",
-      "Assam",
-      "Meghalaya",
-      "Tripura",
-      "Manipur",
-      "Mizoram",
-      "Nagaland",
-    ],
-  },
-  {
-    slug: "thar-desert",
-    label: "Thar Desert",
-    color: "#f59e0b",
-    bright: "#fbbf24",
-    dim: "#f59e0b20",
-    states: ["Rajasthan"],
-  },
-  {
-    slug: "peninsular-plateau",
-    label: "Peninsular Plateau",
-    color: "#f97316",
-    bright: "#fb923c",
-    dim: "#f9731620",
-    states: [
-      "Madhya Pradesh",
-      "Chhattisgarh",
-      "Jharkhand",
-      "Maharashtra",
-      "Telangana",
-      "Karnataka",
-    ],
-  },
-  {
-    slug: "coastal-plains",
-    label: "Coastal Plains",
-    color: "#0ea5e9",
-    bright: "#38bdf8",
-    dim: "#0ea5e920",
-    states: [
-      "Gujarat",
-      "Dadra and Nagar Haveli and Daman and Diu",
-      "Goa",
-      "Kerala",
-      "Tamil Nadu",
-      "Puducherry",
-      "Andhra Pradesh",
-      "Odisha",
-    ],
-  },
-  {
-    slug: "islands",
-    label: "Islands",
-    color: "#14b8a6",
-    bright: "#2dd4bf",
-    dim: "#14b8a620",
-    states: ["Andaman & Nicobar Islands", "Andaman & Nicobar", "Lakshadweep"],
-  },
-];
 
 const GEO_URL = "/india-states.json";
 const MAP_WIDTH = 600;
 const MAP_HEIGHT = 600;
 
-function getRegion(name: string): Region | undefined {
-  return REGIONS.find((r) => r.states.includes(name));
+function getRegion(name: string) {
+  return regionGroups.find((r) => r.states.includes(name));
 }
 
 /* ─── Tooltip state ─── */
@@ -160,8 +63,8 @@ function RegionGeographies({
         if (!path) return null;
 
         // A region is active if it's currently selected OR (nothing is selected and it's hovered)
-        const isHovered = hoveredSlug === region?.slug;
-        const isSelected = selectedSlug === region?.slug;
+        const isHovered = hoveredSlug === region?.id;
+        const isSelected = selectedSlug === region?.id;
 
         // Dim others if something is either selected or hovered
         const somethingActive = selectedSlug !== null || hoveredSlug !== null;
@@ -184,9 +87,9 @@ function RegionGeographies({
           <path
             key={`${stateName}-${index}`}
             d={path}
-            onMouseEnter={() => region && onHover(region.slug)}
+            onMouseEnter={() => region && onHover(region.id)}
             onMouseLeave={onLeave}
-            onFocus={() => region && onHover(region.slug)}
+            onFocus={() => region && onHover(region.id)}
             onBlur={onLeave}
             onMouseMove={(e: React.MouseEvent<SVGPathElement>) => {
               if (region) {
@@ -195,13 +98,13 @@ function RegionGeographies({
             }}
             onClick={(e: React.MouseEvent<SVGPathElement>) => {
               e.stopPropagation();
-              if (region) onSelect(region.slug);
+              if (region) onSelect(region.id);
             }}
             onKeyDown={(e: React.KeyboardEvent<SVGPathElement>) => {
               if (!region) return;
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                onSelect(region.slug);
+                onSelect(region.id);
               }
             }}
             tabIndex={region ? 0 : -1}
@@ -239,7 +142,7 @@ function IndiaMapInner() {
     ? landforms.find((lf) => lf.slug === activeDisplaySlug)
     : null;
   const activeRegion = activeDisplaySlug
-    ? REGIONS.find((r) => r.slug === activeDisplaySlug)
+    ? regionGroups.find((r) => r.id === activeDisplaySlug)
     : null;
 
   const handleHover = useCallback((slug: string) => setHoveredSlug(slug), []);
@@ -257,7 +160,7 @@ function IndiaMapInner() {
     (e: React.MouseEvent, regionLabel: string, regionColor: string) => {
       // Don't show tooltip for the currently selected region (it's already in the panel)
       if (
-        selectedSlug === activeRegion?.slug &&
+        selectedSlug === activeRegion?.id &&
         regionLabel === activeRegion?.label
       ) {
         setTooltip(null);
@@ -392,7 +295,7 @@ function IndiaMapInner() {
                 onMouseEnter={() => handleHover("islands")}
                 onMouseLeave={handleLeave}
                 onMouseMove={(e) => {
-                  const region = REGIONS.find((r) => r.slug === "islands");
+                  const region = regionGroups.find((r) => r.id === "islands");
                   if (region) handleMouseMove(e, region.label, region.color);
                 }}
                 onClick={(e) => {
@@ -412,13 +315,13 @@ function IndiaMapInner() {
               >
                 <circle
                   r={22}
-                  fill={REGIONS.find((r) => r.slug === "islands")?.color}
+                  fill={regionGroups.find((r) => r.id === "islands")?.color}
                   opacity={activeDisplaySlug === "islands" ? 0.3 : 0.08}
                   className="transition-all duration-300 pointer-events-none"
                 />
                 <circle
                   r={8}
-                  fill={REGIONS.find((r) => r.slug === "islands")?.color}
+                  fill={regionGroups.find((r) => r.id === "islands")?.color}
                   stroke="#ffffff"
                   strokeWidth={1.5}
                   className="transition-all duration-300 cursor-pointer"
@@ -436,7 +339,7 @@ function IndiaMapInner() {
                 onMouseEnter={() => handleHover("islands")}
                 onMouseLeave={handleLeave}
                 onMouseMove={(e) => {
-                  const region = REGIONS.find((r) => r.slug === "islands");
+                  const region = regionGroups.find((r) => r.id === "islands");
                   if (region) handleMouseMove(e, region.label, region.color);
                 }}
                 onClick={(e) => {
@@ -456,13 +359,13 @@ function IndiaMapInner() {
               >
                 <circle
                   r={28}
-                  fill={REGIONS.find((r) => r.slug === "islands")?.color}
+                  fill={regionGroups.find((r) => r.id === "islands")?.color}
                   opacity={activeDisplaySlug === "islands" ? 0.3 : 0.08}
                   className="transition-all duration-300 pointer-events-none"
                 />
                 <circle
                   r={10}
-                  fill={REGIONS.find((r) => r.slug === "islands")?.color}
+                  fill={regionGroups.find((r) => r.id === "islands")?.color}
                   stroke="#ffffff"
                   strokeWidth={1.5}
                   className="transition-all duration-300 cursor-pointer"
@@ -508,22 +411,22 @@ function IndiaMapInner() {
         {/* ── Legend / Tabs ── */}
         <div className="mt-2 relative z-30 w-full px-2">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 bg-background/50 backdrop-blur-md p-2 rounded-2xl border border-white/5 shadow-inner">
-            {REGIONS.map((region) => {
-              const isSelected = selectedSlug === region.slug;
-              const isHovered = hoveredSlug === region.slug;
+            {regionGroups.map((region) => {
+              const isSelected = selectedSlug === region.id;
+              const isHovered = hoveredSlug === region.id;
               const isActive = isSelected || (isHovered && !selectedSlug);
 
               return (
                 <button
-                  key={region.slug}
+                  key={region.id}
                   className={`relative flex flex-col items-start justify-center gap-1 text-left p-2.5 sm:p-3 rounded-xl transition-all duration-300 overflow-hidden group/tab ${
                     isActive
                       ? "bg-white/10 ring-1 ring-white/20 shadow-md"
                       : "hover:bg-white/5 opacity-70 hover:opacity-100"
                   }`}
-                  onMouseEnter={() => handleHover(region.slug)}
+                  onMouseEnter={() => handleHover(region.id)}
                   onMouseLeave={handleLeave}
-                  onClick={() => handleSelect(region.slug)}
+                  onClick={() => handleSelect(region.id)}
                 >
                   {/* Subtle active glow */}
                   <div
@@ -567,9 +470,9 @@ function IndiaMapInner() {
         <div className="sr-only">
           <p>Landform regions</p>
           <ul>
-            {REGIONS.map((region) => (
-              <li key={region.slug}>
-                <Link href={`/landforms/${region.slug}`}>{region.label}</Link>
+            {regionGroups.map((region) => (
+              <li key={region.id}>
+                <Link href={`/landforms/${region.id}`}>{region.label}</Link>
               </li>
             ))}
           </ul>
@@ -632,7 +535,7 @@ function IndiaMapInner() {
                 {/* Image */}
                 <div className="rounded-2xl overflow-hidden h-48 w-full relative shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/5 group-hover/panel:border-white/10 transition-colors">
                   <Image
-                    src={activeLandform.imageUrl}
+                    src={activeLandform.heroImageUrl}
                     fill
                     sizes="(max-width: 768px) 100vw, 400px"
                     alt={activeLandform.name}
@@ -644,11 +547,11 @@ function IndiaMapInner() {
                 {/* Body */}
                 <div className="space-y-4 relative z-10">
                   <p className="text-muted-foreground leading-relaxed text-sm sm:text-base line-clamp-3">
-                    {activeLandform.description}
+                    {activeLandform.summary}
                   </p>
 
                   <div className="flex flex-wrap gap-2 pt-1">
-                    {activeLandform.facts.slice(0, 3).map((fact, i) => (
+                    {activeLandform.stats.slice(0, 3).map((fact, i) => (
                       <Badge
                         key={i}
                         variant="secondary"
