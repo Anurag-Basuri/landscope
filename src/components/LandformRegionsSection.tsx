@@ -2,14 +2,12 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { geoMercator, geoPath, type GeoPermissibleObjects } from "d3-geo";
-import { feature } from "topojson-client";
 import type { FeatureCollection } from "geojson";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Sparkles } from "lucide-react";
 import { RegionGroup, RegionSubregion } from "@/data/types";
-import { getWildlifeBySlug } from "@/data/wildlife";
+import { getIndiaGeographies } from "@/lib/indiaGeo";
 
-const GEO_URL = "/india-states.json";
 const MAP_WIDTH = 520;
 const MAP_HEIGHT = 560;
 
@@ -22,6 +20,7 @@ interface TooltipInfo {
 
 interface Props {
   regionGroup: RegionGroup;
+  signatureSpeciesMap: Record<string, string>;
 }
 
 function buildSubregionMap(subregions: RegionSubregion[]) {
@@ -32,7 +31,10 @@ function buildSubregionMap(subregions: RegionSubregion[]) {
   return map;
 }
 
-export default function LandformRegionsSection({ regionGroup }: Props) {
+export default function LandformRegionsSection({
+  regionGroup,
+  signatureSpeciesMap,
+}: Props) {
   const [geographies, setGeographies] = useState<FeatureCollection | null>(
     null,
   );
@@ -54,11 +56,9 @@ export default function LandformRegionsSection({ regionGroup }: Props) {
   const activeSpecies = useMemo(() => {
     if (!activeSubregion) return [];
     return activeSubregion.signatureSpeciesSlugs
-      .map((slug) => getWildlifeBySlug(slug))
-      .filter((species): species is NonNullable<typeof species> =>
-        Boolean(species),
-      );
-  }, [activeSubregion]);
+      .map((slug) => ({ slug, name: signatureSpeciesMap[slug] }))
+      .filter((species) => Boolean(species.name));
+  }, [activeSubregion, signatureSpeciesMap]);
 
   const highlightCount = useMemo(
     () =>
@@ -85,25 +85,8 @@ export default function LandformRegionsSection({ regionGroup }: Props) {
 
     async function loadGeographies() {
       try {
-        const response = await fetch(GEO_URL);
-        const data = await response.json();
-
-        if (cancelled) return;
-
-        if (data?.type === "FeatureCollection") {
-          setGeographies(data as FeatureCollection);
-          return;
-        }
-
-        if (data?.type === "Topology" && data.objects) {
-          const objectKey = Object.keys(data.objects)[0];
-          if (!objectKey) return;
-          const collection = feature(
-            data,
-            data.objects[objectKey],
-          ) as unknown as FeatureCollection;
-          setGeographies(collection);
-        }
+        const collection = await getIndiaGeographies();
+        if (!cancelled) setGeographies(collection);
       } catch (error) {
         console.error("Failed to load region map", error);
       }

@@ -5,21 +5,23 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { geoMercator, geoPath, type GeoPermissibleObjects } from "d3-geo";
-import { feature } from "topojson-client";
 import type { FeatureCollection } from "geojson";
 import { landforms } from "@/data/landforms";
 import { regionGroups } from "@/data/regions";
 import type { Landform } from "@/data/types";
 import { ArrowRight, MapPin, MousePointerClick } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { getIndiaGeographies } from "@/lib/indiaGeo";
 
-const GEO_URL = "/india-states.json";
 const MAP_WIDTH = 600;
 const MAP_HEIGHT = 600;
 
-function getRegion(name: string) {
-  return regionGroups.find((r) => r.states.includes(name));
-}
+const landformBySlug = new Map(landforms.map((lf) => [lf.slug, lf]));
+const regionById = new Map(regionGroups.map((region) => [region.id, region]));
+const regionByState = new Map<string, (typeof regionGroups)[number]>();
+regionGroups.forEach((region) => {
+  region.states.forEach((state) => regionByState.set(state, region));
+});
 
 /* ─── Tooltip state ─── */
 interface TooltipInfo {
@@ -58,7 +60,7 @@ function RegionGeographies({
       {geographies.features.map((geo, index) => {
         const props = (geo.properties ?? {}) as { ST_NM?: string };
         const stateName = props.ST_NM ?? "";
-        const region = getRegion(stateName);
+        const region = regionByState.get(stateName);
         const path = pathGenerator(geo as GeoPermissibleObjects);
 
         if (!path) return null;
@@ -140,10 +142,10 @@ function IndiaMapInner() {
   const activeDisplaySlug = selectedSlug || hoveredSlug;
 
   const activeLandform: Landform | null = activeDisplaySlug
-    ? (landforms.find((lf) => lf.slug === activeDisplaySlug) ?? null)
+    ? (landformBySlug.get(activeDisplaySlug) ?? null)
     : null;
   const activeRegion = activeDisplaySlug
-    ? regionGroups.find((r) => r.id === activeDisplaySlug)
+    ? (regionById.get(activeDisplaySlug) ?? null)
     : null;
 
   const handleHover = useCallback((slug: string) => setHoveredSlug(slug), []);
@@ -191,25 +193,8 @@ function IndiaMapInner() {
 
     async function loadGeographies() {
       try {
-        const response = await fetch(GEO_URL);
-        const data = await response.json();
-
-        if (cancelled) return;
-
-        if (data?.type === "FeatureCollection") {
-          setGeographies(data as FeatureCollection);
-          return;
-        }
-
-        if (data?.type === "Topology" && data.objects) {
-          const objectKey = Object.keys(data.objects)[0];
-          if (!objectKey) return;
-          const collection = feature(
-            data,
-            data.objects[objectKey],
-          ) as unknown as FeatureCollection;
-          setGeographies(collection);
-        }
+        const collection = await getIndiaGeographies();
+        if (!cancelled) setGeographies(collection);
       } catch (error) {
         console.error("Failed to load map data", error);
       }

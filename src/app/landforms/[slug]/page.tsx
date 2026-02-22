@@ -61,6 +61,23 @@ export default async function LandformPage({ params }: PageProps) {
       Boolean(species),
     );
 
+  const signatureSpeciesMap = regionGroup
+    ? Object.fromEntries(
+        Array.from(
+          new Set(
+            regionGroup.subregions.flatMap(
+              (subregion) => subregion.signatureSpeciesSlugs,
+            ),
+          ),
+        )
+          .map((speciesSlug) => {
+            const species = getWildlifeBySlug(speciesSlug);
+            return species ? [speciesSlug, species.name] : null;
+          })
+          .filter((entry): entry is [string, string] => entry !== null),
+      )
+    : {};
+
   return (
     <>
       {/* Hero */}
@@ -192,7 +209,10 @@ export default async function LandformPage({ params }: PageProps) {
       {regionGroup && (
         <section className="pb-16">
           <div className="max-w-7xl mx-auto px-5">
-            <LandformRegionsSection regionGroup={regionGroup} />
+            <LandformRegionsSection
+              regionGroup={regionGroup}
+              signatureSpeciesMap={signatureSpeciesMap}
+            />
           </div>
         </section>
       )}
