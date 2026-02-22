@@ -4,10 +4,10 @@ A comprehensive knowledge hub for land resource management in India, built with 
 
 ## Features
 
-- 📚 **Library** — Curated articles on land classification, agriculture, soil health, and case studies
-- 📜 **Policies** — Detailed coverage of India's land policies and legislation
-- 📰 **News** — Latest updates on land resource management
-- ❓ **FAQ** — Frequently asked questions about land conservation
+- 🗺️ **Interactive Map** — Explore India by region and landform
+- 🏔️ **Landforms** — Deep dives into six major physiographic divisions
+- 🐾 **Flora & Fauna** — Biodiversity across landform zones
+- ❓ **FAQ** — Frequently asked questions about geography and wildlife
 - 📬 **Contact** — Get in touch form with embedded map
 
 ## Getting Started
@@ -19,31 +19,39 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+## Environment Variables
+
+Create a `.env` file with the following:
+
+```bash
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DB_NAME"
+NEXT_PUBLIC_SITE_URL="http://localhost:3000"
+```
+
 ## Project Structure
 
 ```
 src/
 ├── app/                    # Next.js pages (App Router)
 │   ├── page.tsx            # Home page
+│   ├── about/page.tsx      # About page
 │   ├── faq/page.tsx        # FAQ page
 │   ├── contact/page.tsx    # Contact page
-│   ├── articles/[slug]/    # Dynamic article pages
-│   ├── library/[slug]/     # Dynamic library category pages
-│   └── news/[slug]/        # Dynamic news pages
+│   ├── landforms/          # Landforms index + detail pages
+│   └── wildlife/           # Wildlife index + detail pages
 ├── components/             # Reusable React components
 │   ├── Header.tsx
 │   ├── Footer.tsx
-│   ├── LibrarySlider.tsx
-│   ├── ArticleCard.tsx
-│   ├── NewsCard.tsx
+│   ├── IndiaMap.tsx
+│   ├── LandformCard.tsx
+│   ├── WildlifeCard.tsx
 │   ├── FAQAccordion.tsx
 │   └── BackToTop.tsx
 └── data/                   # Typed content data
-    ├── types.ts
-    ├── articles.ts
-    ├── news.ts
-    ├── library.ts
-    └── faq.ts
+  ├── types.ts
+  ├── landforms.ts
+  ├── wildlife.ts
+  └── faq.ts
 ```
 
 ## Adding Content
