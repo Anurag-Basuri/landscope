@@ -46,6 +46,7 @@ declare module "react-simple-maps" {
     geography: GeographyType;
     onMouseEnter?: (event: React.MouseEvent) => void;
     onMouseLeave?: (event: React.MouseEvent) => void;
+    onMouseMove?: (event: React.MouseEvent) => void;
     onClick?: (event: React.MouseEvent) => void;
     style?: {
       default?: GeographyStyleConfig;
