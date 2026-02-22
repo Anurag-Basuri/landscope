@@ -13,6 +13,7 @@ export interface Landform {
   ecology: ContentSection;
   agriculture: ContentSection;
   regionGroupId: string;
+  signatureSpeciesSlugs: string[];
   floraIds: string[];
   faunaIds: string[];
 }
@@ -48,6 +49,10 @@ export interface RegionSubregion {
   states: string[];
   highlights: string[];
   color: string;
+  keyPlaces: string[];
+  climateBands: string[];
+  elevationRange: string;
+  signatureSpeciesSlugs: string[];
 }
 
 export interface RegionGroup {

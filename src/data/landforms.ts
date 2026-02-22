@@ -125,6 +125,12 @@ export const landforms: Landform[] = [
         "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800",
     },
     regionGroupId: "himalayan-mountains",
+    signatureSpeciesSlugs: [
+      "snow-leopard",
+      "red-panda",
+      "himalayan-monal",
+      "rhododendron",
+    ],
     floraIds: ["rhododendron", "deodar-cedar", "blue-pine", "himalayan-orchid"],
     faunaIds: ["snow-leopard", "red-panda", "himalayan-monal", "markhor"],
   },
@@ -244,6 +250,12 @@ export const landforms: Landform[] = [
         "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800",
     },
     regionGroupId: "northern-plains",
+    signatureSpeciesSlugs: [
+      "gangetic-dolphin",
+      "indian-rhinoceros",
+      "bengal-florican",
+      "banyan-tree",
+    ],
     floraIds: ["banyan-tree", "peepal-tree", "mango-tree", "teak"],
     faunaIds: [
       "gangetic-dolphin",
@@ -366,6 +378,12 @@ export const landforms: Landform[] = [
         "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=800",
     },
     regionGroupId: "peninsular-plateau",
+    signatureSpeciesSlugs: [
+      "bengal-tiger",
+      "indian-elephant",
+      "nilgiri-tahr",
+      "sandalwood",
+    ],
     floraIds: ["sandalwood", "teak", "bamboo", "rosewood"],
     faunaIds: [
       "indian-elephant",
@@ -490,6 +508,12 @@ export const landforms: Landform[] = [
         "https://images.unsplash.com/photo-1547234935-80c7145ec969?w=800",
     },
     regionGroupId: "thar-desert",
+    signatureSpeciesSlugs: [
+      "great-indian-bustard",
+      "desert-fox",
+      "chinkara",
+      "khejri-tree",
+    ],
     floraIds: ["khejri-tree", "babool", "cactus", "date-palm"],
     faunaIds: [
       "great-indian-bustard",
@@ -612,6 +636,12 @@ export const landforms: Landform[] = [
         "https://images.unsplash.com/photo-1484291150605-0860ed671425?w=800",
     },
     regionGroupId: "coastal-plains",
+    signatureSpeciesSlugs: [
+      "olive-ridley-turtle",
+      "flamingo",
+      "mudskipper",
+      "mangrove",
+    ],
     floraIds: ["coconut-palm", "mangrove", "casuarina", "palm-tree"],
     faunaIds: ["olive-ridley-turtle", "kingfisher", "mudskipper", "flamingo"],
   },
@@ -729,6 +759,12 @@ export const landforms: Landform[] = [
         "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800",
     },
     regionGroupId: "islands",
+    signatureSpeciesSlugs: [
+      "dugong",
+      "nicobar-pigeon",
+      "leatherback-turtle",
+      "coconut-palm",
+    ],
     floraIds: ["padauk-tree", "tropical-evergreen", "coconut-palm", "mangrove"],
     faunaIds: [
       "dugong",

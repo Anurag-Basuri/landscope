@@ -7,6 +7,7 @@ import type { FeatureCollection } from "geojson";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Sparkles } from "lucide-react";
 import { RegionGroup, RegionSubregion } from "@/data/types";
+import { getWildlifeBySlug } from "@/data/wildlife";
 
 const GEO_URL = "/india-states.json";
 const MAP_WIDTH = 520;
@@ -49,6 +50,15 @@ export default function LandformRegionsSection({ regionGroup }: Props) {
     const id = selectedId ?? hoveredId;
     return regionGroup.subregions.find((sub) => sub.id === id) ?? null;
   }, [hoveredId, selectedId, regionGroup.subregions]);
+
+  const activeSpecies = useMemo(() => {
+    if (!activeSubregion) return [];
+    return activeSubregion.signatureSpeciesSlugs
+      .map((slug) => getWildlifeBySlug(slug))
+      .filter((species): species is NonNullable<typeof species> =>
+        Boolean(species),
+      );
+  }, [activeSubregion]);
 
   const highlightCount = useMemo(
     () =>
@@ -329,6 +339,77 @@ export default function LandformRegionsSection({ regionGroup }: Props) {
                 </li>
               ))}
             </ul>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-card/40 backdrop-blur-md p-6 shadow-xl">
+            <h4 className="text-sm font-semibold text-foreground mb-3">
+              Climate bands & elevation
+            </h4>
+            {activeSubregion ? (
+              <div className="space-y-3">
+                <div className="flex flex-wrap gap-2">
+                  {activeSubregion.climateBands.map((band) => (
+                    <span
+                      key={band}
+                      className="text-xs px-2.5 py-1 rounded-full border border-border/60 text-muted-foreground bg-background/40"
+                    >
+                      {band}
+                    </span>
+                  ))}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  Elevation range: {activeSubregion.elevationRange}
+                </div>
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                Select a subregion to see climate bands and elevation range.
+              </p>
+            )}
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-card/40 backdrop-blur-md p-6 shadow-xl">
+            <h4 className="text-sm font-semibold text-foreground mb-3">
+              Key cities & landmarks
+            </h4>
+            {activeSubregion ? (
+              <div className="flex flex-wrap gap-2">
+                {activeSubregion.keyPlaces.map((place) => (
+                  <span
+                    key={place}
+                    className="text-xs px-2.5 py-1 rounded-full border border-border/60 text-muted-foreground bg-background/40"
+                  >
+                    {place}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                Select a subregion to see key cities and landmarks.
+              </p>
+            )}
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-card/40 backdrop-blur-md p-6 shadow-xl">
+            <h4 className="text-sm font-semibold text-foreground mb-3">
+              Signature species
+            </h4>
+            {activeSubregion ? (
+              <div className="flex flex-wrap gap-2">
+                {activeSpecies.map((species) => (
+                  <span
+                    key={species.slug}
+                    className="text-xs px-2.5 py-1 rounded-full border border-border/60 text-muted-foreground bg-background/40"
+                  >
+                    {species.name}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                Select a subregion to see signature species.
+              </p>
+            )}
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-card/40 backdrop-blur-md p-6 shadow-xl">

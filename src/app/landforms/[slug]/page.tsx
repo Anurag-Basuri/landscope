@@ -3,7 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { landforms, getLandformBySlug } from "@/data/landforms";
 import { getRegionGroupByLandform } from "@/data/regions";
-import { getFloraByLandform, getFaunaByLandform } from "@/data/wildlife";
+import {
+  getFloraByLandform,
+  getFaunaByLandform,
+  getWildlifeBySlug,
+} from "@/data/wildlife";
 import LandformRegionsSection from "@/components/LandformRegionsSection";
 import WildlifeCard from "@/components/WildlifeCard";
 import { ChevronRight, ChevronDown, Sparkles } from "lucide-react";
@@ -50,6 +54,12 @@ export default async function LandformPage({ params }: PageProps) {
 
   const flora = getFloraByLandform(slug);
   const fauna = getFaunaByLandform(slug);
+
+  const signatureSpecies = lf.signatureSpeciesSlugs
+    .map((speciesSlug) => getWildlifeBySlug(speciesSlug))
+    .filter((species): species is NonNullable<typeof species> =>
+      Boolean(species),
+    );
 
   return (
     <>
@@ -157,6 +167,24 @@ export default async function LandformPage({ params }: PageProps) {
               ))}
             </div>
           </div>
+
+          {signatureSpecies.length > 0 && (
+            <div className="mt-12 rounded-3xl border border-white/10 bg-card/40 backdrop-blur-md p-6">
+              <h3 className="text-xl font-semibold text-foreground mb-4">
+                Signature species
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {signatureSpecies.map((species) => (
+                  <span
+                    key={species.slug}
+                    className="text-xs px-2.5 py-1 rounded-full border border-border/60 text-muted-foreground bg-background/40"
+                  >
+                    {species.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
