@@ -317,9 +317,9 @@ function IndiaMapInner() {
         >
           <ComposableMap
             projection="geoMercator"
-            projectionConfig={{ scale: 1250, center: [81.5, 22.5] }}
+            projectionConfig={{ scale: 1100, center: [80.5, 22.5] }}
             width={600}
-            height={670}
+            height={600}
             className="w-full h-full object-contain"
           >
             <RegionGeographies
@@ -432,48 +432,63 @@ function IndiaMapInner() {
           )}
         </AnimatePresence>
 
-        {/* ── Legend ── */}
-        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 px-4 bg-background/40 backdrop-blur-sm py-3 rounded-2xl border border-white/5 mx-4 shadow-sm relative z-30">
-          {REGIONS.map((region) => {
-            const isSelected = selectedSlug === region.slug;
-            const isHovered = hoveredSlug === region.slug;
-            const isActive = isSelected || (isHovered && !selectedSlug);
-            const isDimmed = activeDisplaySlug && !isActive;
+        {/* ── Legend / Tabs ── */}
+        <div className="mt-2 relative z-30 w-full px-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 bg-background/50 backdrop-blur-md p-2 rounded-2xl border border-white/5 shadow-inner">
+            {REGIONS.map((region) => {
+              const isSelected = selectedSlug === region.slug;
+              const isHovered = hoveredSlug === region.slug;
+              const isActive = isSelected || (isHovered && !selectedSlug);
 
-            return (
-              <button
-                key={region.slug}
-                className={`flex items-center gap-1.5 text-[11px] transition-all rounded-full px-2.5 py-1 ${
-                  isActive
-                    ? "text-foreground bg-white/10 ring-1 ring-white/20 shadow-sm"
-                    : isDimmed
-                      ? "text-muted-foreground/40 grayscale filter"
-                      : "text-muted-foreground hover:text-foreground hover:bg-white/5"
-                }`}
-                onMouseEnter={() => handleHover(region.slug)}
-                onMouseLeave={handleLeave}
-                onClick={() => handleSelect(region.slug)}
-              >
-                <span
-                  className="w-2.5 h-2.5 rounded-full shrink-0 transition-colors"
-                  style={{
-                    backgroundColor:
-                      isActive || !activeDisplaySlug
-                        ? region.color
-                        : `${region.color}40`,
-                    boxShadow: isActive ? `0 0 8px ${region.color}40` : "none",
-                  }}
-                />
-                {region.label}
-              </button>
-            );
-          })}
+              return (
+                <button
+                  key={region.slug}
+                  className={`relative flex flex-col items-start justify-center gap-1 text-left p-2.5 sm:p-3 rounded-xl transition-all duration-300 overflow-hidden group/tab ${
+                    isActive
+                      ? "bg-white/10 ring-1 ring-white/20 shadow-md"
+                      : "hover:bg-white/5 opacity-70 hover:opacity-100"
+                  }`}
+                  onMouseEnter={() => handleHover(region.slug)}
+                  onMouseLeave={handleLeave}
+                  onClick={() => handleSelect(region.slug)}
+                >
+                  {/* Subtle active glow */}
+                  <div
+                    className={`absolute inset-0 opacity-0 transition-opacity duration-300 ${isActive ? "opacity-20" : "group-hover/tab:opacity-10"}`}
+                    style={{
+                      background: `linear-gradient(to bottom right, ${region.color}, transparent)`,
+                    }}
+                  />
+
+                  <div className="flex items-center justify-between w-full relative z-10">
+                    <span
+                      className="w-2 h-2 rounded-full shrink-0 transition-colors"
+                      style={{
+                        backgroundColor:
+                          isActive || !activeDisplaySlug
+                            ? region.color
+                            : `${region.color}40`,
+                        boxShadow: isActive
+                          ? `0 0 8px ${region.color}`
+                          : "none",
+                      }}
+                    />
+                  </div>
+                  <span
+                    className={`text-[10px] sm:text-[11px] font-semibold tracking-wide mt-1 relative z-10 ${isActive ? "text-white" : "text-muted-foreground"}`}
+                  >
+                    {region.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Helper text */}
-        <p className="text-center text-[10px] text-muted-foreground/60 mt-3 flex items-center justify-center gap-1">
-          <MousePointerClick className="h-3 w-3" />
-          Click any region on the map or legend to pin selection
+        <p className="text-center text-[10px] text-muted-foreground/60 mt-4 flex items-center justify-center gap-1">
+          <MousePointerClick className="h-3 w-3 opacity-70" />
+          Click any region on the map or tab to pin details
         </p>
       </div>
 

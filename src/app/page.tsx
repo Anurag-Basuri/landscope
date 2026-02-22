@@ -101,6 +101,53 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ─── STATS ─── */}
+      <section className="py-12 lg:py-16">
+        <div className="max-w-7xl mx-auto px-5">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              {
+                number: "6",
+                label: "Major Landforms",
+                icon: Layers,
+              },
+              {
+                number: "3.3M",
+                label: "sq km Total Area",
+                icon: MapPin,
+              },
+              {
+                number: "~1,00,000",
+                label: "Fauna Species",
+                icon: PawPrint,
+              },
+              {
+                number: "~45,000",
+                label: "Flora Species",
+                icon: Leaf,
+              },
+            ].map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className="text-center p-8 bg-card border border-border/50 rounded-2xl hover:border-primary/30 transition-all duration-300 group"
+              >
+                <stat.icon className="h-6 w-6 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                <span className="block text-3xl font-extrabold bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+                  {stat.number}
+                </span>
+                <span className="text-muted-foreground text-sm mt-2 block">
+                  {stat.label}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ─── INTERACTIVE MAP ─── */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/3 w-80 h-80 bg-cyan-primary/5 rounded-full blur-[100px] -z-10" />
@@ -197,53 +244,6 @@ export default function Home() {
                 View All Wildlife <ArrowRight className="h-4 w-4 ml-2" />
               </Link>
             </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── STATS ─── */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-5">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              {
-                number: "6",
-                label: "Major Landforms",
-                icon: Layers,
-              },
-              {
-                number: "3.3M",
-                label: "sq km Total Area",
-                icon: MapPin,
-              },
-              {
-                number: "~1,00,000",
-                label: "Fauna Species",
-                icon: PawPrint,
-              },
-              {
-                number: "~45,000",
-                label: "Flora Species",
-                icon: Leaf,
-              },
-            ].map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="text-center p-8 bg-card border border-border/50 rounded-2xl hover:border-primary/30 transition-all duration-300 group"
-              >
-                <stat.icon className="h-6 w-6 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                <span className="block text-3xl font-extrabold bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
-                  {stat.number}
-                </span>
-                <span className="text-muted-foreground text-sm mt-2 block">
-                  {stat.label}
-                </span>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
