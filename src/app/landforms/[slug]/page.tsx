@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,18 +8,9 @@ import {
   getFaunaByLandform,
   getWildlifeBySlug,
 } from "@/data/wildlife";
+import LandformRegionsSectionClient from "@/components/LandformRegionsSectionClient";
 import WildlifeCard from "@/components/WildlifeCard";
 import { ChevronRight, ChevronDown, Sparkles } from "lucide-react";
-
-const LandformRegionsSection = dynamic(
-  () => import("@/components/LandformRegionsSection"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="rounded-3xl border border-border/60 bg-card/40 h-[640px] w-full" />
-    ),
-  },
-);
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -219,7 +209,7 @@ export default async function LandformPage({ params }: PageProps) {
       {regionGroup && (
         <section className="pb-16">
           <div className="max-w-7xl mx-auto px-5">
-            <LandformRegionsSection
+            <LandformRegionsSectionClient
               regionGroup={regionGroup}
               signatureSpeciesMap={signatureSpeciesMap}
             />
