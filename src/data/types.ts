@@ -4,13 +4,15 @@ export interface Landform {
   slug: string;
   name: string;
   tagline: string;
-  description: string;
-  imageUrl: string;
+  summary: string;
+  heroImageUrl: string;
   galleryImages: string[];
-  sections: ContentSection[];
-  facts: Fact[];
-  vegetation: ContentSection;
+  stats: StatItem[];
+  highlights: Highlight[];
+  story: ContentSection[];
+  ecology: ContentSection;
   agriculture: ContentSection;
+  regionGroupId: string;
   floraIds: string[];
   faunaIds: string[];
 }
@@ -25,6 +27,38 @@ export interface ContentSection {
 export interface Fact {
   label: string;
   value: string;
+}
+
+export interface StatItem {
+  label: string;
+  value: string;
+  detail?: string;
+}
+
+export interface Highlight {
+  title: string;
+  description: string;
+  accent?: string;
+}
+
+export interface RegionSubregion {
+  id: string;
+  label: string;
+  description: string;
+  states: string[];
+  highlights: string[];
+  color: string;
+}
+
+export interface RegionGroup {
+  id: string;
+  landformSlug: string;
+  label: string;
+  color: string;
+  bright: string;
+  dim: string;
+  states: string[];
+  subregions: RegionSubregion[];
 }
 
 export interface Wildlife {
