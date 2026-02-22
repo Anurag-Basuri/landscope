@@ -21,28 +21,28 @@ export default function LandformTabs({ landform, flora, fauna }: Props) {
       <TabsList className="w-full max-w-2xl mx-auto bg-card border border-border/50 p-1 rounded-xl mb-10 grid grid-cols-4">
         <TabsTrigger
           value="overview"
-          className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-primary data-[state=active]:to-teal-accent data-[state=active]:text-white rounded-lg text-sm gap-1.5"
+          className="data-[state=active]:bg-linear-to-r data-[state=active]:from-cyan-primary data-[state=active]:to-teal-accent data-[state=active]:text-white rounded-lg text-sm gap-1.5"
         >
           <Mountain className="h-3.5 w-3.5" />
           <span className="hidden sm:inline">Overview</span>
         </TabsTrigger>
         <TabsTrigger
           value="vegetation"
-          className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-primary data-[state=active]:to-teal-accent data-[state=active]:text-white rounded-lg text-sm gap-1.5"
+          className="data-[state=active]:bg-linear-to-r data-[state=active]:from-cyan-primary data-[state=active]:to-teal-accent data-[state=active]:text-white rounded-lg text-sm gap-1.5"
         >
           <TreePine className="h-3.5 w-3.5" />
           <span className="hidden sm:inline">Vegetation</span>
         </TabsTrigger>
         <TabsTrigger
           value="agriculture"
-          className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-primary data-[state=active]:to-teal-accent data-[state=active]:text-white rounded-lg text-sm gap-1.5"
+          className="data-[state=active]:bg-linear-to-r data-[state=active]:from-cyan-primary data-[state=active]:to-teal-accent data-[state=active]:text-white rounded-lg text-sm gap-1.5"
         >
           <Wheat className="h-3.5 w-3.5" />
           <span className="hidden sm:inline">Agriculture</span>
         </TabsTrigger>
         <TabsTrigger
           value="wildlife"
-          className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-primary data-[state=active]:to-teal-accent data-[state=active]:text-white rounded-lg text-sm gap-1.5"
+          className="data-[state=active]:bg-linear-to-r data-[state=active]:from-cyan-primary data-[state=active]:to-teal-accent data-[state=active]:text-white rounded-lg text-sm gap-1.5"
         >
           <PawPrint className="h-3.5 w-3.5" />
           <span className="hidden sm:inline">Wildlife</span>

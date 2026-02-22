@@ -38,6 +38,8 @@ export interface Wildlife {
   habitat: string;
   conservationStatus?: string;
   landformSlugs: string[];
+  funFact?: string;
+  galleryImages?: string[];
 }
 
 export interface FAQItem {
