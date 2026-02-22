@@ -36,6 +36,7 @@ export default function WildlifeCard({ species, index = 0 }: Props) {
               height={300}
               alt={species.name}
               className="img-cover group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
               loading="lazy"
             />
             {species.conservationStatus && (

@@ -93,6 +93,7 @@ export default function Home() {
                 height={520}
                 alt="Indian landscape"
                 className="img-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 priority
               />
               <div className="absolute inset-0 bg-linear-to-t from-background/60 to-transparent" />
