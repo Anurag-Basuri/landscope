@@ -1,8 +1,5 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Wildlife } from "@/data/types";
@@ -19,14 +16,9 @@ const statusColors: Record<string, string> = {
   "Near Threatened": "bg-blue-400/90 text-white hover:bg-blue-400",
 };
 
-export default function WildlifeCard({ species, index = 0 }: Props) {
+export default function WildlifeCard({ species }: Props) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-30px" }}
-      transition={{ duration: 0.4, delay: index * 0.06 }}
-    >
+    <div className="reveal-card">
       <Link href={`/wildlife/${species.slug}`}>
         <Card className="group overflow-hidden border-border/50 hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 py-0 gap-0">
           <div className="relative h-[220px] overflow-hidden">
@@ -74,6 +66,6 @@ export default function WildlifeCard({ species, index = 0 }: Props) {
           </CardContent>
         </Card>
       </Link>
-    </motion.div>
+    </div>
   );
 }

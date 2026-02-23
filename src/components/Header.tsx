@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useState, type FocusEvent } from "react";
+import {
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+  type FocusEvent,
+} from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,29 +18,54 @@ import {
   SheetTrigger,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Menu, ChevronDown } from "lucide-react";
+import {
+  Menu,
+  ChevronDown,
+  Mountain,
+  Waves,
+  Palmtree,
+  Sun,
+  TriangleAlert,
+  Compass,
+  X,
+} from "lucide-react";
+
+/* Icon map for each landform slug */
+const landformIcons: Record<string, React.ElementType> = {
+  "himalayan-mountains": Mountain,
+  "northern-plains": Compass,
+  "peninsular-plateau": TriangleAlert,
+  "thar-desert": Sun,
+  "coastal-plains": Waves,
+  islands: Palmtree,
+};
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isLandformsOpen, setIsLandformsOpen] = useState(false);
+  const [megaOpen, setMegaOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const pathname = usePathname();
+  const prevPathname = useRef(pathname);
 
-  useEffect(() => {
-    function onScroll() {
-      setIsScrolled(window.scrollY > 50);
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = total > 0 ? (window.scrollY / total) * 100 : 0;
-      setScrollProgress(progress);
-    }
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+  const handleScroll = useCallback(() => {
+    setIsScrolled(window.scrollY > 30);
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    setScrollProgress(total > 0 ? (window.scrollY / total) * 100 : 0);
   }, []);
 
   useEffect(() => {
-    setIsLandformsOpen(false);
-  }, [pathname]);
+    const onScroll = () => handleScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [handleScroll]);
+
+  /* Close mega & mobile on route change */
+  if (prevPathname.current !== pathname) {
+    prevPathname.current = pathname;
+    if (megaOpen) setMegaOpen(false);
+    if (mobileOpen) setMobileOpen(false);
+  }
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -49,197 +80,260 @@ export default function Header() {
     return pathname.startsWith(href);
   }
 
-  function handleLandformsBlur(e: FocusEvent<HTMLDivElement>) {
+  function handleMegaBlur(e: FocusEvent<HTMLDivElement>) {
     if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-      setIsLandformsOpen(false);
+      setMegaOpen(false);
     }
   }
 
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/95 backdrop-blur-xl shadow-lg border-b border-border/40 py-2.5"
-          : "bg-transparent py-4"
-      }`}
-    >
-      <div className="absolute left-0 top-0 h-0.5 w-full bg-transparent">
-        <div
-          className="h-full bg-primary transition-[width] duration-150"
-          style={{ width: `${scrollProgress}%` }}
-        />
-      </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Logo */}
-        <Link
-          href="/"
-          className={`relative z-10 transition-transform duration-300 ${
-            isScrolled ? "scale-90 origin-left" : "scale-100"
-          }`}
-        >
-          <Image
-            src="/Landscope.png"
-            width={119}
-            height={37}
-            alt="Landscope logo"
-            priority
-          />
-        </Link>
+    <>
+      <header
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+          isScrolled ? "header-scrolled py-2" : "bg-transparent py-3.5 sm:py-4"
+        }`}
+      >
+        {/* ── Gradient accent line (top edge) ── */}
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-cyan-primary via-teal-accent to-cyan-primary opacity-60" />
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1">
+        {/* ── Scroll progress ── */}
+        <div className="absolute inset-x-0 bottom-0 h-[1.5px]">
+          <div
+            className="h-full bg-gradient-to-r from-cyan-primary to-teal-accent transition-[width] duration-100 ease-out"
+            style={{ width: `${scrollProgress}%` }}
+          />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+          {/* ── Logo ── */}
           <Link
             href="/"
-            aria-current={isActive("/") ? "page" : undefined}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
-              isActive("/")
-                ? "bg-primary/10 text-primary"
-                : "text-muted-foreground hover:text-foreground hover:bg-accent/60"
+            className={`relative z-10 flex items-center gap-2 transition-all duration-500 ${
+              isScrolled ? "scale-[0.88] origin-left" : "scale-100"
             }`}
           >
-            Home
+            <Image
+              src="/Landscope.png"
+              width={119}
+              height={37}
+              alt="Landscope logo"
+              priority
+              className="drop-shadow-[0_0_12px_rgba(14,165,234,0.25)]"
+            />
           </Link>
 
-          {/* Landforms Dropdown */}
-          <div
-            className="relative"
-            onMouseEnter={() => setIsLandformsOpen(true)}
-            onMouseLeave={() => setIsLandformsOpen(false)}
-            onFocus={() => setIsLandformsOpen(true)}
-            onBlur={handleLandformsBlur}
-          >
+          {/* ── Desktop Nav ── */}
+          <nav className="hidden md:flex items-center gap-0.5">
+            {/* Home link */}
             <Link
-              href="/landforms"
-              aria-current={isActive("/landforms") ? "page" : undefined}
-              className={`flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
-                isActive("/landforms")
-                  ? "bg-primary/10 text-primary"
-                  : "text-muted-foreground hover:text-foreground hover:bg-accent/60"
-              }`}
-              aria-haspopup="menu"
-              aria-expanded={isLandformsOpen}
-              aria-controls="landforms-menu"
-              onKeyDown={(e) => {
-                if (e.key === "ArrowDown") {
-                  e.preventDefault();
-                  setIsLandformsOpen(true);
-                }
-                if (e.key === "Escape") {
-                  setIsLandformsOpen(false);
-                }
-              }}
+              href="/"
+              aria-current={isActive("/") ? "page" : undefined}
+              className={`nav-link ${isActive("/") ? "nav-link-active" : ""}`}
             >
-              Landforms
-              <ChevronDown
-                className={`h-3.5 w-3.5 transition-transform duration-300 ${
-                  isLandformsOpen ? "rotate-180" : ""
-                }`}
-              />
+              Home
             </Link>
+
+            {/* Landforms mega-menu trigger */}
             <div
-              id="landforms-menu"
-              role="menu"
-              aria-label="Landforms"
-              className={`absolute top-full left-0 min-w-[260px] bg-card/95 backdrop-blur-xl border border-border/50 rounded-xl p-2 transition-all duration-300 shadow-2xl shadow-black/20 ${
-                isLandformsOpen
-                  ? "opacity-100 visible translate-y-0 pointer-events-auto"
-                  : "opacity-0 invisible translate-y-3 pointer-events-none"
-              }`}
+              className="relative"
+              onMouseEnter={() => setMegaOpen(true)}
+              onMouseLeave={() => setMegaOpen(false)}
+              onFocus={() => setMegaOpen(true)}
+              onBlur={handleMegaBlur}
             >
-              {landforms.map((lf) => (
-                <Link
-                  key={lf.slug}
-                  href={`/landforms/${lf.slug}`}
-                  role="menuitem"
-                  aria-current={
-                    pathname === `/landforms/${lf.slug}` ? "page" : undefined
+              <Link
+                href="/landforms"
+                aria-current={isActive("/landforms") ? "page" : undefined}
+                aria-haspopup="menu"
+                aria-expanded={megaOpen}
+                aria-controls="mega-menu"
+                className={`nav-link group/lf ${
+                  isActive("/landforms") ? "nav-link-active" : ""
+                }`}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    setMegaOpen(true);
                   }
-                  className={`block px-4 py-2.5 text-sm rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
-                    pathname === `/landforms/${lf.slug}`
-                      ? "text-primary bg-accent/50"
-                      : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+                  if (e.key === "Escape") setMegaOpen(false);
+                }}
+              >
+                Landforms
+                <ChevronDown
+                  className={`h-3 w-3 ml-0.5 transition-transform duration-300 ${
+                    megaOpen ? "rotate-180" : ""
                   }`}
-                >
-                  {lf.name}
-                </Link>
-              ))}
-            </div>
-          </div>
+                />
+              </Link>
 
-          {navLinks.slice(1).map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              aria-current={isActive(link.href) ? "page" : undefined}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
-                isActive(link.href)
-                  ? "bg-primary/10 text-primary"
-                  : "text-muted-foreground hover:text-foreground hover:bg-accent/60"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Mobile Nav */}
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              aria-label="Open navigation menu"
-            >
-              <Menu className="h-6 w-6" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="bg-card border-border w-72">
-            <SheetTitle className="text-foreground font-bold text-lg mb-6">
-              Navigation
-            </SheetTitle>
-            <nav className="flex flex-col gap-1">
-              {[
-                { href: "/", label: "Home" },
-                { href: "/landforms", label: "Landforms" },
-                ...navLinks.slice(1),
-              ].map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  aria-current={isActive(link.href) ? "page" : undefined}
-                  className={`px-4 py-3 text-sm font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
-                    isActive(link.href)
-                      ? "text-primary bg-accent/50"
-                      : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              {/* Landform sub-links */}
-              <div className="ml-4 mt-1 mb-2 flex flex-col gap-0.5">
-                {landforms.map((lf) => (
+              {/* ── Mega menu ── */}
+              <div
+                id="mega-menu"
+                role="menu"
+                aria-label="Landforms"
+                className={`mega-menu ${
+                  megaOpen
+                    ? "opacity-100 visible translate-y-0 scale-100"
+                    : "opacity-0 invisible translate-y-2 scale-[0.97]"
+                }`}
+              >
+                <div className="px-5 pt-4 pb-2">
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-0.5">
+                    Explore by landform
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-1.5 px-4 pb-4">
+                  {landforms.map((lf) => {
+                    const Icon = landformIcons[lf.slug] ?? Mountain;
+                    const active = pathname === `/landforms/${lf.slug}`;
+                    return (
+                      <Link
+                        key={lf.slug}
+                        href={`/landforms/${lf.slug}`}
+                        role="menuitem"
+                        aria-current={active ? "page" : undefined}
+                        className={`mega-menu-item ${
+                          active ? "mega-menu-item-active" : ""
+                        }`}
+                      >
+                        <span className="mega-menu-icon">
+                          <Icon className="h-4 w-4" />
+                        </span>
+                        <span>
+                          <span className="block text-sm font-semibold text-foreground transition-colors">
+                            {lf.name.replace("The ", "")}
+                          </span>
+                          <span className="block text-[11px] text-muted-foreground leading-snug line-clamp-1 mt-0.5">
+                            {lf.tagline.split("—")[0].trim()}
+                          </span>
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
+                <div className="border-t border-white/5 px-5 py-3">
                   <Link
-                    key={lf.slug}
-                    href={`/landforms/${lf.slug}`}
-                    aria-current={
-                      pathname === `/landforms/${lf.slug}` ? "page" : undefined
-                    }
-                    className={`px-4 py-2 text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
-                      pathname === `/landforms/${lf.slug}`
-                        ? "text-primary"
-                        : "text-muted-foreground hover:text-foreground"
+                    href="/landforms"
+                    className="text-xs text-primary hover:text-teal-accent transition-colors font-medium"
+                  >
+                    View all landforms →
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Other links */}
+            {navLinks.slice(1).map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={isActive(link.href) ? "page" : undefined}
+                className={`nav-link ${
+                  isActive(link.href) ? "nav-link-active" : ""
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* ── Mobile trigger ── */}
+          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden text-foreground hover:bg-white/5"
+                aria-label="Open navigation"
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="mobile-drawer border-l border-white/10 w-[300px] p-0"
+            >
+              {/* Drawer header */}
+              <div className="flex items-center justify-between px-5 pt-5 pb-4">
+                <SheetTitle className="sr-only">Navigation</SheetTitle>
+                <Image
+                  src="/Landscope.png"
+                  width={100}
+                  height={31}
+                  alt="Landscope logo"
+                  className="drop-shadow-[0_0_8px_rgba(14,165,234,0.3)]"
+                />
+                <button
+                  onClick={() => setMobileOpen(false)}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Close navigation"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              {/* Gradient divider */}
+              <div className="h-[1.5px] bg-gradient-to-r from-cyan-primary/60 via-teal-accent/40 to-transparent mx-4" />
+
+              {/* Mobile nav links */}
+              <nav className="flex flex-col gap-0.5 px-4 pt-4 pb-6">
+                {[
+                  { href: "/", label: "Home" },
+                  { href: "/landforms", label: "Landforms" },
+                  ...navLinks.slice(1),
+                ].map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    aria-current={isActive(link.href) ? "page" : undefined}
+                    className={`mobile-nav-link ${
+                      isActive(link.href) ? "mobile-nav-link-active" : ""
                     }`}
                   >
-                    {lf.name}
+                    {link.label}
                   </Link>
                 ))}
+              </nav>
+
+              {/* Mobile landform sub-links */}
+              <div className="px-4 pb-6">
+                <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-3 px-3">
+                  Quick access
+                </p>
+                <div className="grid gap-1">
+                  {landforms.map((lf) => {
+                    const Icon = landformIcons[lf.slug] ?? Mountain;
+                    const active = pathname === `/landforms/${lf.slug}`;
+                    return (
+                      <Link
+                        key={lf.slug}
+                        href={`/landforms/${lf.slug}`}
+                        aria-current={active ? "page" : undefined}
+                        className={`mobile-landform-link ${
+                          active ? "mobile-landform-link-active" : ""
+                        }`}
+                      >
+                        <Icon className="h-3.5 w-3.5 shrink-0" />
+                        <span className="text-[13px] font-medium">
+                          {lf.name.replace("The ", "")}
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
-            </nav>
-          </SheetContent>
-        </Sheet>
-      </div>
-    </header>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </header>
+
+      {/* ── Mega menu backdrop ── */}
+      {megaOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-[2px] transition-opacity"
+          onClick={() => setMegaOpen(false)}
+        />
+      )}
+    </>
   );
 }

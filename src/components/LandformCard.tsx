@@ -1,8 +1,5 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Landform } from "@/data/types";
 import { ArrowRight } from "lucide-react";
 
@@ -15,12 +12,7 @@ export default function LandformCard({ landform, index = 0 }: Props) {
   const num = String(index + 1).padStart(2, "0");
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-    >
+    <div className="reveal-card">
       <Link
         href={`/landforms/${landform.slug}`}
         className="group relative block rounded-3xl overflow-hidden h-[320px] sm:h-[340px] lg:h-[360px] border border-white/10 bg-card/40 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-primary/10"
@@ -72,6 +64,6 @@ export default function LandformCard({ landform, index = 0 }: Props) {
           </span>
         </div>
       </Link>
-    </motion.div>
+    </div>
   );
 }
