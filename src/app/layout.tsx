@@ -1,8 +1,16 @@
 import type { Metadata } from "next";
+import { Noto_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
+
+const notoSans = Noto_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-noto-sans",
+});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -36,7 +44,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" id="top" suppressHydrationWarning>
+    <html
+      lang="en"
+      id="top"
+      className={notoSans.variable}
+      suppressHydrationWarning
+    >
       <body>
         <Header />
         <main className="relative">{children}</main>

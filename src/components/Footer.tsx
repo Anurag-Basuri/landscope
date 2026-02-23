@@ -1,11 +1,7 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Mail } from "lucide-react";
+import NewsletterForm from "@/components/NewsletterForm";
 
 export default function Footer() {
   return (
@@ -73,19 +69,7 @@ export default function Footer() {
               Monthly dispatches from the atlas — new regions, species, and
               conservation updates.
             </p>
-            <form
-              className="flex flex-col sm:flex-row gap-2"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <Input
-                type="email"
-                placeholder="Your email"
-                className="bg-secondary border-border/50 text-foreground placeholder:text-muted-foreground"
-              />
-              <Button className="bg-linear-to-r from-cyan-primary to-teal-accent text-white shrink-0">
-                <Mail className="h-4 w-4" />
-              </Button>
-            </form>
+            <NewsletterForm />
           </div>
         </div>
 
