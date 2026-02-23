@@ -152,20 +152,22 @@
 }
 
 /* ─── Masonry-ish gallery ─── */
-.gallery-masonry > :nth-child(1) {
-  grid-row: span 2;
-}
-.gallery-masonry > :nth-child(4) {
-  grid-row: span 2;
+@media (min-width: 640px) {
+  .gallery-masonry > :nth-child(1) {
+    grid-row: span 2;
+  }
+  .gallery-masonry > :nth-child(4) {
+    grid-row: span 2;
+  }
 }
 
 @layer components {
   .atlas-section {
-    @apply py-16 sm:py-20;
+    @apply py-14 sm:py-16 lg:py-20;
   }
 
   .atlas-container {
-    @apply max-w-7xl mx-auto px-5;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
   .atlas-kicker {
@@ -173,7 +175,7 @@
   }
 
   .atlas-title {
-    @apply text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground;
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-foreground leading-tight;
   }
 
   .atlas-subtitle {
@@ -181,7 +183,7 @@
   }
 
   .atlas-panel {
-    @apply rounded-3xl border border-white/10 bg-card/60 backdrop-blur-md shadow-2xl;
+    @apply rounded-2xl sm:rounded-3xl border border-white/10 bg-card/60 backdrop-blur-md shadow-2xl;
   }
 
   .atlas-chip {
@@ -190,5 +192,13 @@
 
   .atlas-divider {
     @apply h-px w-full bg-border/50;
+  }
+
+  .atlas-breadcrumb {
+    @apply flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm text-muted-foreground flex-wrap;
+  }
+
+  .atlas-page-header {
+    @apply pt-20 sm:pt-24 md:pt-28 pb-16 sm:pb-20;
   }
 }

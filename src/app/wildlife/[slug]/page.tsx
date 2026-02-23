@@ -68,11 +68,11 @@ export default async function WildlifeDetailPage({ params }: PageProps) {
   };
 
   return (
-    <section className="pt-24 md:pt-28 pb-20">
-      <div className="max-w-7xl mx-auto px-5">
+    <section className="atlas-page-header">
+      <div className="atlas-container">
         {/* Breadcrumbs & back link */}
-        <div className="flex items-center justify-between mb-8">
-          <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
+        <div className="flex items-center justify-between mb-6 sm:mb-8">
+          <nav className="atlas-breadcrumb">
             <Link href="/" className="hover:text-primary transition-colors">
               Home
             </Link>
@@ -95,15 +95,15 @@ export default async function WildlifeDetailPage({ params }: PageProps) {
           </Link>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-10 items-start">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-10 items-start">
           {/* Image */}
-          <div className="relative rounded-2xl overflow-hidden">
+          <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden">
             <Image
               src={sp.imageUrl}
               width={600}
               height={450}
               alt={sp.name}
-              className="w-full h-auto object-cover"
+              className="w-full aspect-[4/3] object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
             />
@@ -125,14 +125,14 @@ export default async function WildlifeDetailPage({ params }: PageProps) {
               {sp.type === "flora" ? "🌿 Flora" : "🐾 Fauna"} · {sp.category}
             </span>
 
-            <h1 className="text-3xl lg:text-4xl font-extrabold text-foreground mb-2">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-foreground mb-2">
               {sp.name}
             </h1>
-            <p className="text-muted-foreground italic text-lg mb-6">
+            <p className="text-muted-foreground italic text-base sm:text-lg mb-4 sm:mb-6">
               {sp.scientificName}
             </p>
 
-            <p className="text-muted-foreground leading-relaxed mb-8">
+            <p className="text-muted-foreground leading-relaxed text-sm sm:text-base mb-6 sm:mb-8">
               {sp.description}
             </p>
 
@@ -195,8 +195,8 @@ export default async function WildlifeDetailPage({ params }: PageProps) {
 
         {/* Gallery Images */}
         {sp.galleryImages && sp.galleryImages.length > 0 && (
-          <div className="mt-16">
-            <h2 className="text-2xl font-bold text-foreground mb-6">
+          <div className="mt-12 sm:mt-16">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">
               <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
                 Gallery
               </span>
@@ -225,8 +225,8 @@ export default async function WildlifeDetailPage({ params }: PageProps) {
 
         {/* Related Species */}
         {related.length > 0 && (
-          <div className="mt-16">
-            <h2 className="text-2xl font-bold text-foreground mb-6">
+          <div className="mt-12 sm:mt-16">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">
               Related{" "}
               <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
                 Species

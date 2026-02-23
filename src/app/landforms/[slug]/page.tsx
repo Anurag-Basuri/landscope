@@ -81,7 +81,7 @@ export default async function LandformPage({ params }: PageProps) {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[520px] pt-24 sm:pt-28">
+      <section className="relative min-h-[420px] sm:min-h-[520px] pt-20 sm:pt-24 md:pt-28">
         <Image
           src={lf.heroImageUrl}
           width={1600}
@@ -100,7 +100,7 @@ export default async function LandformPage({ params }: PageProps) {
               Landscape profile
             </div>
             {/* Breadcrumbs */}
-            <nav className="flex items-center gap-1.5 text-sm text-muted-foreground mb-4">
+            <nav className="atlas-breadcrumb mb-4">
               <Link href="/" className="hover:text-primary transition-colors">
                 Home
               </Link>
@@ -116,7 +116,7 @@ export default async function LandformPage({ params }: PageProps) {
             </nav>
 
             <div className="atlas-panel bg-background/60 p-6 sm:p-8">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-3">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-3">
                 {lf.name}
               </h1>
               <p className="text-base sm:text-lg text-muted-foreground max-w-2xl">

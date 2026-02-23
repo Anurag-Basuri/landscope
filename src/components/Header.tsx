@@ -57,7 +57,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 relative ${
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled
           ? "bg-background/95 backdrop-blur-xl shadow-lg border-b border-border/40 py-2.5"
           : "bg-transparent py-4"
@@ -69,7 +69,7 @@ export default function Header() {
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
-      <div className="max-w-7xl mx-auto px-5 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"

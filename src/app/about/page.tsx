@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <section className="pt-24 md:pt-28 pb-20">
+    <section className="atlas-page-header">
       <div className="atlas-container max-w-4xl">
         <div className="atlas-panel bg-card/50 p-6 sm:p-10">
           <p className="atlas-kicker mb-3">About the atlas</p>
@@ -34,7 +34,7 @@ export default function AboutPage() {
             engaging, and inspiring.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground pt-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground pt-4">
             Why India&apos;s Geography Matters
           </h2>
           <p>
@@ -50,7 +50,7 @@ export default function AboutPage() {
             mega-diverse countries.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground pt-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground pt-4">
             What We Cover
           </h2>
           <ul className="space-y-2 pl-1">

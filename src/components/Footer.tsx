@@ -12,7 +12,7 @@ export default function Footer() {
     <footer className="relative bg-card/80 border-t border-border/50 pt-16 pb-8">
       <div className="absolute inset-x-0 -top-10 h-10 bg-linear-to-b from-transparent to-background/40" />
       <div className="atlas-container">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 mb-12">
           {/* Brand */}
           <div>
             <Link href="/">
@@ -73,7 +73,10 @@ export default function Footer() {
               Monthly dispatches from the atlas — new regions, species, and
               conservation updates.
             </p>
-            <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
+            <form
+              className="flex flex-col sm:flex-row gap-2"
+              onSubmit={(e) => e.preventDefault()}
+            >
               <Input
                 type="email"
                 placeholder="Your email"

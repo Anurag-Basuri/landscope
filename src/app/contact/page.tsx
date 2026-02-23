@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <section className="pt-24 md:pt-28 pb-20">
+    <section className="atlas-page-header">
       <div className="atlas-container max-w-6xl">
         <div className="atlas-panel bg-card/50 p-6 sm:p-10 mb-10">
           <p className="atlas-kicker mb-3">Contact</p>
@@ -26,7 +26,7 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
           {/* Form */}
           <Card className="border-border/50 bg-card/60">
             <CardContent className="p-6 space-y-5">

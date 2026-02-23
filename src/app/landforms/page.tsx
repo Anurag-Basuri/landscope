@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function LandformsPage() {
   return (
-    <section className="pt-24 md:pt-28 pb-20">
+    <section className="atlas-page-header">
       <div className="atlas-container">
         <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
           <div>
@@ -58,7 +58,7 @@ export default function LandformsPage() {
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {landforms.map((lf, i) => (
             <LandformCard key={lf.slug} landform={lf} index={i} />
           ))}

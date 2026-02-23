@@ -27,7 +27,7 @@ export default function WildlifePage() {
   }));
 
   return (
-    <section className="pt-24 md:pt-28 pb-20">
+    <section className="atlas-page-header">
       <div className="atlas-container">
         <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
           <div>
@@ -59,7 +59,7 @@ export default function WildlifePage() {
           <span className="atlas-chip">Updated 2026</span>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
           {filtered.map((sp, i) => (
             <WildlifeCard key={sp.slug} species={sp} index={i} />
           ))}
