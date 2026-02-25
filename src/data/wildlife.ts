@@ -11,7 +11,7 @@ export const wildlife: Wildlife[] = [
     type: "flora",
     category: "Tree",
     imageUrl:
-      "https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?w=600",
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600",
     description:
       "The national flower of Nepal and the state tree of Uttarakhand, Rhododendron is a spectacular flowering tree found in the Himalayan forests between 1,500–3,600 m altitude. Its crimson blossoms carpet the hillsides from March to May, creating one of the most iconic sights of the Himalayas.",
     habitat:
@@ -27,7 +27,7 @@ export const wildlife: Wildlife[] = [
     type: "flora",
     category: "Tree",
     imageUrl:
-      "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=600",
+      "https://images.unsplash.com/photo-1511497584788-876760111969?w=600",
     description:
       "The Deodar Cedar, meaning 'timber of the gods' in Sanskrit, is a majestic conifer native to the western Himalayas. Growing up to 60 m tall, its drooping branches and fragrant wood have made it sacred across Indian culture. It is the state tree of Himachal Pradesh.",
     habitat: "Western Himalayan forests between 1,500–3,200 m altitude",
@@ -42,7 +42,7 @@ export const wildlife: Wildlife[] = [
     type: "flora",
     category: "Tree",
     imageUrl:
-      "https://images.unsplash.com/photo-1425913397330-cf8af2ff40a1?w=600",
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?w=600",
     description:
       "Blue Pine (Bhutan Pine) is a tall coniferous tree with distinctive blue-green needles and long hanging cones. It thrives in the temperate Himalayas and is important for timber and resin production.",
     habitat: "Temperate Himalayan forests, 1,800–4,000 m",
@@ -123,7 +123,7 @@ export const wildlife: Wildlife[] = [
     type: "fauna",
     category: "Mammal",
     imageUrl:
-      "https://images.unsplash.com/photo-1527118732049-c88155f2107c?w=600",
+      "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=600",
     description:
       "The markhor, with its magnificent spiralling horns, is the largest wild goat species. Found in the western Himalayas (Pir Panjal range in J&K), it inhabits steep, rocky terrain. Its name means 'snake eater' in Persian, though it actually feeds on grass, leaves, and twigs.",
     habitat: "Rocky mountainous regions, 600–3,600 m",

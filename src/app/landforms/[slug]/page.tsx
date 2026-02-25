@@ -10,7 +10,9 @@ import {
 } from "@/data/wildlife";
 import LandformRegionsSectionClient from "@/components/LandformRegionsSectionClient";
 import WildlifeCard from "@/components/WildlifeCard";
-import { ChevronRight, ChevronDown, Sparkles } from "lucide-react";
+import AnimatedSection from "@/components/AnimatedSection";
+import AnimatedStat from "@/components/AnimatedStat";
+import { ChevronRight, ChevronDown, Sparkles, Leaf, Wheat } from "lucide-react";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -127,22 +129,12 @@ export default async function LandformPage({ params }: PageProps) {
               </p>
               <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-3">
                 {lf.stats.slice(0, 6).map((stat) => (
-                  <div
+                  <AnimatedStat
                     key={stat.label}
-                    className="bg-card/70 border border-white/10 backdrop-blur-md rounded-xl px-4 py-3"
-                  >
-                    <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                      {stat.label}
-                    </div>
-                    <div className="text-sm font-semibold text-white mt-1">
-                      {stat.value}
-                    </div>
-                    {stat.detail && (
-                      <div className="text-[11px] text-muted-foreground mt-1">
-                        {stat.detail}
-                      </div>
-                    )}
-                  </div>
+                    label={stat.label}
+                    value={stat.value}
+                    detail={stat.detail}
+                  />
                 ))}
               </div>
             </div>
@@ -159,53 +151,61 @@ export default async function LandformPage({ params }: PageProps) {
       <section className="atlas-section">
         <div className="atlas-container">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-start">
-            <div className="space-y-6">
-              <p className="atlas-kicker">At a glance</p>
-              <h2 className="atlas-title">What defines this landscape</h2>
-              <p className="atlas-subtitle">{lf.summary}</p>
-            </div>
+            <AnimatedSection direction="left">
+              <div className="space-y-6">
+                <p className="atlas-kicker">At a glance</p>
+                <h2 className="atlas-title">What defines this landscape</h2>
+                <p className="atlas-subtitle">{lf.summary}</p>
+              </div>
+            </AnimatedSection>
             <div className="grid gap-4">
-              {lf.highlights.map((highlight) => (
-                <div
+              {lf.highlights.map((highlight, i) => (
+                <AnimatedSection
                   key={highlight.title}
-                  className="rounded-2xl border border-white/10 bg-card/70 backdrop-blur-md p-5 shadow-lg"
+                  direction="right"
+                  delay={i * 120}
                 >
-                  <div
-                    className="h-1 w-12 rounded-full"
-                    style={{ backgroundColor: highlight.accent ?? "#38bdf8" }}
-                  />
-                  <h3 className="text-lg font-semibold text-foreground mt-3">
-                    {highlight.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-                    {highlight.description}
-                  </p>
-                </div>
+                  <div className="rounded-2xl border border-white/10 bg-card/70 backdrop-blur-md p-5 shadow-lg hover:border-white/20 hover:shadow-xl transition-all duration-300 group">
+                    <div
+                      className="h-1 w-12 rounded-full group-hover:w-20 transition-all duration-500"
+                      style={{ backgroundColor: highlight.accent ?? "#38bdf8" }}
+                    />
+                    <h3 className="text-lg font-semibold text-foreground mt-3">
+                      {highlight.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
+                      {highlight.description}
+                    </p>
+                  </div>
+                </AnimatedSection>
               ))}
             </div>
           </div>
 
           {signatureSpecies.length > 0 && (
-            <div className="mt-12 atlas-panel bg-card/50 p-6">
-              <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-                <h3 className="text-xl font-semibold text-foreground">
-                  Signature species
-                </h3>
-                <span className="text-xs text-muted-foreground">
-                  {signatureSpecies.length} featured
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {signatureSpecies.map((species) => (
-                  <span
-                    key={species.slug}
-                    className="text-xs px-2.5 py-1 rounded-full border border-border/60 text-muted-foreground bg-background/40"
-                  >
-                    {species.name}
+            <AnimatedSection delay={200}>
+              <div className="mt-12 atlas-panel bg-card/50 p-6">
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <h3 className="text-xl font-semibold text-foreground">
+                    Signature species
+                  </h3>
+                  <span className="text-xs text-muted-foreground">
+                    {signatureSpecies.length} featured
                   </span>
-                ))}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {signatureSpecies.map((species) => (
+                    <Link
+                      key={species.slug}
+                      href={`/wildlife/${species.slug}`}
+                      className="text-xs px-3 py-1.5 rounded-full border border-border/60 text-muted-foreground bg-background/40 hover:border-primary/50 hover:text-primary transition-all duration-200"
+                    >
+                      {species.type === "flora" ? "🌿" : "🐾"} {species.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
+            </AnimatedSection>
           )}
         </div>
       </section>
@@ -225,100 +225,124 @@ export default async function LandformPage({ params }: PageProps) {
       {/* Story */}
       <section className="atlas-section">
         <div className="atlas-container">
-          <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
-            <div>
-              <p className="atlas-kicker">Deep dive</p>
-              <h2 className="atlas-title">
-                Geography, climate, culture, and more
-              </h2>
+          <AnimatedSection>
+            <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
+              <div>
+                <p className="atlas-kicker">Deep dive</p>
+                <h2 className="atlas-title">
+                  Geography, climate, culture, and more
+                </h2>
+              </div>
+              <span className="text-sm text-muted-foreground">
+                {lf.story.length} chapters
+              </span>
             </div>
-            <span className="text-sm text-muted-foreground">
-              {lf.story.length} chapters
-            </span>
-          </div>
+          </AnimatedSection>
           <div className="space-y-16">
             {lf.story.map((section, idx) => {
               const isEven = idx % 2 === 0;
               return (
-                <div
+                <AnimatedSection
                   key={section.id}
-                  className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} gap-8 items-center rounded-3xl border border-white/10 bg-card/30 backdrop-blur-md p-6 sm:p-8`}
+                  direction={isEven ? "left" : "right"}
+                  delay={80}
                 >
-                  <div className="flex-1 space-y-4">
-                    <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-muted-foreground">
-                      <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                      Chapter {String(idx + 1).padStart(2, "0")}
-                    </div>
-                    <h3 className="text-3xl font-extrabold text-foreground">
-                      {section.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {section.content}
-                    </p>
-                  </div>
-                  {section.imageUrl && (
-                    <div className="flex-1 w-full">
-                      <div className="rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-                        <Image
-                          src={section.imageUrl}
-                          width={640}
-                          height={480}
-                          alt={section.title}
-                          className="w-full aspect-[4/3] object-cover"
-                          loading="lazy"
-                        />
+                  <div
+                    className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} gap-8 items-center rounded-3xl border border-white/10 bg-card/30 backdrop-blur-md p-6 sm:p-8 hover:border-white/15 transition-colors duration-300`}
+                  >
+                    <div className="flex-1 space-y-4">
+                      <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-muted-foreground">
+                        <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                        Chapter {String(idx + 1).padStart(2, "0")}
                       </div>
+                      <h3 className="text-3xl font-extrabold text-foreground">
+                        {section.title}
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {section.content}
+                      </p>
                     </div>
-                  )}
-                </div>
+                    {section.imageUrl && (
+                      <div className="flex-1 w-full">
+                        <div className="rounded-3xl overflow-hidden border border-white/10 shadow-2xl group">
+                          <Image
+                            src={section.imageUrl}
+                            width={640}
+                            height={480}
+                            alt={section.title}
+                            className="w-full aspect-4/3 object-cover group-hover:scale-[1.03] transition-transform duration-700"
+                            loading="lazy"
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </AnimatedSection>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* Ecology & Agriculture */}
-      <section className="atlas-section bg-card/40">
+      {/* Ecology & Agriculture — Immersive split-pane */}
+      <section className="atlas-section">
         <div className="atlas-container">
-          <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
-            <div>
-              <p className="atlas-kicker">Ecosystems</p>
-              <h2 className="atlas-title">Ecology and livelihoods</h2>
-            </div>
-          </div>
-          <div className="grid lg:grid-cols-2 gap-8">
-            {[lf.ecology, lf.agriculture].map((section) => (
-              <div
-                key={section.id}
-                className="rounded-3xl overflow-hidden border border-white/10 bg-card/70 backdrop-blur-md shadow-2xl"
-              >
-                {section.imageUrl && (
-                  <div className="relative h-56">
-                    <Image
-                      src={section.imageUrl}
-                      fill
-                      alt={section.title}
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                    <div className="absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
-                  </div>
-                )}
-                <div className="p-6 space-y-3">
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                    {section.id === lf.ecology.id
-                      ? "Vegetation"
-                      : "Agriculture"}
-                  </span>
-                  <h3 className="text-2xl font-bold text-foreground">
-                    {section.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {section.content}
-                  </p>
-                </div>
+          <AnimatedSection>
+            <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
+              <div>
+                <p className="atlas-kicker">Ecosystems</p>
+                <h2 className="atlas-title">Ecology and livelihoods</h2>
               </div>
-            ))}
+            </div>
+          </AnimatedSection>
+          <div className="space-y-8">
+            {[lf.ecology, lf.agriculture].map((section, i) => {
+              const isEcology = section.id === lf.ecology.id;
+              return (
+                <AnimatedSection
+                  key={section.id}
+                  direction={i === 0 ? "left" : "right"}
+                  delay={100}
+                >
+                  <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl min-h-[360px] group">
+                    {/* Full-bleed background image */}
+                    {section.imageUrl && (
+                      <Image
+                        src={section.imageUrl}
+                        fill
+                        alt={section.title}
+                        className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
+                        sizes="100vw"
+                      />
+                    )}
+                    {/* Dark overlay */}
+                    <div className="absolute inset-0 bg-linear-to-r from-background/95 via-background/70 to-transparent" />
+                    {/* Frosted text panel */}
+                    <div className="relative z-10 flex flex-col justify-center max-w-2xl p-8 sm:p-10 min-h-[360px]">
+                      <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-primary mb-4">
+                        {isEcology ? (
+                          <>
+                            <Leaf className="h-3.5 w-3.5" /> Vegetation &amp;
+                            Ecology
+                          </>
+                        ) : (
+                          <>
+                            <Wheat className="h-3.5 w-3.5" /> Agriculture &amp;
+                            Livelihoods
+                          </>
+                        )}
+                      </div>
+                      <h3 className="text-2xl sm:text-3xl font-extrabold text-foreground mb-4">
+                        {section.title}
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">
+                        {section.content}
+                      </p>
+                    </div>
+                  </div>
+                </AnimatedSection>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -326,27 +350,35 @@ export default async function LandformPage({ params }: PageProps) {
       {/* Wildlife */}
       <section className="atlas-section">
         <div className="atlas-container">
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-            <div>
-              <p className="atlas-kicker">Biodiversity</p>
-              <h2 className="atlas-title">Flora & Fauna</h2>
+          <AnimatedSection>
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+              <div>
+                <p className="atlas-kicker">Biodiversity</p>
+                <h2 className="atlas-title">Flora &amp; Fauna</h2>
+              </div>
+              <span className="text-sm text-muted-foreground">
+                {flora.length + fauna.length} species documented
+              </span>
             </div>
-            <span className="text-sm text-muted-foreground">
-              {flora.length + fauna.length} species documented
-            </span>
-          </div>
+          </AnimatedSection>
 
           {fauna.length > 0 && (
             <div className="space-y-6 mb-12">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xl font-semibold text-foreground">Fauna</h3>
-                <span className="text-xs text-muted-foreground">
-                  {fauna.length} species
-                </span>
-              </div>
+              <AnimatedSection>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-semibold text-foreground">
+                    🐾 Fauna
+                  </h3>
+                  <span className="text-xs text-muted-foreground">
+                    {fauna.length} species
+                  </span>
+                </div>
+              </AnimatedSection>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {fauna.map((sp, i) => (
-                  <WildlifeCard key={sp.slug} species={sp} index={i} />
+                  <AnimatedSection key={sp.slug} delay={i * 80}>
+                    <WildlifeCard species={sp} index={i} />
+                  </AnimatedSection>
                 ))}
               </div>
             </div>
@@ -354,15 +386,21 @@ export default async function LandformPage({ params }: PageProps) {
 
           {flora.length > 0 && (
             <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xl font-semibold text-foreground">Flora</h3>
-                <span className="text-xs text-muted-foreground">
-                  {flora.length} species
-                </span>
-              </div>
+              <AnimatedSection>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-semibold text-foreground">
+                    🌿 Flora
+                  </h3>
+                  <span className="text-xs text-muted-foreground">
+                    {flora.length} species
+                  </span>
+                </div>
+              </AnimatedSection>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {flora.map((sp, i) => (
-                  <WildlifeCard key={sp.slug} species={sp} index={i} />
+                  <AnimatedSection key={sp.slug} delay={i * 80}>
+                    <WildlifeCard species={sp} index={i} />
+                  </AnimatedSection>
                 ))}
               </div>
             </div>
@@ -374,31 +412,32 @@ export default async function LandformPage({ params }: PageProps) {
       {lf.galleryImages.length > 0 && (
         <section className="atlas-section bg-card/50">
           <div className="atlas-container">
-            <div className="text-center mb-8">
-              <p className="atlas-kicker">Gallery</p>
-              <h2 className="text-2xl font-bold text-foreground">
-                <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
-                  Landscapes in focus
-                </span>
-              </h2>
-            </div>
+            <AnimatedSection>
+              <div className="text-center mb-8">
+                <p className="atlas-kicker">Gallery</p>
+                <h2 className="text-2xl font-bold text-foreground">
+                  <span className="bg-linear-to-r from-cyan-primary to-teal-accent bg-clip-text text-transparent">
+                    Landscapes in focus
+                  </span>
+                </h2>
+              </div>
+            </AnimatedSection>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[200px] gallery-masonry">
               {lf.galleryImages.map((img, i) => (
-                <div
-                  key={i}
-                  className="rounded-xl overflow-hidden group relative"
-                >
-                  <Image
-                    src={img}
-                    width={600}
-                    height={400}
-                    alt={`${lf.name} photo ${i + 1}`}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                </div>
+                <AnimatedSection key={i} direction="fade" delay={i * 100}>
+                  <div className="rounded-xl overflow-hidden group relative h-full">
+                    <Image
+                      src={img}
+                      width={600}
+                      height={400}
+                      alt={`${lf.name} photo ${i + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                  </div>
+                </AnimatedSection>
               ))}
             </div>
           </div>
