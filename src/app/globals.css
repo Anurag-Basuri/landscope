@@ -241,12 +241,12 @@
 
   /* Mega menu panel */
   .mega-menu {
-    @apply absolute top-[calc(100%+6px)] -left-4 w-[460px]
+    @apply absolute top-[calc(100%+16px)] left-1/2 -translate-x-1/2 w-[460px]
       rounded-2xl border border-white/10
       bg-card/95 backdrop-blur-2xl
       shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]
       transition-all duration-300 ease-out
-      origin-top-left z-50;
+      origin-top z-50;
   }
   .mega-menu-item {
     @apply flex items-start gap-3 px-3.5 py-3 rounded-xl

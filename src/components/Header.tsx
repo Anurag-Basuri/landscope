@@ -88,23 +88,22 @@ export default function Header() {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-          isScrolled ? "header-scrolled py-2" : "bg-transparent py-3.5 sm:py-4"
-        }`}
-      >
-        {/* ── Gradient accent line (top edge) ── */}
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-cyan-primary via-teal-accent to-cyan-primary opacity-60" />
+      <div className="fixed top-0 left-0 w-full z-50 flex justify-center pt-4 sm:pt-6 px-4 md:px-6 lg:px-8 pointer-events-none transition-all duration-500">
+        <header
+          className={`pointer-events-auto relative flex items-center justify-between px-5 sm:px-6 py-3 w-full max-w-5xl rounded-[2rem] transition-all duration-500 border overflow-visible ${
+            isScrolled
+              ? "bg-background/85 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.2)] border-white/10"
+              : "bg-background/40 backdrop-blur-md border-white/5 shadow-lg"
+          }`}
+        >
+          {/* ── Scroll progress line (inside pill) ── */}
+          <div className="absolute -bottom-px left-6 right-6 h-[1.5px] rounded-full overflow-hidden opacity-80">
+            <div
+              className="h-full bg-gradient-to-r from-cyan-primary to-teal-accent transition-[width] duration-100 ease-out z-10"
+              style={{ width: `${scrollProgress}%` }}
+            />
+          </div>
 
-        {/* ── Scroll progress ── */}
-        <div className="absolute inset-x-0 bottom-0 h-[1.5px]">
-          <div
-            className="h-full bg-gradient-to-r from-cyan-primary to-teal-accent transition-[width] duration-100 ease-out"
-            style={{ width: `${scrollProgress}%` }}
-          />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* ── Logo ── */}
           <Link
             href="/"
@@ -324,8 +323,8 @@ export default function Header() {
               </div>
             </SheetContent>
           </Sheet>
-        </div>
-      </header>
+        </header>
+      </div>
 
       {/* ── Mega menu backdrop ── */}
       {megaOpen && (
