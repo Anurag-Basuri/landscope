@@ -5,18 +5,23 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 interface Props {
   children: ReactNode;
   className?: string;
-  /** Stagger delay in ms per index (for grids) */
+  /** Animation direction */
+  direction?: "up" | "left" | "right" | "fade";
+  /** Delay in ms */
   delay?: number;
 }
 
-/**
- * Lightweight intersection-based reveal.
- * Replaces framer-motion `whileInView` with a CSS transition
- * so the parent can remain a server component.
- */
+const hiddenStyles: Record<string, string> = {
+  up: "opacity-0 translate-y-8",
+  left: "opacity-0 -translate-x-8",
+  right: "opacity-0 translate-x-8",
+  fade: "opacity-0",
+};
+
 export default function AnimatedSection({
   children,
   className = "",
+  direction = "up",
   delay = 0,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
@@ -41,8 +46,10 @@ export default function AnimatedSection({
   return (
     <div
       ref={ref}
-      className={`transition-all duration-600 ease-out ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+      className={`transition-all duration-700 ease-out ${
+        visible
+          ? "opacity-100 translate-x-0 translate-y-0"
+          : hiddenStyles[direction]
       } ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
