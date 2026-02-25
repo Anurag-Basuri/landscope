@@ -57,7 +57,7 @@ export const wildlife: Wildlife[] = [
     type: "flora",
     category: "Flower",
     imageUrl:
-      "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=600",
+      "https://images.unsplash.com/photo-1610397648930-477b8c7f0943?w=600",
     description:
       "The Blue Vanda orchid, found in the eastern Himalayas, is one of India's rarest and most beautiful flowers. Its striking blue petals make it highly prized. The species is protected under CITES due to over-collection.",
     habitat:
@@ -123,7 +123,7 @@ export const wildlife: Wildlife[] = [
     type: "fauna",
     category: "Mammal",
     imageUrl:
-      "https://images.unsplash.com/photo-1518173946687-a1e33bbc4a5e?w=600",
+      "https://images.unsplash.com/photo-1527118732049-c88155f2107c?w=600",
     description:
       "The markhor, with its magnificent spiralling horns, is the largest wild goat species. Found in the western Himalayas (Pir Panjal range in J&K), it inhabits steep, rocky terrain. Its name means 'snake eater' in Persian, though it actually feeds on grass, leaves, and twigs.",
     habitat: "Rocky mountainous regions, 600–3,600 m",
@@ -172,7 +172,8 @@ export const wildlife: Wildlife[] = [
     scientificName: "Mangifera indica",
     type: "flora",
     category: "Tree",
-    imageUrl: "https://images.unsplash.com/photo-1563114773-84221bd62daa?w=600",
+    imageUrl:
+      "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?w=600",
     description:
       "India is the world's largest producer of mangoes, and the mango tree has been cultivated for over 4,000 years. Over 1,500 varieties exist in India including Alphonso, Dasheri, and Langra. The tree provides fruit, shade, and timber.",
     habitat: "Tropical and subtropical lowlands, alluvial plains",
@@ -187,7 +188,7 @@ export const wildlife: Wildlife[] = [
     type: "flora",
     category: "Tree",
     imageUrl:
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600",
+      "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600",
     description:
       "Teak is one of the world's most valuable hardwoods, prized for its durability and resistance to decay. Native to India, teak forests dominated the moist deciduous zones of central and southern India. The wood is extensively used in shipbuilding, furniture, and construction.",
     habitat: "Moist deciduous forests, tropical lowlands",
@@ -204,7 +205,7 @@ export const wildlife: Wildlife[] = [
     type: "fauna",
     category: "Mammal",
     imageUrl:
-      "https://images.unsplash.com/photo-1607153333879-c174d265f1d2?w=600",
+      "https://images.unsplash.com/photo-1570481662006-a3a1374699e8?w=600",
     description:
       "India's national aquatic animal, the Gangetic dolphin is a freshwater species that is essentially blind, navigating by echolocation. Found in the Ganga-Brahmaputra river system, its population has declined due to pollution, dams, and habitat loss. Fewer than 2,000 remain in the wild.",
     habitat: "Deep river pools of the Ganga-Brahmaputra system",
@@ -220,7 +221,7 @@ export const wildlife: Wildlife[] = [
     type: "fauna",
     category: "Mammal",
     imageUrl:
-      "https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600",
+      "https://images.unsplash.com/photo-1598894000396-bc30e0996899?w=600",
     description:
       "The greater one-horned rhinoceros is the largest of Asia's rhino species. Once widespread across the Indo-Gangetic Plain, it now survives mainly in Kaziranga National Park (Assam) and Dudhwa National Park (UP). Conservation efforts have increased its population from ~200 in 1900 to ~3,500 today.",
     habitat:
@@ -236,8 +237,7 @@ export const wildlife: Wildlife[] = [
     scientificName: "Houbaropsis bengalensis",
     type: "fauna",
     category: "Bird",
-    imageUrl:
-      "https://images.unsplash.com/photo-1480044965905-02098d419e96?w=600",
+    imageUrl: "https://images.unsplash.com/photo-1551085254-e96b210db58a?w=600",
     description:
       "One of the world's rarest bustards, the Bengal Florican is found in the grasslands of the Terai region. Males perform spectacular leaping displays during breeding season. Fewer than 500 remain globally, making it critically endangered.",
     habitat: "Alluvial grasslands and open scrubland of the Terai",
@@ -253,7 +253,7 @@ export const wildlife: Wildlife[] = [
     type: "fauna",
     category: "Mammal",
     imageUrl:
-      "https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600",
+      "https://images.unsplash.com/photo-1484406566174-437a054e2f07?w=600",
     description:
       "Asia's largest antelope, the nilgai (blue bull) is commonly seen across the northern plains and peninsular India. Males have a distinctive blue-grey coat while females are brown. They are often found near agricultural fields and scrublands.",
     habitat: "Plains, scrublands, and deciduous forests",
@@ -287,7 +287,8 @@ export const wildlife: Wildlife[] = [
     scientificName: "Bambusa spp.",
     type: "flora",
     category: "Grass",
-    imageUrl: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=600",
+    imageUrl:
+      "https://images.unsplash.com/photo-1517483000871-1dbf64a6e1c6?w=600",
     description:
       "India is the world's second-largest producer of bamboo. These giant grasses can grow up to 30 m tall and play a crucial role in the economy of tribal communities. The Western Ghats and northeastern regions are particularly rich in bamboo species.",
     habitat: "Moist deciduous forests, Western Ghats, northeastern hills",
@@ -479,7 +480,7 @@ export const wildlife: Wildlife[] = [
     type: "fauna",
     category: "Mammal",
     imageUrl:
-      "https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600",
+      "https://images.unsplash.com/photo-1516934024742-b461fba47600?w=600",
     description:
       "The Indian Desert Fox is a small, agile predator with large ears adapted for heat dissipation in the desert. It feeds on rodents, insects, and small reptiles. Mostly nocturnal, it can be spotted at dusk near sand dunes in Jaisalmer and Jodhpur districts.",
     habitat: "Sand dunes, scrublands, and rocky terrain of the Thar Desert",
@@ -493,8 +494,7 @@ export const wildlife: Wildlife[] = [
     scientificName: "Gazella bennettii",
     type: "fauna",
     category: "Mammal",
-    imageUrl:
-      "https://images.unsplash.com/photo-1484406566174-437a054e2f07?w=600",
+    imageUrl: "https://images.unsplash.com/photo-1543946207-39bd91e70ca7?w=600",
     description:
       "The chinkara is a graceful, slender gazelle that thrives in arid environments. It can survive without water for long periods, obtaining moisture from plants and dew. It is the state animal of Rajasthan and is protected under the Bishnoi community's conservation traditions.",
     habitat: "Arid plains, light forests, and sand dunes",
@@ -528,7 +528,7 @@ export const wildlife: Wildlife[] = [
     type: "flora",
     category: "Tree",
     imageUrl:
-      "https://images.unsplash.com/photo-1518173946687-a1e33bbc4a5e?w=600",
+      "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600",
     description:
       "Mangroves are salt-tolerant trees that form dense coastal forests in tidal zones. The Sundarbans (West Bengal) is the world's largest mangrove forest. Mangroves protect coastlines from erosion and storms, serve as fish nurseries, and sequester carbon at rates 3–5× higher than terrestrial forests.",
     habitat: "Tidal mudflats, estuaries, and coastal lagoons",
@@ -575,7 +575,7 @@ export const wildlife: Wildlife[] = [
     type: "fauna",
     category: "Reptile",
     imageUrl:
-      "https://images.unsplash.com/photo-1518467166681-9e0e0b4b8c48?w=600",
+      "https://images.unsplash.com/photo-1591025207163-942350e47db2?w=600",
     description:
       "Every year, hundreds of thousands of Olive Ridley turtles arrive at Gahirmatha and Rushikulya beaches in Odisha for mass nesting (Arribada). It is the world's largest aggregation of any sea turtle species. Conservation efforts have protected nesting beaches from fishing and light pollution.",
     habitat: "Tropical ocean waters; nests on sandy beaches",
@@ -591,7 +591,7 @@ export const wildlife: Wildlife[] = [
     type: "fauna",
     category: "Bird",
     imageUrl:
-      "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600",
+      "https://images.unsplash.com/photo-1579271842637-0d0f64a87ab3?w=600",
     description:
       "One of India's most recognisable birds, the White-Throated Kingfisher has a brilliant turquoise-blue back and chocolate-brown head. Unlike many kingfishers, it often hunts far from water, catching insects, lizards, and frogs in coastal scrublands.",
     habitat: "Coastal wetlands, mangroves, rivers, and agricultural fields",
@@ -671,8 +671,7 @@ export const wildlife: Wildlife[] = [
     scientificName: "Dugong dugon",
     type: "fauna",
     category: "Mammal",
-    imageUrl:
-      "https://images.unsplash.com/photo-1518173946687-a1e33bbc4a5e?w=600",
+    imageUrl: "https://images.unsplash.com/photo-1544551763-77932aac0705?w=600",
     description:
       "The dugong (sea cow) is a gentle marine herbivore that grazes on seagrass beds around the Andaman & Nicobar Islands and the Gulf of Mannar. India has only about 250 dugongs left, primarily in the Andamans. It is India's only marine herbivorous mammal.",
     habitat: "Shallow coastal waters with seagrass beds",
@@ -702,7 +701,7 @@ export const wildlife: Wildlife[] = [
     type: "fauna",
     category: "Bird",
     imageUrl:
-      "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600",
+      "https://images.unsplash.com/photo-1522926193341-e9ffd686c60f?w=600",
     description:
       "The Nicobar Pigeon, with its shimmering metallic green, copper, and blue plumage, is among the most beautiful pigeons in the world. Found on small, wooded islands of the Nicobar group, it is the closest living relative of the extinct Dodo.",
     habitat: "Uninhabited or undisturbed small islands with dense forest",
@@ -718,7 +717,7 @@ export const wildlife: Wildlife[] = [
     type: "fauna",
     category: "Reptile",
     imageUrl:
-      "https://images.unsplash.com/photo-1518467166681-9e0e0b4b8c48?w=600",
+      "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=600",
     description:
       "The leatherback is the world's largest turtle (up to 700 kg) and the most migratory. The Nicobar Islands are one of its few nesting sites in India. Unlike other sea turtles, it has a flexible, leather-like shell. It can dive over 1,000 m deep.",
     habitat: "Open ocean; nests on sandy beaches of the Nicobar Islands",
