@@ -9,7 +9,7 @@ import {
 } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
+import Logo from "@/components/Logo";
 import { landforms } from "@/data/landforms";
 import { Button } from "@/components/ui/button";
 import {
@@ -111,12 +111,9 @@ export default function Header() {
               isScrolled ? "scale-[0.88] origin-left" : "scale-100"
             }`}
           >
-            <Image
-              src="/Landscope.png"
-              width={119}
-              height={37}
-              alt="Landscope logo"
-              priority
+            <Logo
+              width={150}
+              height={34}
               className="drop-shadow-[0_0_12px_rgba(14,165,234,0.25)]"
             />
           </Link>
@@ -255,11 +252,9 @@ export default function Header() {
               {/* Drawer header */}
               <div className="flex items-center justify-between px-5 pt-5 pb-4">
                 <SheetTitle className="sr-only">Navigation</SheetTitle>
-                <Image
-                  src="/Landscope.png"
-                  width={100}
-                  height={31}
-                  alt="Landscope logo"
+                <Logo
+                  width={120}
+                  height={28}
                   className="drop-shadow-[0_0_8px_rgba(14,165,234,0.3)]"
                 />
                 <button
